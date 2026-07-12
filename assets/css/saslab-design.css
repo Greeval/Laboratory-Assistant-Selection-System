@@ -1,0 +1,160 @@
+/* 
+ * SASLAB DESIGN SYSTEM 
+ * Theme: Academic Soft-SaaS
+ */
+
+@import url('https://fonts.googleapis.com/css2?family=Geist:wght@400;600;700;800&family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+    /* Color Palette */
+    --background: #fcf9f2;
+    --surface: #FFFFFF;
+    --surface-alt: #F3EFE5;
+    
+    --on-background: #1c1c18;
+    --on-surface: #1c1c18;
+    --on-surface-variant: #4a463f;
+    --ink-soft: #4A473F;
+    --muted: #8A8577;
+    
+    --border: #EAE4D6;
+    --border-strong: #DCD3BE;
+    
+    /* Status Colors */
+    --danger-bg: #FBE1E6;
+    --danger-ink: #C13E5A;
+    --info-bg: #DEEFFB;
+    --info-ink: #1C6FB0;
+    
+    /* Role Accents */
+    --mahasiswa-ink: #5B4FCF;
+    --mahasiswa-bg: #EDE7FF;
+    
+    --admin-lab-ink: #1E8A54;
+    --admin-lab-bg: #DFF4E7;
+    
+    --admin-prodi-ink: #9A6B10;
+    --admin-prodi-bg: #FEECC8;
+
+    /* Base Typography */
+    --font-heading: 'Geist', sans-serif;
+    --font-body: 'Inter', sans-serif;
+    
+    /* Elevations */
+    --shadow-1: 0 1px 2px rgba(22, 20, 15, 0.05);
+    --shadow-2: 0 10px 30px rgba(22, 20, 15, 0.08);
+}
+
+body {
+    background-color: var(--background);
+    color: var(--on-background);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    letter-spacing: -0.02em;
+    color: var(--on-surface);
+}
+
+/* Layout & Containers */
+.sas-container {
+    max-width: 1120px;
+    margin: 0 auto;
+}
+
+.sas-card {
+    background-color: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 24px;
+    box-shadow: var(--shadow-1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.sas-card.hoverable:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-2);
+}
+
+/* Buttons */
+.btn-sas {
+    border-radius: 999px; /* Full pill */
+    padding: 10px 24px;
+    font-weight: 600;
+    font-family: var(--font-body);
+    border: none;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn-sas:hover {
+    transform: translateY(-2px);
+}
+
+.btn-sas-primary {
+    background-color: var(--on-background); /* Ink */
+    color: #FFFFFF;
+}
+
+/* Role-based Buttons */
+.btn-sas-mahasiswa { background-color: var(--mahasiswa-ink); color: #FFFFFF; }
+.btn-sas-lab { background-color: var(--admin-lab-ink); color: #FFFFFF; }
+.btn-sas-prodi { background-color: var(--admin-prodi-ink); color: #FFFFFF; }
+
+.btn-sas-outline {
+    background-color: transparent;
+    border: 1.5px solid var(--border-strong);
+    color: var(--on-background);
+}
+
+.btn-sas-outline:hover {
+    border-color: var(--on-background);
+}
+
+/* Form Inputs */
+.sas-input {
+    background-color: var(--surface);
+    border: 1.5px solid var(--border-strong);
+    border-radius: 14px;
+    padding: 12px 16px;
+    color: var(--on-surface);
+    font-family: var(--font-body);
+    transition: all 0.2s ease;
+}
+
+.sas-input:focus {
+    outline: none;
+    box-shadow: 0 0 0 4px rgba(22, 20, 15, 0.05);
+}
+
+/* Role-based focus */
+.focus-mahasiswa:focus { border-color: var(--mahasiswa-ink); box-shadow: 0 0 0 4px rgba(91, 79, 207, 0.15); }
+.focus-lab:focus { border-color: var(--admin-lab-ink); box-shadow: 0 0 0 4px rgba(30, 138, 84, 0.15); }
+.focus-prodi:focus { border-color: var(--admin-prodi-ink); box-shadow: 0 0 0 4px rgba(154, 107, 16, 0.15); }
+
+/* Badges */
+.sas-badge {
+    border-radius: 999px;
+    padding: 4px 12px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+.sas-badge-danger { background-color: var(--danger-bg); color: var(--danger-ink); }
+.sas-badge-info { background-color: var(--info-bg); color: var(--info-ink); }
+.sas-badge-success { background-color: #E6F4EA; color: #137333; }
+.sas-badge-warning { background-color: #FEF7E0; color: #B06000; }
+
+/* Utilities */
+.text-tabular { font-variant-numeric: tabular-nums; }
+.label-caps {
+    font-family: var(--font-body);
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}

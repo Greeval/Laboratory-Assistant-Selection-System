@@ -1,0 +1,160 @@
+--- PAGE 1 ---
+LAPORAN DFD (DATA FLOWDIAGRAM)
+ANALISIS SISTEM:APLIKASI SISTEM INFORMASI SELEKSI
+REKUTMEN ASISTEN LAB
+DosenPengampu: Ilka Zufria,M.Kom
+DisusunOleh: Kelompok3
+1. Daffa ZahirArkhan (0701242066)
+2. Mirza Azmi Zawahri (0701242069)
+3. Indryani Afdila (0701243156)
+4. MuhammadHakim Sembara (0701242089)
+5. Arya Ovaliano (0701242062)
+6. Maria Ulfa (0701243153)
+7. MumtazahDhyfa Nazha (0701243151)
+8. RahmadSyafaruddin (0701241016)
+9. M.Adri Hasfhi Rangkuti (0701242064)
+PROGRAM STUDI ILMU KOMPUTER
+FAKULTAS SAINS DAN TEKNOLOGI
+UNIVERSITAS ISLAM NEGERI SUMATERA UTARA
+MEDAN
+2026
+--- PAGE 2 ---
+11. DFD Level 0
+DFD Level 0 pada Sistem Informasi Seleksi Rekrutmen Asisten
+Laboratorium digunakan untuk menggambarkan aliran data utama yang terjadi di
+dalam sistem. Diagram ini melibatkan tiga entitas eksternal yaitu Mahasiswa,
+Admin Prodi, dan Admin Laboratorium. Mahasiswa berperan sebagai peserta
+seleksi yang melakukan login, mengisi data diri, mengunggah berkas, mengikuti
+ujian, dan menerima hasil seleksi. Admin Prodi bertugas mengelola akun
+mahasiswa agar mahasiswa dapat mengakses sistem. Sementara itu, Admin
+Laboratorium bertanggung jawab dalam validasi berkas, pengelolaan soal dan
+jadwal ujian,penilaianujian,serta penentuanhasil akhirseleksi.
+--- PAGE 3 ---
+2Alur sistem dimulai dari proses login menggunakan data akun yang
+tersimpan pada data store Akun. Setelah berhasil login, mahasiswa mengisi data
+diri dan mengunggah dokumen persyaratan yang kemudian divalidasi oleh Admin
+Laboratorium. Admin Laboratorium juga mengelola soal serta jadwal ujian yang
+digunakan pada proses pelaksanaan ujian seleksi. Jawaban mahasiswa akan
+disimpan ke dalam data store Detail_Jawaban dan diproses untuk menghasilkan
+nilai ujian. Pada tahap akhir, sistem menampilkan hasil seleksi berdasarkan hasil
+ujiandanvalidasi pemberkasanyangtelahdilakukansebelumnya.
+2. DFD Level 1
+a. Proses 1.0
+Proses Login Sistem merupakan tahap autentikasi pengguna sebelum dapat
+mengakses fitur pada Sistem Informasi Seleksi Rekrutmen Asisten Laboratorium.
+Pada proses ini pengguna yang dapat melakukan login adalah Mahasiswa dan
+Admin Laboratorium dengan menggunakan username dan password yang telah
+terdaftar pada sistem. Mahasiswa memperoleh data akun dari Admin Prodi yang
+sebelumnya telah membuat akun mahasiswa melalui proses Kelola Akun
+Mahasiswa. Setelah pengguna menginput username dan password, sistem akan
+melakukan validasi data dengan mencocokkan informasi pada data store Akun.
+Jika data login sesuai, sistem akan memberikan hak akses kepada pengguna sesuai
+role masing-masing sehingga pengguna dapat mengakses menu dan fitur yang
+tersedia di dalam sistem.
+--- PAGE 4 ---
+3b. Proses 2.0
+Proses Kelola Akun Mahasiswa dilakukan oleh Admin Prodi sebagai tahap
+awal sebelum mahasiswa dapat mengikuti proses seleksi. Pada proses ini Admin
+Prodi dapat menambahkan akun baru maupun melakukan perubahan data akun
+mahasiswa. Data akun yang dikelola meliputi username, password, dan role
+pengguna. Sistem kemudian menyimpan data akun tersebut ke dalam data store
+Akun. Akun yang telah dibuat nantinya digunakan mahasiswa untuk melakukan
+loginke dalam sistem.
+c. Proses 3.0
+--- PAGE 5 ---
+4Proses Pemberkasan dan Data Diri dilakukan oleh mahasiswa setelah
+berhasil login ke dalam sistem. Pada proses ini mahasiswa mengisi biodata secara
+mandiri serta mengunggah dokumen persyaratan seperti CV, KHS, dan berkas
+pendukung lainnya. Sistem akan menyimpan data diri mahasiswa ke dalam data
+store Mahasiswa dan dokumen persyaratan ke dalam data store Pemberkasan.
+Setelah berkas dikirim, Admin Laboratorium melakukan proses validasi terhadap
+dokumen yang telah diunggah mahasiswa. Hasil validasi tersebut digunakan
+sebagai syarat untukmengikuti proses ujianseleksi.
+d. Proses 4.0
+Proses Kelola Soal dan Jadwal Ujian dilakukan oleh Admin Laboratorium
+untuk mempersiapkan pelaksanaan ujian seleksi asisten laboratorium. Admin
+Laboratorium menginput data soal, kunci jawaban, tipe soal, bobot nilai, serta
+jadwal atau sesi ujian ke dalam sistem. Data tersebut kemudian disimpan ke dalam
+data store Soal dan Sesi_Ujian. Informasi soal dan jadwal ujian nantinya akan
+digunakan pada proses pelaksanaan ujian. Dengan adanya proses ini, sistem dapat
+mengaturpelaksanaanujiansecara terstrukturdanterjadwal.
+--- PAGE 6 ---
+5e. Proses 5.0
+Pada proses Pelaksanaan Ujian, mahasiswa mengikuti ujian seleksi sesuai
+jadwal yang telah ditentukan. Sistem akan mengambil data soal dan sesi ujian dari
+data store Soal dan Sesi_Ujian untuk ditampilkan kepada mahasiswa. Mahasiswa
+kemudian menginput jawaban ujian ke dalam sistem dan data jawaban tersebut
+disimpan pada data store Detail_Jawaban. Sistem dapat melakukan penilaian
+otomatis untuk soal pilihan ganda, sedangkan penilaian soal essay dilakukan oleh
+Admin Laboratorium. Hasil penilaian ujian selanjutnya digunakan dalam proses
+penentuanhasil akhirseleksi.
+--- PAGE 7 ---
+6f. Proses 6.0
+Proses Hasil Akhir Seleksi merupakan tahap akhir dalam sistem seleksi
+asisten laboratorium. Pada proses ini sistem mengambil data nilai ujian dari data
+store Detail_Jawaban dan data validasi administrasi dari data store Pemberkasan.
+Berdasarkan data tersebut, Admin Laboratorium melakukan verifikasi dan
+menentukan status kelulusan mahasiswa. Hasil keputusan kemudian disimpan ke
+dalam data store Hasil_Akhir. Sistem selanjutnya menampilkan informasi hasil
+seleksi kepada mahasiswa melalui halamanpengumumanpada sistem.
+3. DFD Level 2
+a. Proses 1.0
+--- PAGE 8 ---
+7Proses login merupakan tahap awal yang digunakan untuk
+mengidentifikasi pengguna sebelum masuk ke dalam sistem. Pada tahap 1.1 Input
+Username dan Password, pengguna seperti mahasiswa dan admin laboratorium
+memasukkan kredensial mereka ke dalam sistem. Data yang dimasukkan
+kemudian diteruskan ke proses 1.2 Validasi Username dan Password untuk
+dicocokkan dengan data yang tersimpan pada basis data akun. Setelah validasi
+dilakukan, sistem melanjutkan ke 1.3 Cek Role Pengguna, yaitu menentukan
+peran dari pengguna apakah sebagai mahasiswa atau admin. Berdasarkan hasil
+pengecekan tersebut, sistem kemudian menjalankan proses 1.4 Pemberian Hak
+Akses yang mengarahkan pengguna ke tampilan dan fitur sesuai dengan perannya
+masing-masing.
+b. Proses 2.0
+Proses pengelolaan akun mahasiswa dilakukan oleh admin prodi untuk
+memastikan setiap mahasiswa memiliki akses sistem yang valid. Pada tahap 2.1
+Input Data Akun, admin memasukkan data akun mahasiswa ke dalam sistem. Data
+tersebut kemudian melalui proses 2.2 Validasi Data Akun untuk memastikan tidak
+ada kesalahan atau duplikasi data. Setelah valid, sistem melakukan 2.3 Simpan
+Akun dengan menyimpan data ke database akun. Tahap terakhir yaitu 2.4
+Distribusi Akun, di mana sistem membagikan informasi akun kepada mahasiswa
+agardapat digunakanuntukloginke sistem.
+--- PAGE 9 ---
+8c. Proses 3.0
+Pada proses ini, admin laboratorium bertanggung jawab dalam
+pengelolaan soal dan jadwal ujian. Tahap 3.1 Input Soal digunakan untuk
+memasukkan soal ujian ke dalam sistem, yang kemudian diperiksa pada proses 3.2
+Validasi Soal untuk memastikan kualitas dan kesesuaian materi. Setelah valid,
+soal disimpan melalui proses 3.3 Simpan Soal ke dalam database soal. Selain itu,
+admin juga mengatur jadwal ujian melalui 3.4 Input Jadwal dan Sesi, yang
+kemudian disimpan pada proses 3.5 Simpan Jadwal ke dalam basis data sesi ujian
+agardapat digunakansaat pelaksanaanujian.
+d. Proses 4.0
+--- PAGE 10 ---
+9Proses ini berfokus pada pengumpulan data dan dokumen mahasiswa.
+Pada tahap 4.1 Input Biodata, mahasiswa mengisi informasi pribadi yang akan
+disimpan dalam database mahasiswa. Selanjutnya, pada proses 4.2 Upload Berkas,
+mahasiswa mengunggah dokumen pendukung yang kemudian disimpan dalam
+sistem pemberkasan. Berkas tersebut akan melalui proses 4.3 Validasi Berkas, di
+mana admin laboratorium memeriksa kelengkapan dan keabsahan dokumen
+sebelum data dinyatakanvaliddandigunakandalam proses seleksi.
+e. Proses 5.0
+Tahap pelaksanaan ujian dimulai dengan 5.1 Ambil Soal dan Jadwal, di
+mana sistem mengambil data soal serta jadwal ujian yang telah tersimpan. Data
+tersebut kemudian digunakan untuk 5.2 Tampilkan Ujian, yaitu menampilkan
+antarmuka ujian kepada mahasiswa. Selanjutnya mahasiswa mengerjakan soal
+melalui proses 5.3 Input Jawaban, dan jawaban tersebut disimpan pada 5.4
+Simpan Jawaban ke dalam database detail jawaban. Tahap terakhir yaitu 5.5
+Penilaian Ujian, di mana jawaban mahasiswa dievaluasi dan dinilai oleh sistem
+atauadminlaboratorium.Hasil penilaian
+ujian
+--- PAGE 11 ---
+10f. Proses 6.0
+Proses akhir ini digunakan untuk menentukan hasil seleksi mahasiswa.
+Pada tahap 6.1 Ambil Data Nilai, sistem mengumpulkan data nilai ujian dan data
+pemberkasan sebagai dasar penilaian. Data tersebut kemudian diverifikasi pada
+6.2 Verifikasi Kelulusan oleh admin laboratorium untuk menentukan kelayakan
+mahasiswa. Setelah itu, hasil akhir disimpan melalui proses 6.3 Simpan Hasil
+Seleksi ke dalam database hasil akhir, dan informasi kelulusan kemudian
+ditampilkanataudisampaikankepada mahasiswa.

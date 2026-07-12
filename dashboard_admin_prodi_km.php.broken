@@ -1,0 +1,805 @@
+<?php
+// Inisialisasi sesi & koneksi
+session_start();
+require_once __DIR__ . '/koneksiweb.php';
+require_once __DIR__ . '/csrf_helper.php';
+verify_csrf_token();
+
+// PROTEKSI SESI: Hanya 'Admin Prodi' yang boleh mengakses
+if (empty($_SESSION['Admin Prodi']['id_user'])) {
+    header("Location: login.php");
+    exit();
+}
+
+// Ambil data sesi pengguna yang sedang login
+$id_user_login   = $_SESSION['Admin Prodi']['id_user'];
+$username_login  = $_SESSION['Admin Prodi']['username'];
+
+// Proses tambah akun (create)
+if (isset($_POST['tambah_akun'])) {
+    $username = mysqli_real_escape_string($koneksi, trim($_POST['username']));
+    $password = $_POST['password'];
+    $role     = mysqli_real_escape_string($koneksi, $_POST['role']);
+
+    // Validasi Anti-Duplikasi
+    $cek = mysqli_query($koneksi, "SELECT id_user FROM akun WHERE username='$username'");
+    if (mysqli_num_rows($cek) > 0) {
+        header("Location: dashboard_admin_prodi_km.php?status=username_sudah_ada");
+        exit();
+    }
+
+    // Selalu simpan akun baru menggunakan hash BCRYPT standar
+    $password_hashed = password_hash($password, PASSWORD_DEFAULT);
+
+    $query_tambah = "INSERT INTO akun (username, password, role) VALUES ('$username', '$password_hashed', '$role')";
+    if (mysqli_query($koneksi, $query_tambah)) {
+        $new_id = mysqli_insert_id($koneksi);
+        if ($role === 'Admin Lab') {
+            mysqli_query($koneksi, "INSERT INTO admin_lab (id_user, nama_admin) VALUES ($new_id, '$username')");
+        }
+        header("Location: dashboard_admin_prodi_km.php?status=sukses_tambah");
+    } else {
+        header("Location: dashboard_admin_prodi_km.php?status=gagal_tambah");
+    }
+    exit();
+}
+
+// Proses import excel mahasiswa
+if (isset($_POST['import_mahasiswa'])) {
+    if (isset($_FILES['file_excel']) && $_FILES['file_excel']['error'] == 0) {
+        $ext = pathinfo($_FILES['file_excel']['name'], PATHINFO_EXTENSION);
+        if (strtolower($ext) == 'xlsx') {
+            require_once __DIR__ . '/SimpleXLSX.php';
+            if ( $xlsx = Shuchkin\SimpleXLSX::parse( $_FILES['file_excel']['tmp_name'] ) ) {
+                $rows = $xlsx->rows();
+                $nim_idx = -1;
+                $nama_idx = -1;
+                $jurusan_idx = -1;
+                $fakultas_idx = -1;
+                $password_idx = -1;
+                $data_start_row = -1;
+
+                foreach ($rows as $r_idx => $row) {
+                    $row_lower = array_map('strtolower', $row);
+                    if ($nim_idx == -1) {
+                        $nim_col = array_search('nim', $row_lower);
+                        if ($nim_col !== false) {
+                            $nim_idx = $nim_col;
+                            foreach ($row_lower as $c_idx => $val) {
+                                if (strpos($val, 'nama') !== false) $nama_idx = $c_idx;
+                                if (strpos($val, 'program studi') !== false || strpos($val, 'jurusan') !== false) $jurusan_idx = $c_idx;
+                                if (strpos($val, 'fakultas') !== false) $fakultas_idx = $c_idx;
+                                if (strpos($val, 'password') !== false) $password_idx = $c_idx;
+                            }
+                            $data_start_row = $r_idx + 1;
+                            break;
+                        }
+                    }
+                }
+
+                if ($nim_idx != -1) {
+                    $sukses = 0;
+                    $gagal = 0;
+                    for ($i = $data_start_row; $i < count($rows); $i++) {
+                        $row = $rows[$i];
+                        $nim = isset($row[$nim_idx]) ? trim($row[$nim_idx]) : '';
+                        if (empty($nim)) continue;
+                        
+                        // Otomatis tambah 0 jika belum ada
+                        if (substr($nim, 0, 1) !== '0') {
+                            $nim = '0' . $nim;
+                        }
+                        
+                        $nama = isset($row[$nama_idx]) ? mysqli_real_escape_string($koneksi, trim($row[$nama_idx])) : '';
+                        $jurusan = isset($row[$jurusan_idx]) ? mysqli_real_escape_string($koneksi, trim($row[$jurusan_idx])) : '';
+                        $fakultas = isset($row[$fakultas_idx]) ? mysqli_real_escape_string($koneksi, trim($row[$fakultas_idx])) : '';
+                        $password = isset($row[$password_idx]) && $row[$password_idx] !== '' ? trim($row[$password_idx]) : $nim;
+                        
+                        $cek = mysqli_query($koneksi, "SELECT id_user FROM akun WHERE username='$nim'");
+                        if (mysqli_num_rows($cek) == 0) {
+                            $password_hashed = password_hash($password, PASSWORD_DEFAULT);
+                            $query_tambah = "INSERT INTO akun (username, password, role) VALUES ('$nim', '$password_hashed', 'Mahasiswa')";
+                            if (mysqli_query($koneksi, $query_tambah)) {
+                                $id_user = mysqli_insert_id($koneksi);
+                                $query_mhs = "INSERT INTO mahasiswa (id_user, nim, nama_mahasiswa, semester, ipk, jurusan, fakultas) VALUES ('$id_user', '$nim', '$nama', 0, 0, '$jurusan', '$fakultas')";
+                                mysqli_query($koneksi, $query_mhs);
+                                $sukses++;
+                            } else {
+                                $gagal++;
+                            }
+                        } else {
+                            $gagal++;
+                        }
+                    }
+                    header("Location: dashboard_admin_prodi_km.php?status=import_selesai&s=$sukses&g=$gagal");
+                    exit();
+                } else {
+                    header("Location: dashboard_admin_prodi_km.php?status=format_excel_salah");
+                    exit();
+                }
+            } else {
+                header("Location: dashboard_admin_prodi_km.php?status=gagal_import");
+                exit();
+            }
+        }
+    }
+}
+
+// Proses ubah akun (update) & manual cascade nim sinkronis
+// Notifikasi
+$pesan = '';
+$alert_type = 'info';
+if (isset($_GET['status'])) {
+    $status = $_GET['status'];
+    if ($status == 'sukses_tambah') {
+        $pesan = "Data akun berhasil didaftarkan.";
+        $alert_type = 'success';
+    } elseif ($status == 'gagal_tambah') {
+        $pesan = "Terjadi kesalahan. Akun gagal ditambahkan.";
+        $alert_type = 'danger';
+    } elseif ($status == 'sukses_ubah') {
+        $pesan = "Data akun berhasil diperbarui dan disinkronisasi.";
+        $alert_type = 'success';
+    } elseif ($status == 'gagal_ubah') {
+        $pesan = "Terjadi kesalahan. Akun gagal diperbarui.";
+        $alert_type = 'danger';
+    } elseif ($status == 'sukses_hapus') {
+        $pesan = "Data akun beserta berkas terkait berhasil dihapus permanen.";
+        $alert_type = 'success';
+    } elseif ($status == 'gagal_hapus') {
+        $pesan = "Terjadi kesalahan. Akun gagal dihapus.";
+        $alert_type = 'danger';
+    } elseif ($status == 'username_sudah_ada') {
+        $pesan = "NIM/Username sudah terdaftar! Harap gunakan yang lain.";
+        $alert_type = 'warning';
+    } elseif ($status == 'import_selesai') {
+        $s = $_GET['s'] ?? 0;
+        $g = $_GET['g'] ?? 0;
+        $pesan = "Import selesai! Berhasil: $s baris. Gagal/Sudah ada: $g baris.";
+        $alert_type = $s > 0 ? 'success' : 'warning';
+    } elseif ($status == 'format_excel_salah') {
+        $pesan = "Format Excel tidak sesuai. Pastikan ada kolom 'NIM'.";
+        $alert_type = 'danger';
+    } elseif ($status == 'gagal_import') {
+        $pesan = "Gagal memproses file Excel.";
+        $alert_type = 'danger';
+    }
+}
+
+if (isset($_POST['ubah_akun']) || isset($_POST['update_akun'])) { 
+    $id_user       = mysqli_real_escape_string($koneksi, $_POST['id_user']);
+    $username_lama = mysqli_real_escape_string($koneksi, trim($_POST['username_lama'])); // NIM sebelum diedit
+    $username_baru = mysqli_real_escape_string($koneksi, trim($_POST['username']));      // NIM baru dari form
+    $role          = mysqli_real_escape_string($koneksi, $_POST['role']);
+    
+    // 1. Validasi duplikasi username jika username/NIM diubah
+    if ($username_baru !== $username_lama) {
+        $cek_username = mysqli_query($koneksi, "SELECT id_user FROM akun WHERE username='$username_baru' AND id_user != '$id_user'");
+        if (mysqli_num_rows($cek_username) > 0) {
+            header("Location: dashboard_admin_prodi_km.php?status=username_sudah_ada");
+            exit();
+        }
+    }
+
+    // 2. Periksa apakah kolom password diisi baru atau dikosongkan
+    if (!empty($_POST['password'])) {
+        $password_input  = trim($_POST['password']);
+        $password_hashed = password_hash($password_input, PASSWORD_DEFAULT);
+        $query_akun      = "UPDATE akun SET username = '$username_baru', password = '$password_hashed', role = '$role' WHERE id_user = '$id_user'";
+    } else {
+        $query_akun      = "UPDATE akun SET username = '$username_baru', role = '$role' WHERE id_user = '$id_user'";
+    }
+
+    // 3. Jalankan pembaruan data pada tabel induk 'akun'
+    if (mysqli_query($koneksi, $query_akun)) {
+        
+        // Sinkronisasi cascading manual ke tabel mahasiswa & pemberkasan via nim lama
+        $query_mhs = "UPDATE mahasiswa SET id_user = '$username_baru' WHERE id_user = '$username_lama'";
+        mysqli_query($koneksi, $query_mhs);
+
+        $query_berkas = "UPDATE pemberkasan SET nim = '$username_baru' WHERE nim = '$username_lama'";
+        mysqli_query($koneksi, $query_berkas);
+
+        // Fail-safe jika admin prodi sedang menyunting akun pribadinya yang sedang aktif
+        if ($username_login === $username_lama) {
+            $_SESSION['Admin Prodi']['username'] = $username_baru;
+        }
+
+        header("Location: dashboard_admin_prodi_km.php?status=sukses_ubah");
+        exit();
+    } else {
+        header("Location: dashboard_admin_prodi_km.php?status=gagal_ubah");
+        exit();
+    }
+}
+
+// Proses ganti password admin diri sendiri
+if (isset($_POST['ganti_password_diri'])) {
+    $pw_lama = $_POST['password_lama'];
+    $pw_baru = $_POST['password_baru'];
+    $pw_konf = $_POST['konfirmasi_password'];
+    
+    if ($pw_baru !== $pw_konf) {
+        echo "<script>alert('Konfirmasi password baru tidak cocok!'); window.location.href='dashboard_admin_prodi_km.php?status=sukses_ubah';</script>";
+        exit();
+    }
+    
+    // Ambil password saat ini
+    $id_user_target = isset($id_user_session) ? $id_user_session : (isset($id_user_login) ? $id_user_login : 0);
+    $q_cek = mysqli_query($koneksi, "SELECT password FROM akun WHERE id_user = $id_user_target LIMIT 1");
+    if ($q_cek && mysqli_num_rows($q_cek) > 0) {
+        $dt = mysqli_fetch_assoc($q_cek);
+        $db_pw = $dt['password'];
+        
+        $pw_valid = false;
+        if (strpos($db_pw, '$2y$') === 0) {
+            $pw_valid = password_verify($pw_lama, $db_pw);
+        } else {
+            $pw_valid = hash_equals($db_pw, $pw_lama);
+        }
+        
+        if (!$pw_valid) {
+            echo "<script>alert('Password lama salah!'); window.location.href='dashboard_admin_prodi_km.php?status=sukses_ubah';</script>";
+            exit();
+        }
+        
+        $pw_hash = password_hash($pw_baru, PASSWORD_DEFAULT);
+        $q_pw = "UPDATE akun SET password = '$pw_hash' WHERE id_user = $id_user_target";
+        if (mysqli_query($koneksi, $q_pw)) {
+            echo "<script>alert('Password berhasil diubah.'); window.location.href='dashboard_admin_prodi_km.php?status=sukses_ubah';</script>";
+        } else {
+            echo "<script>alert('Gagal mengubah password.'); window.location.href='dashboard_admin_prodi_km.php?status=sukses_ubah';</script>";
+        }
+    }
+    exit();
+}
+
+// PROSES AKSI: HAPUS AKUN (via POST dengan CSRF)
+if (isset($_POST['hapus_akun']) && isset($_POST['id_hapus'])) {
+    $id_hapus = mysqli_real_escape_string($koneksi, $_POST['id_hapus']);
+
+    // Batasan Keamanan: Dilarang menghapus akun sendiri
+    if ((int)$id_hapus === (int)$id_user_login) {
+        header("Location: dashboard_admin_prodi_km.php?status=gagal_hapus_diri");
+        exit();
+    }
+
+    if (is_numeric($id_hapus) && (int)$id_hapus > 0) {
+        $query_hapus = "DELETE FROM akun WHERE id_user = '$id_hapus'";
+        if (mysqli_query($koneksi, $query_hapus)) {
+            header("Location: dashboard_admin_prodi_km.php?status=sukses_hapus");
+        } else {
+            header("Location: dashboard_admin_prodi_km.php?status=gagal_hapus");
+        }
+    } else {
+        header("Location: dashboard_admin_prodi_km.php?status=gagal_hapus");
+    }
+    exit();
+}
+
+// Ambil data rekap untuk elemen tabel html dibaliknya
+// Query 1: Data Akun Mahasiswa
+$query_mhs    = "SELECT a.id_user, a.username, a.role, m.nama_mahasiswa, m.jurusan, m.fakultas FROM akun a LEFT JOIN mahasiswa m ON a.id_user = m.id_user WHERE a.role = 'Mahasiswa' ORDER BY a.id_user ASC";
+$result_mhs   = mysqli_query($koneksi, $query_mhs);
+
+// Query 2: Data Akun Administrator (Admin Prodi & Admin Lab)
+$query_admin  = "SELECT id_user, username, role FROM akun WHERE role = 'Admin Prodi' OR role = 'Admin Lab' ORDER BY role ASC, id_user ASC";
+$result_admin = mysqli_query($koneksi, $query_admin);
+?>
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kelola Akun - Admin Prodi | Seleksi Aslab UINSU</title>
+<link class="text/html" rel="stylesheet" href="assets/css/bootstrap.min.css">
+<link class="text/html" rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
+
+<link class="text/html" rel="stylesheet" href="assets/pelengkap/dapk.css?v=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
+ </head>
+<body>
+    <style>
+                body {
+            background-color: #121318;
+            font-family: 'Segoe UI', sans-serif;
+            color: #e2e8f0;
+        }
+        .navbar-brand-custom {
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+        .page-header {
+            background: #1d1e24; border-bottom: 1px solid #2a2d35;
+            color: white;
+            padding: 2rem 0;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+        .card-main {
+            border: 1px solid #2a2d35 !important;
+            border-radius: 12px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+            background-color: #1d1e24 !important;
+            color: #e2e8f0;
+        }
+        .card-main .card-body, .card-main .card-header, .card-main .card-footer {
+            background-color: #1d1e24 !important;
+            color: #e2e8f0;
+        }
+        /* Tables dark */
+        .table { color: #e2e8f0; }
+        .table-bordered td, .table-bordered th { border-color: #2a2d35; }
+        .table tbody tr:hover { background-color: rgba(255, 255, 255, 0.05); }
+        /* Inputs dark */
+        .form-control, .form-select { background-color: #131418 !important; border-color: #2a2d35; color: #e2e8f0 !important; }
+        .form-control:focus, .form-select:focus { border-color: #ffffff; box-shadow: 0 0 0 0.2rem rgba(45,212,227,0.15); }
+        .form-control::placeholder { color: #5a5c66; }
+        .nav-tabs .nav-link {
+            color: #94a3b8;
+            font-weight: 500;
+            border-radius: 8px 8px 0 0;
+            padding: 0.75rem 1.25rem;
+        }
+        .nav-tabs .nav-link.active {
+            color: #ffffff;
+            font-weight: 700;
+            background-color: #1d1e24;
+            border-color: #2a2d35 #2a2d35 #1d1e24;
+            border-top: 2px solid #2dd4e3;
+        }
+        .nav-tabs .nav-link:hover:not(.active) {
+            background-color: rgba(255,255,255,0.05);
+            color: #e2e8f0;
+        }
+        .nav-tabs { border-bottom-color: #2a2d35; }
+
+        .table thead th {
+            background-color: #252730;
+            font-size: 0.82rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #94a3b8;
+            border-bottom: 2px solid #2a2d35;
+        }
+        .table tbody td {
+            vertical-align: middle;
+            font-size: 0.93rem;
+            color: #e2e8f0 !important;
+            background-color: transparent !important;
+        }
+        .table tbody tr {
+            color: #e2e8f0;
+            background-color: #1d1e24 !important;
+        }
+        .table tbody tr:nth-child(even) {
+            background-color: #22242c !important;
+        }
+        .table tbody tr:hover {
+            background-color: rgba(255, 255, 255, 0.05) !important;
+        }
+        .table tbody td a { color: #93c5fd; }
+        .text-muted { color: #94a3b8 !important; }
+        /* Global dark mode text fix */
+        .card-main *, .tab-content *, .tab-pane-inner * {
+            color: #e2e8f0;
+        }
+        .card-main h1, .card-main h2, .card-main h3,
+        .card-main h4, .card-main h5, .card-main h6 {
+            color: #f8fafc;
+        }
+        /* Keep badge colors intact */
+        .badge { color: inherit; }
+        .badge.bg-secondary { color: #fff !important; }
+        .badge.bg-success { color: #fff !important; }
+        .badge.bg-danger { color: #fff !important; }
+        .badge.bg-warning { color: #000 !important; }
+        .badge.bg-info { color: #000 !important; }
+        /* Keep button colors */
+        .btn-outline-warning { color: #ffc107 !important; }
+        .btn-outline-danger { color: #dc3545 !important; }
+        .btn-outline-warning:hover { color: #000 !important; }
+        .btn-outline-danger:hover { color: #fff !important; }
+        /* Alert dark */
+        .alert-success { background-color: #0d2b1e; border-color: #198754; color: #6ee7b7 !important; }
+        .alert-success * { color: #6ee7b7 !important; }
+        .alert-danger { background-color: #2d0a0a; border-color: #dc3545; color: #fca5a5 !important; }
+        /* Heading in content */
+        h1, h2, h3, h4, h5, h6, p, span, label, td, th, li {
+            color: inherit;
+        }
+        .badge-role-mhs {
+            background-color: #cfe2ff;
+            color: #084298;
+        }
+        .badge-role-prodi {
+            background-color: #d1e7dd;
+            color: #0f5132;
+        }
+        .badge-role-lab {
+            background-color: #fff3cd;
+            color: #664d03;
+        }
+        .tab-content {
+            border: 1px solid #2a2d35;
+            border-top: none;
+            border-radius: 0 0 12px 12px;
+            background-color: #1d1e24;
+            color: #e2e8f0;
+        }
+        .tab-pane-inner {
+            padding: 1.5rem;
+        }
+        .empty-state {
+            text-align: center;
+            padding: 3rem 1rem;
+            color: #adb5bd;
+        }
+        .empty-state i {
+            font-size: 3rem;
+            display: block;
+            margin-bottom: 0.75rem;
+        }
+
+        /* Override Bootstrap text colors untuk dark mode */
+        .text-dark { color: #f8fafc !important; }
+        .text-body { color: #e2e8f0 !important; }
+        .text-secondary { color: #94a3b8 !important; }
+        /* Table rows - force semua teks terlihat */
+        .table * { color: #e2e8f0 !important; }
+        .table .btn, .table .badge { color: unset !important; }
+        .table .btn-outline-warning { color: #ffc107 !important; }
+        .table .btn-outline-warning:hover { background-color: #ffc107 !important; color: #000 !important; }
+        .table .btn-outline-danger { color: #fca5a5 !important; border-color: #dc3545 !important; }
+        .table .btn-outline-danger:hover { background-color: #dc3545 !important; color: #ffffff !important; }
+        .table .btn-outline-primary { color: #60a5fa !important; }
+        /* Badge role colors - dark mode friendly */
+        .badge-role-mhs {
+            background-color: #1e3a5f;
+            color: #93c5fd !important;
+            border: 1px solid #3b82f6;
+        }
+        .badge-role-prodi {
+            background-color: #14532d;
+            color: #86efac !important;
+            border: 1px solid #22c55e;
+        }
+        .badge-role-lab {
+            background-color: #422006;
+            color: #fcd34d !important;
+            border: 1px solid #f59e0b;
+        }
+        .badge.bg-secondary { background-color: #374151 !important; color: #d1d5db !important; }
+        .badge.bg-success { color: #fff !important; }
+
+        .btn-float-add {
+    position: fixed;
+    right: 25px; /* Diubah dari left menjadi right */
+    bottom: 25px;
+    width: 65px;
+    height: 65px;
+    border-radius: 50%;
+    z-index: 9999;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-size: 28px;
+    box-shadow: 0 6px 20px rgba(0,0,0,.25);
+
+    transition: .3s;
+}
+
+.btn-float-add:hover {
+    transform: scale(1.08);
+}
+        </style>
+
+<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #1d1e24; border-bottom: 1px solid #2a2d35;">
+    <div class="container-xl">
+        <a class="navbar-brand navbar-brand-custom" href="#">
+            <i class="bi bi-shield-lock-fill me-2"></i>
+            Admin Prodi &mdash; UINSU
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarAdmin">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarAdmin">
+            <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-2">
+                <li class="nav-item">
+                    <span class="navbar-text text-white-50 me-3">
+                        <i class="bi bi-person-circle me-1"></i>
+                        Selamat datang, <strong class="text-white"><?php echo htmlspecialchars($username_login); ?></strong>
+                    </span>
+                </li>
+                <li class="nav-item me-2">
+                    <button class="btn btn-outline-light btn-sm px-3" data-bs-toggle="modal" data-bs-target="#modalGantiPasswordDiri">
+                        <i class="bi bi-key me-1"></i> Ganti Password
+                    </button>
+                </li>
+                <li class="nav-item">
+                    <a class="btn btn-outline-light btn-sm px-3" href="login.php">
+                        <i class="bi bi-box-arrow-right me-1"></i> Keluar
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="page-header">
+    <div class="container-xl">
+        <div class="d-flex justify-content-between align-items-center">
+            <div>
+                <h4 class="mb-1 fw-bold">
+                    <i class="bi bi-people-fill me-2"></i>
+                    Kelola Akun Pengguna
+                </h4>
+                <p class="mb-0 text-white-50">
+                    Manajemen akun mahasiswa dan tenaga administrator sistem rekrutmen asisten laboratorium.
+                </p>
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+<button class="btn btn-success btn-float-add" data-bs-toggle="modal" data-bs-target="#modalTambah" title="Tambah Akun Baru">
+    <i class="bi bi-person-plus-fill"></i>
+</button>
+
+<div class="container-xl pb-5">
+
+    <?php if (isset($_GET['status'])) : ?>
+        <?php
+        $status      = $_GET['status'];
+        $alert_class = '';
+        $alert_icon  = '';
+        $alert_msg   = '';
+
+if ($status === 'sukses_tambah') {
+
+    $alert_class = 'alert-success';
+    $alert_icon  = 'bi-check-circle-fill';
+    $alert_msg   = '<strong>Berhasil!</strong> Akun pengguna baru telah didaftarkan ke sistem.';
+
+} elseif ($status === 'sukses_ubah') {
+
+    $alert_class = 'alert-success';
+    $alert_icon  = 'bi-check-circle-fill';
+    $alert_msg   = '<strong>Berhasil!</strong> Perubahan data akun telah disimpan.';
+
+} elseif ($status === 'sukses_hapus') {
+
+    $alert_class = 'alert-success';
+    $alert_icon  = 'bi-check-circle-fill';
+    $alert_msg   = '<strong>Berhasil!</strong> Akun pengguna telah berhasil dihapus dari sistem.';
+
+} elseif ($status === 'gagal_hapus_diri') {
+
+    $alert_class = 'alert-danger';
+    $alert_icon  = 'bi-shield-exclamation';
+    $alert_msg   = '<strong>Akses Ditolak!</strong> Anda tidak diizinkan menghapus akun Anda sendiri yang sedang aktif.';
+
+} elseif ($status === 'gagal_hapus' || $status === 'gagal_tambah' || $status === 'gagal_ubah') {
+
+    $alert_class = 'alert-danger';
+    $alert_icon  = 'bi-x-circle-fill';
+    $alert_msg   = '<strong>Gagal!</strong> Proses pengelolaan akun gagal dieksekusi.';
+} elseif ($status === 'akses_ditolak') {
+    $alert_class = 'alert-warning';
+    $alert_icon  = 'bi-exclamation-triangle-fill';
+    $alert_msg   = '<strong>Peringatan!</strong> Anda tidak memiliki izin untuk mengakses halaman atau fitur tersebut.';
+
+} elseif ($status === 'username_sudah_ada') {
+    $alert_class = 'alert-warning';
+    $alert_icon  = 'bi-exclamation-triangle-fill';
+    $alert_msg   = '<strong>Peringatan!</strong> Username sudah digunakan, silakan gunakan username lain.';
+}
+        ?>
+        <?php if (!empty($alert_msg)) : ?>
+            <div class="alert <?php echo $alert_class; ?> alert-dismissible fade show d-flex align-items-center mb-4 shadow-sm" role="alert">
+                <i class="bi <?php echo $alert_icon; ?> me-2 fs-5"></i>
+                <div><?php echo $alert_msg; ?></div>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Tutup"></button>
+            </div>
+        <?php endif; ?>
+    <?php endif; ?>
+
+    <div class="card card-main">
+        <div class="card-header border-bottom-0 pt-3 px-4" style="background-color:#1d1e24;">
+            <h5 class="mb-0 fw-semibold text-white">
+                <i class="bi bi-card-list me-2 text-success"></i>
+                Daftar Akun Terdaftar
+            </h5>
+        </div>
+
+        <div class="px-4 pt-3">
+            <ul class="nav nav-tabs" id="akunTab" role="tablist">
+
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="tab-mhs-btn" data-bs-toggle="tab"
+                        data-bs-target="#tab-mhs" type="button" role="tab"
+                        aria-controls="tab-mhs" aria-selected="true">
+                        <i class="bi bi-mortarboard-fill me-2"></i>
+                        Data Akun Mahasiswa
+                        <span class="badge bg-primary ms-2">
+                            <?php echo $result_mhs ? mysqli_num_rows($result_mhs) : 0; ?>
+                        </span>
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="tab-admin-btn" data-bs-toggle="tab"
+                        data-bs-target="#tab-admin" type="button" role="tab"
+                        aria-controls="tab-admin" aria-selected="false">
+                        <i class="bi bi-person-gear me-2"></i>
+                        Data Akun Administrator
+                        <span class="badge bg-success ms-2">
+                            <?php echo $result_admin ? mysqli_num_rows($result_admin) : 0; ?>
+                        </span>
+                    </button>
+                </li>
+            </ul>
+        </div>
+
+        <div class="tab-content" id="akunTabContent">
+
+            <div class="tab-pane fade show active" id="tab-mhs" role="tabpanel" aria-labelledby="tab-mhs-btn">
+                <div class="tab-pane-inner">
+
+                    <?php if ($result_mhs && mysqli_num_rows($result_mhs) > 0) : ?>
+                        <div class="table-responsive">
+                            <table class="table table-hover table-bordered align-middle mb-0">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 60px;" class="text-center">No.</th>
+                                        <th>Username</th>
+                                        <th>Nama</th>
+                                        <th>Fakultas</th>
+                                        <th>Program Studi</th>
+                                        <th style="width: 140px;">Role</th>
+                                        <th style="width: 140px;" class="text-center">Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
+                                    $no_mhs = 1;
+                                    while ($row_mhs = mysqli_fetch_assoc($result_mhs)) :
+                                    ?>
+                                        <tr>
+                                            <td class="text-center text-muted fw-semibold"><?php echo $no_mhs++; ?></td>
+                                            <td>
+                                                <i class="bi bi-person-fill me-2 text-primary"></i>
+                                                <?php echo htmlspecialchars($row_mhs['username']); ?>
+                                            </td>
+                                            <td ondblclick="editInline(this, 'mahasiswa', 'nama_mahasiswa', '<?= $row_mhs['id_user']; ?>')" style="cursor: pointer;" title="Klik ganda untuk edit"><?= htmlspecialchars($row_mhs['nama_mahasiswa'] ?? '-'); ?></td>
+                                            <td ondblclick="editInline(this, 'mahasiswa', 'fakultas', '<?= $row_mhs['id_user']; ?>')" style="cursor: pointer;" title="Klik ganda untuk edit"><?= htmlspecialchars($row_mhs['fakultas'] ?? '-'); ?></td>
+                                            <td ondblclick="editInline(this, 'mahasiswa', 'jurusan', '<?= $row_mhs['id_user']; ?>')" style="cursor: pointer;" title="Klik ganda untuk edit"><?= htmlspecialchars($row_mhs['jurusan'] ?? '-'); ?></td>
+                                            <td>
+                                                <span class="badge badge-role-mhs px-3 py-2">
+                                                    <i class="bi bi-mortarboard me-1"></i>
+                                                    <?php echo htmlspecialchars($row_mhs['role']); ?>
+                                                </span>
+                                            </td>
+                                        <td style="width: 1%; white-space: nowrap;">
+                                            <div class="d-flex justify-content-center gap-1">
+                                                <button type="button"
+                                                        class="btn btn-sm btn-outline-warning"
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#modalEditMhs<?= $row_mhs['id_user']; ?>">
+                                                    <i class="bi bi-pencil-square"></i> Ubah
+                                                </button>
+
+                                                <?php if (!( (int)$row_mhs['id_user'] === (int)$id_user_login )) : ?>
+                                                    <form method="POST" class="d-inline" onsubmit="return confirm('Apakah anda yakin ingin menghapus akun mahasiswa ini?');">
+                                                        <?= csrf_field(); ?>
+                                                        <input type="hidden" name="id_hapus" value="<?= $row_mhs['id_user']; ?>">
+                                                        <button type="submit" name="hapus_akun" class="btn btn-sm btn-outline-danger">
+                                                            <i class="bi bi-trash3"></i> Hapus
+                                                        </button>
+                                                    </form>
+                                                <?php else : ?>
+                                                    <button type="button" class="btn btn-sm btn-light text-muted" dmx-disabled="true" title="Tidak dapat menghapus akun sendiri yang sedang aktif" disabled>
+                                                        <i class="bi bi-trash3"></i> Hapus
+                                                    </button>
+                                                <?php endif; ?>
+                                            </div>
+                                        </td>
+                                        </tr>
+
+                                        <div class="modal fade" id="modalEditMhs<?= $row_mhs['id_user']; ?>" tabindex="-1" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <form method="POST">
+    <?= csrf_field(); ?>
+                                                        <div class="modal-header bg-warning text-dark">
+                                                            <h5 class="modal-title fw-bold"><i class="bi bi-pencil-square me-1"></i> Ubah Akun Mahasiswa</h5>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <input type="hidden" name="id_user" value="<?= $row_mhs['id_user']; ?>">
+                                                            
+                    <div class="mb-3 position-relative">
+                        <label class="form-label fw-bold text-secondary">Password Lama</label>
+                        <div class="input-group">
+                            <input type="password" name="password_lama" class="form-control" placeholder="Masukkan password lama" required>
+                            <button class="btn btn-outline-secondary toggle-password" type="button"><i class="bi bi-eye-slash"></i></button>
+                        </div>
+                    </div>
+                    <div class="mb-3 position-relative">
+                        <label class="form-label fw-bold text-secondary">Password Baru</label>
+                        <div class="input-group">
+                            <input type="password" name="password_baru" class="form-control" placeholder="Masukkan password baru" required minlength="4">
+                            <button class="btn btn-outline-secondary toggle-password" type="button"><i class="bi bi-eye-slash"></i></button>
+                        </div>
+                    </div>
+                    <div class="mb-3 position-relative">
+                        <label class="form-label fw-bold text-secondary">Konfirmasi Password Baru</label>
+                        <div class="input-group">
+                            <input type="password" name="konfirmasi_password" class="form-control" placeholder="Ulangi password baru" required minlength="4">
+                            <button class="btn btn-outline-secondary toggle-password" type="button"><i class="bi bi-eye-slash"></i></button>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                    <button type="submit" name="ganti_password_diri" class="btn btn-success fw-bold">Update Password</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="assets/js/bootstrap.bundle.min.js"></script>
+<script>
+function editInline(cell, table, field, id) {
+    if (cell.querySelector('input')) return; // Already editing
+    
+    let originalText = cell.innerText === '-' ? '' : cell.innerText;
+    cell.innerHTML = `<input type="text" class="form-control form-control-sm border-success shadow-none" value="${originalText}" onblur="saveInline(this, '${table}', '${field}', '${id}', '${originalText}')" onkeydown="if(event.key === 'Enter') this.blur();">`;
+    cell.querySelector('input').focus();
+}
+
+function saveInline(input, table, field, id, originalText) {
+    let newValue = input.value.trim();
+    let cell = input.parentElement;
+    
+    if (newValue === originalText) {
+        cell.innerText = newValue === '' ? '-' : newValue;
+        return;
+    }
+    
+    cell.innerText = 'Menyimpan...';
+    
+    let formData = new FormData();
+    formData.append('table', table);
+    formData.append('field', field);
+    formData.append('value', newValue);
+    formData.append('id', id);
+    formData.append('csrf_token', '<?= $_SESSION['csrf_token'] ?? '' ?>');
+    
+    fetch('ajax_update_inline.php', {
+        method: 'POST',
+        body: formData
+    })
+    .then(r => r.json())
+    .then(data => {
+        if (data.status === 'success') {
+            cell.innerText = newValue === '' ? '-' : newValue;
+        } else {
+            alert('Gagal: ' + data.msg);
+            cell.innerText = originalText === '' ? '-' : originalText;
+        }
+    })
+    .catch(err => {
+        alert('Terjadi kesalahan jaringan.');
+        cell.innerText = originalText === '' ? '-' : originalText;
+    });
+}
+</script>
+</body>
+</html>

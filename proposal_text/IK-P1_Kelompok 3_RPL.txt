@@ -1,0 +1,389 @@
+--- PAGE 1 ---
+APLIKASI SISTEM APLIKASI SISTEM
+INFORMASI INFORMASI
+SELEKSI SELEKSI
+REKRUTMEN REKRUTMEN
+ASISTEN LAB ASISTEN LAB
+KAMPUS KAMPUSAPLIKASI SISTEM
+INFORMASI
+SELEKSI
+REKRUTMEN
+ASISTEN LAB
+KAMPUS
+202620262026
+Kelompok 3 IK-P1
+Rekayasa Perangkat Lunak 
+
+--- PAGE 2 ---
+Rekayasa
+Perangkat
+Lunak
+PROGRAM STUDI ILMU KOMPUTER
+FAKULTAS SAINS DAN TEKNOLOGI
+UNIVERSITAS ISLAM NEGERI SUMATERA UTARA
+MEDAN
+2026
+Dosen Pengam pu:
+Ilka Zufria, M.Kom
+Disusun Oleh:
+Daffa Zahir Arkhan  
+(0701242066)
+Mirza Azmi Zawahri
+Indryani Afdila  
+Muhammad Hakim Sembara  
+Arya Ovaliano
+Maria Ulfa
+Mumtazah Dhyfa Nazha
+Rahmad Syafaruddin
+M. Adri Hashfi Rangkuti
+(0701242069)
+(0701243156)
+(0701242089)
+(0701242062)
+(0701243153)
+(0701243151)
+(0701241016)
+(0701242064)
+1.
+2.
+3.
+4.
+5.
+6.
+7.
+8.
+9.
+--- PAGE 3 ---
+Rekayasa
+Perangkat
+Lunak
+LA TAR BELAKANG MASALAH
+  Perkembangan teknologi informasi saat ini
+mendorong berbagai aktivitas di lingkungan
+perguruan tinggi untuk dilakukan secara lebih
+efektif, efisien, dan terintegrasi. Salah satu aktivitas
+yang membutuhkan pengelolaan yang baik adalah
+proses rekrutmen asisten laboratorium (aslab).
+Asisten laboratorium memiliki peran penting dalam
+membantu kegiatan praktikum, pendampingan
+mahasiswa, serta mendukung jalannya aktivitas
+laboratorium agar lebih optimal. Oleh karena itu,
+proses seleksi asisten laboratorium perlu dilakukan
+secara terstruktur agar dapat menghasilkan
+kandidat yang sesuai dengan kebutuhan.
+      Namun, pada kenyataannya proses rekrutmen
+asisten laboratorium yang berjalan saat ini masih
+belum terintegrasi dalam satu sistem. Proses
+pendaftaran dan pengumpulan berkas seperti surat
+lamaran, Kartu Rencana Studi (KRS), Kartu Hasil
+Studi (KHS), transkrip nilai, dan pas foto dilakukan
+melalui Google Form, sedangkan pelaksanaan tes
+kemampuan dasar pemrograman dan wawancara
+masih dilakukan secara langsung di lingkungan
+kampus. Perbedaan media dan mekanisme pada
+setiap tahapan seleksi tersebut menyebabkan proses
+rekrutmen menjadi kurang efisien, sulit dalam
+pengelolaan data, serta menyulitkan pihak
+laboratorium dalam melakukan penilaian dan
+rekapitulasi hasil seleksi secara terstruktur.
+--- PAGE 4 ---
+Rekayasa
+Perangkat
+Lunak
+   Selain itu, pengelolaan data pendaftar yang
+dilakukan melalui media terpisah berpotensi
+menimbulkan kesalahan dalam proses administrasi
+maupun penilaian. Pihak laboratorium juga
+mengalami kesulitan dalam melakukan
+penyaringan kandidat secara objektif karena
+seluruh data dan hasil seleksi belum tersimpan
+dalam satu sistem yang terpusat. Kondisi tersebut
+dapat memengaruhi efektivitas proses seleksi serta
+memperlambat pengambilan keputusan dalam
+menentukan calon asisten laboratorium yang
+diterima.
+       Berdasarkan permasalahan tersebut, diperlukan
+sebuah aplikasi sistem informasi seleksi rekrutmen
+asisten laboratorium berbasis website yang mampu
+mengintegrasikan seluruh tahapan seleksi dalam
+satu platform. Sistem yang akan dibangun
+menyediakan fitur pendaftaran mahasiswa,
+pengisian formulir, unggah berkas seperti KRS,
+KHS, dan transkrip nilai, serta pelaksanaan tes
+pilihan ganda dan esai secara online. Dengan
+adanya sistem ini, diharapkan proses rekrutmen
+asisten laboratorium dapat berjalan lebih efektif,
+efisien, terstruktur, dan objektif, sehingga mampu
+membantu pihak laboratorium dalam memperoleh
+kandidat asisten laboratorium yang sesuai dengan
+kebutuhan.
+
+--- PAGE 5 ---
+Rekayasa
+Perangkat
+Lunak
+RUMUSAN MASALAH  
+Bagaim ana m erancang
+website yang dapat
+m engelola pendaftaran
+dan pengum pulan berkas
+secara terpusat?
+1.
+2.
+3.Bagaim ana sistem
+dapat m em fasilitasi tes
+dasar pem rogram an
+bagi calon pendaftar?
+Bagaim ana website dapat
+m em bantu proses seleksi
+agar lebih objektif
+berdasarkan hasil
+adm inistrasi dan tes
+kem am puan?
+--- PAGE 6 ---
+Rekayasa
+Perangkat
+Lunak
+4.
+5.
+BATASAN M ASALAH  
+1.
+2.
+3.
+Website yang dibuat hanya
+berupa prototype
+sederhana dan belum
+diimplementasikan secara
+online.
+Data yang dikelola meliputi
+formulir pendaftaran dan
+upload berkas (surat
+lamaran, KRS, KHS, pas
+foto).
+Tes kemampuan hanya
+berupa tes dasar
+pemrograman sederhana
+(misalnya pilihan ganda
+atau soal logika dasar
+coding).
+Sistem penilaian masih
+sederhana (berdasarkan
+kelengkapan berkas dan
+skor tes).
+Website dibangun
+menggunakan teknologi
+dasar seperti PHP dan
+MySQL.
+--- PAGE 7 ---
+Rekayasa
+Perangkat
+Lunak
+TUJUAN
+4.
+5.1.
+3.2.
+Mempermudah calon pendaftar
+dalam melakukan pendaftaran
+dan mengikuti seleksi secara
+online.Mengintegrasikan proses
+pendaftaran, pengumpulan
+berkas, dan tes kemampuan
+dalam satu sistem.
+Membantu pihak laboratorium
+dalam menilai kemampuan
+dasar pemrograman calon
+pendaftar.Meningkatkan efisiensi
+dan kecepatan proses
+seleksi.
+Mendapatkan kandidat
+asisten laboratorium yang
+sesuai dengan kriteria.
+--- PAGE 8 ---
+Rekayasa
+Perangkat
+Lunak
+M ANFAAT 
+Mempermudah calon pendaftar dalam melakukan
+pendaftaran dan mengikuti seleksi secara online.
+Membantu pihak laboratorium dalam mengelola
+data pendaftar secara rapi dan terstruktur.
+Menyediakan sistem tes dasar pemrograman yang
+dapat menilai kemampuan calon secara langsung.
+Menghemat waktu dalam proses seleksi karena
+semua dilakukan dalam satu website.
+Meminimalisir kesalahan dalam penilaian dan
+pengelolaan data.
+Membantu mendapatkan kandidat yang lebih
+kompeten dan sesuai dengan kebutuhan
+laboratorium.1.
+2.
+3.
+4.
+5.
+6.
+
+--- PAGE 9 ---
+Rekayasa
+Perangkat
+Lunak
+SOLUSI SISTEM   
+Website yang akan dibuat memiliki beberapa
+fitur utama sederhana, yaitu:
+1.
+2.
+3.
+4.
+5.Form pendaftaran online
+Upload berkas (KRS, KHS, surat
+lamaran, pas foto)
+Halaman tes dasar pemrograman
+(pilihan ganda / logika
+sederhana)
+Sistem penilaian otomatis
+untuk tes
+Halaman admin untuk
+melihat dan menyeleksi
+pendaftar
+Dengan sistem ini, proses seleksi tidak lagi dilakukan secara
+terpisah, tetapi sudah terintegrasi dalam satu platform
+sehingga lebih efisien dan mudah digunakan.
+
+--- PAGE 10 ---
+Rekayasa
+Perangkat
+Lunak
+JADW AL KEGIATAN PROYEK
+PENJELASAN :
+Dilaksanakan pada 15 April 2026 – 16 April 2026.
+Pada tahap ini dilakukan observasi terhadap proses rekrutmen
+asisten laboratorium yang sedang berjalan serta pengumpulan
+data terkait kebutuhan sistem. Kegiatan ini meliputi identifikasi
+alur pendaftaran, jenis berkas yang dibutuhkan, serta mekanisme
+seleksi yang digunakan.
+Observasi & Pengumpulan Data
+Dilaksanakan pada 18 - 19 April 2026.
+Tahap ini berfokus pada perencanaan sistem yang akan
+dibangun, termasuk penentuan fitur utama website serta
+pembagian tugas kepada anggota tim agar proses
+pengembangan berjalan lebih terarah dan terstruktur.
+Perencanaan Sistem 
+--- PAGE 11 ---
+Rekayasa
+Perangkat
+Lunak
+Dilaksanakan pada 21 April 2026 – 30 april 2026.
+Pada tahap ini dilakukan analisis kebutuhan sistem
+secara lebih mendalam, baik dari sisi pengguna
+maupun admin. Selain itu, mulai dirancang struktur
+database serta alur sistem yang akan digunakan dalam
+website.Analisis Kebutuhan 
+Dilaksanakan pada  1 - 15 Mei 2026.
+Tahap perancangan meliputi pembuatan desain
+tampilan (UI/UX) serta perancangan alur sistem secara
+keseluruhan. Hasil dari tahap ini berupa gambaran
+visual dan struktur sistem yang siap untuk
+diimplementasikan.Perancangan Sistem 
+Dilaksanakan pada 16 - 31 Mei 2026.
+Tahap ini merupakan proses pengembangan website,
+baik dari sisi backend maupun frontend. Fitur utama
+seperti sistem login, upload berkas, dan tes online
+mulai dibangun dan diintegrasikan.Penerapan atau Implementasi 
+Dilaksanakan pada 1 Juni 2026 – 15 Juni 2026.
+Tahap akhir dilakukan pengujian sistem untuk
+memastikan semua fitur berjalan dengan baik. Jika
+ditemukan kesalahan, dilakukan perbaikan sebelum
+akhirnya sistem dipresentasikan sebagai hasil akhir
+proyek.Pengujian dan Presentasi 
+
+--- PAGE 12 ---
+Rekayasa
+Perangkat
+Lunak
+PROFIL TIM  PROYEK, PERAN DAN TANGGUNG
+JAW AB 
+Manajer Aplikasi Perangkat Lunak dan Backend
+Manajer aplikasi perangkat lunak sekaligus backend
+developer, yaitu Daffa Kun, memiliki peran penting dalam
+mengatur jalannya proyek secara keseluruhan. Tugasnya
+mencakup perencanaan, pengelolaan timeline, serta
+pembagian tugas kepada setiap anggota tim agar proses
+pengembangan berjalan terarah. Selain itu, ia juga
+bertanggung jawab dalam membangun sistem backend, seperti
+mengelola database, membuat logika program, serta
+mengintegrasikan seluruh fitur yang ada pada website. Peran
+ini memastikan bahwa sistem dapat berjalan dengan stabil,
+aman, dan sesuai dengan kebutuhan yang telah direncanakan.
+Aplikasi Analisis
+Aplikasi analisis atau hakim bertugas dalam merancang
+dan menentukan sistem penilaian dalam proses seleksi.
+Peran ini mencakup penyusunan kriteria penilaian, baik
+dari aspek administrasi maupun hasil tes kemampuan
+dasar pemrograman. Selain itu, ia juga bertanggung jawab
+dalam menganalisis hasil yang diperoleh peserta serta
+membantu dalam menentukan kelulusan secara objektif.
+Dengan adanya peran ini, proses seleksi dapat dilakukan
+secara lebih adil, terukur, dan sesuai dengan standar yang
+telah ditetapkan.Daffa Zahir
+Arkhan 
+Muhammad Hakim
+Sembara Purba
+--- PAGE 13 ---
+Rekayasa
+Perangkat
+Lunak
+Frontend dan UI/UX
+Frontend dan UI/UX bertanggung jawab dalam
+merancang serta mengembangkan tampilan website agar
+menarik dan mudah digunakan oleh pengguna. Tugasnya
+meliputi pembuatan desain antarmuka, pengaturan layout,
+pemilihan warna, serta memastikan navigasi website
+berjalan dengan baik. Selai n itu, peran ini juga
+menghubungkan tampilan dengan sistem backend
+sehingga fitur dapat digunaka n secara optimal. Fokus
+utama dari bagian ini adalah memberikan pengalaman
+pengguna yang nyaman dan intuitif.
+Dokumentasi dan Pembuat Laporan
+Bagian dokumentasi dan pembuat laporan memiliki tanggung jawab dalam
+menyusun seluruh dokumen yang berkaitan dengan proyek. Tugasnya meliputi
+pembuatan proposal, laporan akhir, serta dokumentasi proses pengembangan
+sistem. Selain itu, mereka juga membuat berbagai diagram pendukung seperti
+flowchart, use case, dan ERD untuk memperjelas alur sistem. Peran ini sangat
+penting agar seluruh proses dapat terdokumentasi dengan baik dan mudah
+dipahami oleh pihak lain.
+Mirza Azmi
+Zawahri
+Indryani
+Afdila
+Mumtazah Dhyfa
+Nazha
+--- PAGE 14 ---
+Rekayasa
+Perangkat
+Lunak
+Quality Assurance Tester 
+Quality assurance tester bertugas untuk melakukan pengujian terhadap sistem yang
+telah dikembangkan guna memastikan bahwa semua fitur berjalan dengan baik.
+Mereka melakukan berbagai skenario pengujian untuk menemukan kesalahan atau
+bug yang mungkin terjadi dalam sistem. Selain itu, mereka juga memberikan laporan
+hasil pengujian kepada tim developer untuk dilakukan perbaikan. Peran ini sangat
+penting untuk menjaga kualitas sistem agar sesuai dengan standar yang diharapkan.
+Pengumpulan Data
+Tim pengumpulan data bertanggung jawab
+dalam menghimpun berbagai informasi yang
+dibutuhkan selama proses pengembangan
+sistem. Tugasnya meliputi pengumpulan
+kebutuhan pengguna, mencari referensi
+sistem serupa, serta menyediakan data
+pendukung yang relevan. Informasi yang
+dikumpulkan ini menjadi dasar dalam
+perancangan sistem agar sesuai dengan
+kebutuhan nyata di lapangan. Dengan adanya
+peran ini, sistem yang dikembangkan dapat
+lebih tepat sasaran dan efektif dalam
+penggunaannya.Rahmad
+SyafaruddinArya 
+Ovaliano
+Maria
+Ulfa
+M. Adri Hashfi
+Rangkuti

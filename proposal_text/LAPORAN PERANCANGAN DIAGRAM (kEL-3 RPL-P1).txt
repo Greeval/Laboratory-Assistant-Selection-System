@@ -1,0 +1,148 @@
+--- PAGE 1 ---
+LAPORAN PERANCANGAN DIAGRAM
+ANALISIS SISTEM:APLIKASI SISTEM INFORMASI SELEKSI
+REKUTMEN ASISTEN LAB
+DosenPengampu: Ilka Zufria,M.Kom
+DisusunOleh: Kelompok3
+1. Daffa ZahirArkhan (0701242066)
+2. Mirza Azmi Zawahri (0701242069)
+3. Indryani Afdila (0701243156)
+4. MuhammadHakim Sembara (0701242089)
+5. Arya Ovaliano (0701242062)
+6. Maria Ulfa (0701243153)
+7. MumtazahDhyfa Nazha (0701243151)
+8. RahmadSyafaruddin (0701241016)
+9. M.Adri Hasfhi Rangkuti (0701242064)
+PROGRAM STUDI ILMU KOMPUTER
+FAKULTAS SAINS DAN TEKNOLOGI
+UNIVERSITAS ISLAM NEGERI SUMATERA UTARA
+MEDAN
+2026
+--- PAGE 2 ---
+1A. Usecase Diagram
+Use Case Diagram Sistem Informasi Seleksi Rekrutmen Asisten
+Laboratorium digunakan untuk menggambarkan interaksi antara aktor dengan
+sistem dalam proses seleksi asisten laboratorium. Pada sistem ini terdapat tiga
+aktor utama yaitu Mahasiswa, Admin Prodi, dan Admin Laboratorium.
+Mahasiswa memiliki hak akses untuk melakukan login sistem, menginput biodata,
+mengunggah berkas persyaratan, melihat jadwal ujian, mengerjakan ujian, serta
+melihat hasil seleksi. Admin Prodi bertugas mengelola akun mahasiswa agar
+mahasiswa dapat memperoleh akses login ke dalam sistem. Sementara itu, Admin
+Laboratorium memiliki hak akses untuk mengelola soal ujian, mengatur jadwal
+dan sesi ujian, melakukan validasi berkas, memberikan penilaian ujian,
+memverifikasi kelulusan,serta mengelola hasil akhirseleksi mahasiswa.
+Pada Use Case Diagram juga terdapat relasi <<include>> dan <<extend>>
+untuk menunjukkan hubungan antar proses di dalam sistem. Relasi <<include>>
+digunakan pada proses yang bersifat wajib, seperti proses mengerjakan ujian yang
+selalu melibatkan input jawaban serta proses kelola hasil seleksi yang selalu
+mencakup verifikasi kelulusan. Sedangkan relasi <<extend>> digunakan pada
+proses tambahan atau proses yang terjadi berdasarkan kondisi tertentu, seperti
+--- PAGE 3 ---
+2validasi berkas yang dilakukan setelah mahasiswa mengunggah dokumen
+persyaratan, penilaian ujian yang dilakukan setelah mahasiswa menginput
+jawaban, serta melihat hasil seleksi yang hanya dapat dilakukan apabila proses
+verifikasi kelulusan telah selesai. Dengan adanya Use Case Diagram ini, alur
+interaksi pengguna terhadap sistem dapat dipahami secara lebih jelas dan
+terstruktur.
+B. ActivityDiagram
+1. Activitydiagram login
+Activity Diagram Login menggambarkan proses autentikasi pengguna
+sebelum mengakses sistem. Proses dimulai ketika pengguna memasukkan
+username dan password, kemudian sistem melakukan validasi terhadap data akun
+yang tersimpan pada basis data. Jika data yang dimasukkan valid, sistem akan
+memberikan hak akses sesuai peran pengguna dan menampilkan halaman utama
+(dashboard). Sebaliknya, jika data login tidak valid, sistem akan menampilkan
+pesan kesalahan dan meminta pengguna untuk memasukkan kembali data login
+yang benar. Proses ini berlangsung hingga pengguna berhasil masuk ke dalam
+sistem.
+--- PAGE 4 ---
+32. Activitydiagram pemberkasan
+Activity Diagram Pemberkasan dimulai ketika mahasiswa memilih menu
+pemberkasan setelah berhasil login ke dalam sistem. Selanjutnya, mahasiswa
+melakukan dua aktivitas secara paralel, yaitu mengisi biodata dan mengunggah
+berkas persyaratan seperti CV, KHS, dan dokumen pendukung lainnya. Setelah
+kedua aktivitas tersebut selesai, sistem menggabungkan proses melalui join node
+dan mahasiswa mengirimkan data pemberkasan ke sistem. Data yang telah dikirim
+kemudian diteruskan kepada Admin Laboratorium untuk dilakukan validasi. Pada
+tahap validasi, admin memeriksa kelengkapan dan keabsahan data serta dokumen
+yang telah diunggah. Jika hasil validasi menunjukkan bahwa berkas telah
+memenuhi seluruh persyaratan, maka status pemberkasan dinyatakan valid dan
+proses berakhir. Namun, apabila ditemukan kekurangan atau kesalahan pada
+berkas yang dikirim, mahasiswa diwajibkan melakukan perbaikan dan
+mengunggah kembali data atau dokumen yang diperlukan. Setelah perbaikan
+dilakukan, mahasiswa kembali mengirimkan pemberkasan untuk divalidasi ulang
+--- PAGE 5 ---
+4hingga seluruh persyaratan dinyatakan valid. Dengan demikian, proses
+pemberkasan hanya berakhir ketika status berkas telah dinyatakan valid oleh
+AdminLaboratorium.
+3. Activitydiagram kelola soal danjadwal ujian
+Activity Diagram Kelola Soal dan Jadwal Ujian dimulai ketika Admin
+Laboratorium mengakses menu pengelolaan soal dan jadwal ujian. Pada tahap
+pertama, admin memasukkan data soal yang akan digunakan dalam proses seleksi
+asisten laboratorium. Setelah soal diinput, dilakukan proses validasi untuk
+memastikan bahwa soal telah sesuai dengan kebutuhan dan tidak terdapat
+kesalahan. Jika hasil validasi menunjukkan bahwa soal belum sesuai, maka admin
+melakukan perbaikan soal dan kembali menginput soal untuk divalidasi kembali.
+Proses ini berlangsung hingga soal dinyatakan valid. Setelah soal valid, sistem
+menyimpan data soal ke dalam basis data. Selanjutnya, admin memasukkan
+jadwal dan sesi ujian yang akan digunakan dalam pelaksanaan seleksi. Data
+jadwal yang telah ditentukan kemudian disimpan ke dalam sistem sehingga dapat
+digunakan pada proses pelaksanaan ujian. Setelah seluruh data soal serta jadwal
+ujian berhasil disimpan, proses pengelolaan soal dan jadwal ujian dinyatakan
+selesai.
+--- PAGE 6 ---
+54. Activitydiagram pelaksanaanujian
+Activity Diagram Pelaksanaan Ujian dimulai ketika sistem mengambil
+data soal dan jadwal ujian yang telah tersimpan pada basis data. Setelah data
+diperoleh, sistem menampilkan ujian kepada mahasiswa sehingga peserta dapat
+mulai mengerjakan soal. Mahasiswa kemudian memasukkan jawaban melalui
+sistem dan jawaban tersebut disimpan ke dalam basis data. Selanjutnya dilakukan
+proses penilaian berdasarkan jenis soal yang dikerjakan. Untuk soal pilihan ganda,
+sistem melakukan penilaian secara otomatis dengan membandingkan jawaban
+mahasiswa dengan kunci jawaban yang tersedia. Sementara itu, untuk soal essay,
+proses penilaian dilakukan oleh Admin Laboratorium. Setelah proses penilaian
+selesai, hasil dari kedua jenis penilaian digabungkan dan disimpan sebagai hasil
+--- PAGE 7 ---
+6penilaian ujian. Proses pelaksanaan ujian kemudian berakhir setelah seluruh nilai
+berhasil disimpanolehsistem.
+5. Activitydiagram hasil akhir
+Activity Diagram Penentuan Hasil akhir dimulai ketika sistem mengambil
+data nilai ujian serta data validasi pemberkasan yang telah tersimpan pada basis
+data. Data tersebut kemudian digunakan dalam proses verifikasi kelulusan yang
+dilakukan oleh Admin Laboratorium. Pada tahap ini dilakukan penentuan status
+kelulusan berdasarkan hasil ujian dan kelengkapan persyaratan yang telah
+dipenuhi oleh mahasiswa. Jika mahasiswa memenuhi kriteria yang telah
+ditetapkan, maka status seleksi dinyatakan diterima. Sebaliknya, apabila
+mahasiswa tidak memenuhi kriteria yang ditentukan, maka status seleksi
+dinyatakan tidak diterima. Setelah status kelulusan ditentukan, sistem menyimpan
+--- PAGE 8 ---
+7hasil seleksi ke dalam basis data hasil akhir. Selanjutnya informasi hasil seleksi
+disampaikan kepada mahasiswa, dan proses penentuan hasil seleksi dinyatakan
+selesai.
+C. Class Diagram
+Class Diagram Sistem Informasi Seleksi Rekrutmen Asisten Laboratorium
+digunakan untuk menggambarkan struktur kelas yang terdapat dalam sistem
+beserta atribut, metode, dan hubungan antar kelas. Pada rancangan ini terdapat
+beberapa kelas utama yaitu Akun, Mahasiswa, AdminProdi, AdminLaboratorium,
+Pemberkasan, Soal, SesiUjian, DetailJawaban, dan HasilAkhir. Kelas Akun
+berfungsi sebagai media autentikasi pengguna yang digunakan oleh mahasiswa
+maupun administrator untuk masuk ke dalam sistem. Admin Prodi memiliki
+hubungan dengan kelas Akun karena bertugas mengelola pembuatan akun
+mahasiswa, sedangkan mahasiswa menggunakan akun tersebut untuk mengakses
+--- PAGE 9 ---
+8seluruh fitur sistem. Setiap kelas memiliki atribut yang merepresentasikan data
+yang disimpan serta metode yang menggambarkan fungsi atau operasi yang dapat
+dilakukanpada kelas tersebut.
+Hubungan antar kelas pada diagram dibuat secara searah (navigability)
+untuk menunjukkan arah penggunaan atau pengelolaan data dalam sistem.
+Mahasiswa memiliki hubungan dengan kelas Pemberkasan untuk mengunggah
+dokumen persyaratan serta dengan kelas DetailJawaban untuk menyimpan
+jawaban ujian yang telah dikerjakan. Admin Laboratorium memiliki hubungan
+dengan kelas Soal dan SesiUjian karena bertanggung jawab mengelola soal serta
+jadwal ujian, selain itu juga berhubungan dengan kelas Pemberkasan untuk
+melakukan validasi berkas dan kelas HasilAkhir untuk menentukan status
+kelulusan peserta seleksi. Kelas Soal memiliki hubungan dengan DetailJawaban
+karena setiap jawaban yang diberikan mahasiswa berkaitan dengan soal tertentu.
+Seluruh hubungan tersebut menunjukkan alur pengelolaan data dan tanggung
+jawab masing-masing pengguna dalam mendukung proses seleksi asisten
+laboratorium secara terstrukturdanterintegrasi.

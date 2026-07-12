@@ -1,0 +1,45 @@
+Options -Indexes
+RewriteEngine On
+
+# =============================================
+# SASLAB URL ROUTING
+# =============================================
+
+# Jika file/folder fisik ada, akses langsung
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+# --- LOGIN ---
+# saslab.com → login.php
+RewriteRule ^$ login.php [L]
+RewriteRule ^Login$ login.php [L]
+
+# --- MAHASISWA ---
+# saslab.com/Mahasiswa/Dashboard
+RewriteRule ^Mahasiswa/Dashboard$ dashboard_mahasiswa.php [L,QSA]
+# saslab.com/Mahasiswa/Profil
+RewriteRule ^Mahasiswa/Profil$ dashboard_mahasiswa.php?tab=profil [L,QSA]
+# saslab.com/Mahasiswa/Ujian
+RewriteRule ^Mahasiswa/Ujian$ ujian_mahasiswa.php [L,QSA]
+
+# --- ADMIN LAB ---
+# saslab.com/AdminLab/Dashboard
+RewriteRule ^AdminLab/Dashboard$ dashboard_admin_lab.php [L,QSA]
+# saslab.com/AdminLab/Profil
+RewriteRule ^AdminLab/Profil$ dashboard_admin_lab.php?tab=profil [L,QSA]
+# saslab.com/AdminLab/Soal
+RewriteRule ^AdminLab/Soal$ kelola_soal.php [L,QSA]
+# saslab.com/AdminLab/Penilaian
+RewriteRule ^AdminLab/Penilaian$ penilaian_ujian.php [L,QSA]
+# saslab.com/AdminLab/Interview
+RewriteRule ^AdminLab/Interview$ jadwal_interview.php [L,QSA]
+# saslab.com/AdminLab/HasilSeleksi
+RewriteRule ^AdminLab/HasilSeleksi$ keputusan_seleksi.php [L,QSA]
+
+# --- ADMIN PRODI ---
+# saslab.com/AdminProdi/Dashboard
+RewriteRule ^AdminProdi/Dashboard$ dashboard_admin_prodi_km.php [L,QSA]
+
+# --- LOGOUT ---
+RewriteRule ^Logout$ logout.php [L,QSA]

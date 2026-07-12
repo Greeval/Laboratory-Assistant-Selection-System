@@ -1,0 +1,1628 @@
+--- PAGE 1 ---
+ 
+ 
+APLIKASI SISTEM INFORMASI SELEKSI REKRUTMEN 
+ASISTEN LAB KAMPUS  
+ 
+(Disusun Untuk Memenuhi Tugas Mata Kuliah Rekayasa Perangkat Lunak ) 
+Dosen Pengampu h : Ilka Zufria, M.Kom  
+ 
+ 
+ 
+Disusun  Oleh : 
+• Mirza Azmi Zawahri   (0701242069)  
+• Daffa Zahir Arkhan    (0701242066 ) 
+• Indryani Afdila    (0701243156 ) 
+• Muhammad Hakim Sembara  (0701242089 ) 
+• Maria Ulfa    (0701243153 ) 
+• Mumtazah Dhyfa Nazha  (070124315 1) 
+• Rahmad Syafaruddin   (0701241016 ) 
+• M. Adri Hashfi Rangkuti  (070124206 4) 
+• Arya Ovaliano    (070124206 2) 
+ 
+FAKULTAS  SAINS  DAN  TEKNOLOGI  
+PROGRAM  STUDI  ILMU  KOMPUTER  
+UNIVERSITAS  ISLAM  NEGERI  SUMATERA  UTARA  
+MEDAN  
+2026 
+--- PAGE 2 ---
+ 
+i 
+ ABSTRAK  
+ Asisten laboratorium memiliki peran penting dalam mendukung jalannya 
+aktivitas laboratorium dan kegiatan praktikum di lingkungan perguruan tinggi. 
+Namun, proses rekrutmen asisten laboratorium yang berjalan saat ini masih belum 
+terintegrasi dalam satu sistem. Proses pendaftaran dan pengumpulan berkas (surat 
+lamaran, KRS, KHS, transkrip nilai, dan pas foto) masih menggunakan Google 
+Form, sementara tes kemampuan dasar pemrograman dan wawancara dilakukan 
+secara langsung di kampus. Perbedaan media ini menyebabkan proses rekrutmen 
+kurang efisien, menyulitkan rekapitulasi nilai, serta berpotensi menimbulkan 
+kesalahan administrasi akibat data yang tidak terpusat. Untuk mengatasi 
+permasalahan tersebut, penelitian ini bertujuan untuk merancang dan membangun 
+sebuah aplikasi sistem informasi seleksi rekrutmen asisten laboratorium berbasis 
+website. Sistem yang diusulkan mampu mengintegrasikan seluruh tahapan seleksi 
+dalam satu platform, mulai dari pendaftaran mahasiswa, pengisian formulir, 
+unggah berkas, hingga pelaksanaan tes pilihan ganda dan esai secara online . Hasil 
+dari penelitian ini diharapkan dapat membuat proses rekrutmen asisten 
+laboratorium berjalan lebih efektif, efisien, terstruktur, dan objektif, sehingga 
+membantu pihak laboratorium dalam memperoleh kandidat yang sesuai dengan 
+kebutuhan.  
+Kata Kunci:  Sistem Informasi, Rekrutmen, Asisten Laboratorium, Website, 
+Seleksi  Online . 
+ 
+ABSTRACT  
+ Laboratory assistants play a vital role in supporting laboratory activities 
+and practical sessions within a university environment. However, the current 
+recruitment process for laboratory assistants remains unintegrated into a single 
+system. The registration and document submission processes (covering 
+application letters, Study Plan Cards (KRS), Study Result Cards (KHS), 
+transcripts, and photographs) still utilize Google Forms, while programming logic 
+tests and interviews are conducted directly on campus. This fragmented approach 
+leads to inefficiencies, complicates score recapitulation, and increases the risk of 
+administrative errors due to decentralized data. To address these challenges, this 
+study aims to design and develop a web -based information system for laboratory 
+assistant recruitment selection. The proposed system integrates all selection stages 
+into a single platform, ranging from student registration, form completion, and 
+document uploads to the administration of online multiple -choice and essay tests. 
+The outcome of this research is expected to render the recruitment process more 
+effective, efficient, structured, and objective, thereby assisting laboratory 
+management in acquiring qualified candidates who best meet their operational 
+needs.  
+Keywords:  Information Systems, Recruitment, Laboratory Assistant, Website, 
+Online Selection.  
+--- PAGE 3 ---
+ 
+ii 
+ KATA PENGANTAR  
+ 
+ Puji syukur kehadirat Allah SWT yang telah memberikan rahmat dan 
+hidayah -Nya sehingga penulis dapat menyelesaikan laporan proyek Rekayasa 
+Perangkat Lunak yang berjudul "Sistem Informasi Seleksi Rekrutmen Asisten 
+Laboratorium Berbasis Website" ini dengan baik dan tepat pada waktunya. 
+Laporan ini disusun untuk memenuhi salah satu tugas besar serta syarat kelulusan 
+pada mata kuliah Rekayasa Perangkat Lunak (RPL) di lingkungan perguruan 
+tinggi.. Ucapan terima kasih juga penulis sampaikan kepada pihak laboratorium 
+yang telah memberikan informasi, data, serta kerja sama yang baik sehingga 
+penulis dapat mengidentifikasi masalah dan kebutuhan sistem secara akurat. Tidak 
+lupa, penulis mengapresiasi seluruh anggota Kelompok 3 (Kelas RPL -P1) yang 
+telah bekerja keras, menjaga soliditas, dan meluangkan waktu serta pikiran, serta 
+orang tua dan keluarga tercinta yang senantiasa memberikan doa dan dukungan 
+moral maupun material kepada penulis hingga laporan ini selesai.  
+ Penulis menyadari bahwa laporan proyek ini masih jauh dari 
+kesempurnaan, baik dari segi penyusunan, tata bahasa, maupun kedalaman 
+materinya. Oleh karena itu, penulis sangat mengharapkan kritik dan saran yang 
+membangun dari para pembaca demi perbaikan dan pengembangan sistem ini di 
+masa yang akan datang. Akhir kata, semoga laporan proyek rekayasa perangkat 
+lunak ini dapat memberikan manfaat, menambah wawasan, dan menjadi referensi 
+yang berguna bagi para pembaca, khususnya bagi perkembangan sistem rekrutmen 
+berbasis teknologi informasi.  
+  
+--- PAGE 4 ---
+ 
+iii 
+ DAFTAR  ISI  
+ 
+ABSTRAK  ................................ ................................ ................................ ..............  i 
+KATA PENGANTAR  ................................ ................................ ...........................  ii 
+DAFTAR  ISI  ................................ ................................ ................................ ........ iii 
+DAFTAR GAMBAR  ................................ ................................ .............................  v 
+DAFTAR TABEL  ................................ ................................ ................................  vi 
+BAB I  PENDAHULUAN  ................................ ................................ .....................  1 
+1.1 Latar  Belakang  ................................ ................................ ...............................  1 
+1.2 Rumusan Masalah  ................................ ................................ .........................  2 
+1.3 Batasan Masalah  ................................ ................................ ............................  2 
+1.4 Tujuan  Penelitian  ................................ ................................ ...........................  3 
+1.5 Manfaat Penelitian  ................................ ................................ .........................  3 
+1.6 Jadwal Penelitian  ................................ ................................ ...........................  3 
+1.7 Susunan Tim dan Jobdesk  ................................ ................................ .............  3 
+BAB II  TINJAUAN PUSTAKA ................................ ................................ ..........  5 
+2.1 Sekilas Tentang Instansi/ Organisasi  ................................ .............................  5 
+2.1.1  Profil  ................................ ................................ ................................ ...................  5 
+2.1.2  Visi, Misi dan Tujuan ................................ ................................ ..........................  5 
+2.1.3  Struktur Organisasi :  ................................ ................................ ...........................  6 
+2.2 Landasan Teori tentang Materi Yang Dibahas  ................................ ..............  6 
+BAB III  METODE PERANCANGAN SISTEM ................................ ...............  9 
+3.1 Metode Pengembangan Sistem Informasi  ................................ .....................  9 
+3.2 Metode Analisis PIECES  ................................ ................................ ............  10 
+BAB IV ANALISIS DAN HASIL  ................................ ................................ ...... 12 
+4.1 Deskripsi Sistem Lama  ................................ ................................ ................  12 
+4.2 Analisis Kebutuhan Fungsional dan Non Fungsional  ................................ . 13 
+4.2.1 Analisis Kebutuhan Fungsional  ................................ ................................ ........  13 
+4.2.2 Analisis Kebutuhan Non Fungsiona l ................................ ................................  13 
+4.3 Usulan Sistem Baru  ................................ ................................ .....................  14 
+4.4 Desain Logik Sistem  ................................ ................................ ...................  16 
+--- PAGE 5 ---
+ 
+iv 
+ 4.5 Desain Fisik Sistem Baru  ................................ ................................ ............  37 
+4.5.1 Rancangan Disain Interface  ................................ ................................ ..............  37 
+BAB V IMPLEMENTASI  ................................ ................................ ..................  40 
+5.1 Spesifikasi Sistem Baru  ................................ ................................ ...............  40 
+5.2 Penerapan Sistem Baru  ................................ ................................ ................  41 
+5.2.1 Penerapan Tampilan Input  ................................ ................................ ................  41 
+5.2.2 Penerapan Tampilan Output  ................................ ................................ ..............  45 
+BAB VI PENUTUP  ................................ ................................ .............................  47 
+6.1 Kesimpulan  ................................ ................................ ................................ .. 47 
+6.2 Saran  ................................ ................................ ................................ ............  48 
+DAFTAR PUSTAKA  ................................ ................................ ..........................  49 
+LAMPIRAN  ................................ ................................ ................................ .........  50 
+ 
+ 
+--- PAGE 6 ---
+ 
+v 
+ DAFTAR GAMBAR  
+ 
+Gambar         Judul Gambar            Halaman  
+ 4.1 Konteks Diagram  ................................ ................................ ....................  16 
+ 4.2 DFD Level 0  ................................ ................................ .........................  17 
+ 4.3 DFD Level 1  Proses 1.0  ................................ ................................ ...... 18 
+ 4.4 DFD Level 1  Proses 2.0 ................................ ................................ ...... 19 
+ 4.5 DFD Level 1  Proses 3.0 ................................ ................................ ...... 20 
+ 4.6 DFD Level 1  Proses 4.0 ................................ ................................ ...... 21 
+ 4.7 DFD Level 1  Proses 5.0 ................................ ................................ ...... 22 
+ 4.8 DFD Level 1  Proses 6.0 ................................ ................................ ...... 23 
+ 4.9 DFD 2 Proses 1.0 ................................ ................................ .................  24 
+ 4.10 DFD 2 Proses 2.0 ................................ ................................ .................  25 
+ 4.11 DFD 2 Proses 3.0 ................................ ................................ .................  26 
+ 4.12 DFD 2 Proses 4.0 ................................ ................................ .................  27 
+ 4.13 DFD 2 Proses 5.0 ................................ ................................ .................  27 
+ 4.14 DFD 2 Proses 6.0 ................................ ................................ .................  28 
+ 4.15 Use Case Diagram  ................................ ................................ ...............  29 
+ 4.16 Entity Relationship Diagram(ER D) ................................ .......................  33 
+ 5.1 Tampilan halaman login  ................................ ................................ .........  42 
+ 5.2 Tampilan identitas diri  ................................ ................................ ............  43 
+ 5.3 Tampilan ujian seleksi online  ................................ ................................ . 43 
+ 5.4 Tampilan tambah soal  ................................ ................................ ............  44 
+ 5.5 Tampilan Nilai Essay  ................................ ................................ .............  45 
+ 5.6 Tampilan hasil seleksi  ................................ ................................ ............  46 
+ 
+--- PAGE 7 ---
+ 
+vi 
+ DAFTAR TABEL  
+ 
+Tabel                  Judul Tabel                                Halaman  
+ 1.1 Jadwal Penelitian  ................................ ................................ ....................  3 
+ 4.1 Tabel UNF  ................................ ................................ ..............................  30 
+ 4.2 Tabel INF  ................................ ................................ ...............................  31 
+ 4.3 Tabel Mahasiswa  ................................ ................................ ....................  31 
+ 4.4 Tabel Soal  ................................ ................................ ...............................  31 
+ 4.5 Tabel Admin_Prodi  ................................ ................................ ................  32 
+ 4.6 Tabel Admin_Lab  ................................ ................................ ...................  32 
+ 4.7 Tabel Hasil Ujian  ................................ ................................ ....................  32 
+ 4.8 Tabel Akun  ................................ ................................ .............................  33 
+ 4.4 Tabel Soal  ................................ ................................ ...............................  31 
+ 4.5 Tabel Admin_Prodi  ................................ ................................ ................  32 
+ 4.6 Tabel Admin_Lab  ................................ ................................ ...................  32 
+ 4.7 Tabel Hasil Ujian  ................................ ................................ ....................  32 
+ 4.8 Tabel akun  ................................ ................................ ..............................  33 
+ 4.9 Tabel Class Diagram  ................................ ................................ ..............  34 
+ 4.10 Perancangan Database (Struktur Tabel)  ................................ .................  36 
+ 1 Lampiran  ................................ ................................ ................................  52
+--- PAGE 8 ---
+ 
+1 
+ BAB I  
+PENDAHULUAN  
+  
+1.1 Latar  Belakang  
+ Perkembangan teknologi informasi saat ini mendorong berbagai aktivitas 
+di lingkungan perguruan tinggi untuk dilakukan secara lebih efektif, efisien,dan 
+terintegrasi . Salah satu aktivitas yang membutuhkan pengelolaan yang baik adalah 
+proses rekrutmen asisten laboratorium (aslab) . Asisten laboratorium memiliki 
+peran pentingdalam membantu kegiatan praktikum, pendampingan mahasiswa, 
+serta mendukung jalannya aktivitas laboratorium agar lebih optimal . Oleh karena 
+itu, proses seleksi asisten laboratorium perlu dilakukan secara terstruktur agar 
+dapat menghasilkan kandidat yang sesuaidengan kebutuhan .  
+ Namun, pada kenyataannya proses rekrutmen asisten laboratorium yang 
+berjalan saat ini masih belum terintegrasi dalam satu sistem . Proses pendaftaran 
+dan pengumpulan berkas seperti surat lamaran, Kartu Rencana Studi (KRS), Kartu 
+Hasil Studi (KHS), transkrip nilai, dan pas foto dilakukan melalui Google Form, 
+sedangkan pelaksanaan tes kemampuan dasar pemrograman dan wawancara masih 
+dilakukan secara langsung di lingkungan kampus . Perbedaan media dan 
+mekanisme pada setiap tahapanseleksi tersebut menyebabkan proses rekrutmen 
+menjadi kurang efisien, sulit dalam pengelolaan data, serta menyulitkan pihak 
+laboratorium dalam melakukan penilaian dan rekapitulasi hasil seleksisecara 
+terstruktur .  
+ Selain itu, pengelolaan data pendaftar yang dilakukan melalui media 
+terpisah berpotensi menimbulkan kesalahan dalam proses administrasimaupun 
+penilaian . Pihak laboratorium juga mengalami kesulitan dalam melakukan 
+penyaringan kandidat secara objektif karena seluruh data dan hasil seleksi belum 
+tersimpan dalam satu sistem yang terpusat . Kondisi tersebut dapat memengaruhi 
+efektivitas proses seleksi serta memperlambat pengambilan keputusan dalam 
+menentukan calon asisten laboratorium yang diterima .  
+--- PAGE 9 ---
+2 
+ 
+   Berdasarkan permasalahan tersebut, diperlukansebuah aplikasi sistem 
+informasi seleksi rekrutmen asisten laboratorium berbasis website yang 
+mampumengintegrasikan seluruh tahapan seleksi dalam satu platform . Sistem 
+yang akan dibangun menyediakan fitur pendaftaran mahasiswa, pengisian 
+formulir, unggah berkas seperti KRS, KHS, dan transkrip nilai, serta pelaksanaan 
+tes pilihan ganda dan esai secara online . Dengan adanya sistem ini, diharapkan 
+proses rekrutmen asisten laboratorium dapat berjalan lebih efektif, efisien, 
+terstruktur, dan objektif, sehinggamampu membantu pihak laboratorium dalam 
+memperolehkandidat asisten laboratorium yang sesuai dengan kebutuhan . 
+ 
+1.2 Rumusan Masalah  
+1. Bagaimana merancang website yang dapat mengelola pendaftaran dan 
+pengumpulan berkas secara terpusat?  
+2. Bagaimana sistem dapat memfasilitasi tes dasar pemrograman bagi calon 
+pendaftar?  
+3. Bagaimana website dapat membantu proses seleksi agar lebih objektif 
+berdasarkan hasil administrasi dan tes kemampuan?  
+ 
+1.3 Batasan Masalah  
+1. Website yang dibuat hanya berupa prototype sederhana dan belum 
+diimplementasikan secara online.  
+2. Data yang dikelola meliputi formulir pendaftaran dan upload berkas (surat 
+lamaran, KRS, KHS, pas foto).  
+3. Tes kemampuan hanya berupa tes dasar pemrograman sederhana (misalnya 
+pilihan ganda atau soal logika dasar coding).  
+4. Sistem penilaian masih sederhana (berdasarkan kelengkapan berkas dan 
+skor tes).  
+5. Website  dibangun menggunakan  teknologi dasar  seperti  PHP dan 
+MySQL.  
+ 
+--- PAGE 10 ---
+3 
+ 
+  1.4 Tujuan  Penelitian   
+1. Mempermudah  calon  pendaftar  dalam melakukan pendaftaran dan 
+mengikuti seleksi secara online.  
+2. Mengintegrasikan proses pendaftaran, pengumpulan berkas, dan tes 
+kemampuan dalam satu sistem.  
+3. Membantu  pihak  laboratorium dalam menilai kemampuan dasar 
+pemrograman calon pendaftar.  
+ 
+1.5 Manfaat Penelitian  
+1. Mempermudah  calon  pendaftar  dalam  melakukan pendaftaran  dan mengiku ti 
+seleksi secara online.  
+2. Data pendaftar secara rapi dan terstruktur.  
+3. Menyediakan  sistem  tes dasar  pemrograman  yang dapat  menilai  kemampuan  
+calon  secara  langsung.  
+ 
+1.6 Jadwal Penelitian  
+ 
+Tabel 1.1 Jadwal Penelitian  
+ 
+1.7 Susunan Tim dan Jobdesk  
+a. Daffa Zahir Arkhan : Manajer Aplikasi Perangkat Lunak dan Backend  
+
+--- PAGE 11 ---
+4 
+ 
+  b. Muhammad Hakim Sembara  Purba : Aplikasi Analisis  
+c. Mirza Azmi Zawahri : Frontend dan UI/UX  
+d. Indryani Afdilla dan Mumtazah Dhyfa Nazha : Dokumentasi dan Pembuat 
+Laporan  
+e. Rahmad Syafaruddin  dan Arya Ovaliano : Quality  Assurance  Tester  
+f. Maria Ulfa dan M. Adri Hashfi Rangkuti : Pengumpulan Data  
+--- PAGE 12 ---
+ 
+5 
+ BAB II   
+TINJAUAN PUSTAKA  
+ 
+2.1 Sekilas Tentang Instansi/ Organisasi  
+2.1.1  Profil  
+ Universitas Islam Negeri Sumatera Utara (UINSU) Medan merupakan 
+salah satu Perguruan Tinggi Keagamaan Islam Negeri terkemuka yang terletak di 
+Provinsi Sumatera Utara. Seiring dengan perkembangan zaman dan tuntutan 
+terhadap penguasaan ilmu pengetahuan serta teknologi, UINSU mendirikan 
+Fakultas Sains dan Teknologi (FST) untuk menyelenggarakan pendidikan di 
+bidang ilmu -ilmu murni dan terapan.   
+ Di bawah naungan Fakultas Sains dan Teknologi, terdapat Program Studi 
+Ilmu Komputer. Program Studi Ilmu Komputer UINSU Medan berkomitmen 
+penuh untuk menghasilkan lulusan yang tidak hanya menguasai kompetensi teknis 
+di bidang teknologi informasi, pemrograman, rekayasa perangkat lunak, dan 
+manajemen jaringan, tetapi juga memiliki integritas nilai -nilai keislaman yang 
+kuat. Dalam mendukung proses belajar mengajar dan meningkatkan keterampilan 
+praktis mahasiswa, program studi ini memfasilitasi kegiatan praktikum melalui 
+keberadaan laboratorium komputer terpadu. Aktivitas operasional dan 
+pendampingan di dalam laboratorium ini didukung oleh asisten laboratorium 
+(aslab) yang dipilih melalui proses seleksi rekrutmen terstruktur.  
+ 
+2.1.2  Visi, Misi dan Tujuan  
+Visi : Menjadi universitas kelas dunia yang unggul dalam mewujudkan 
+masyarakat pembelajar dan berkontribusi terhadap kemandirian bangsa.  
+Misi :   
+1. Menyelenggarakan pendidikan dan pengajaran yang berkualitas, 
+berkarakter Islami, dan berbasis integrasi keilmuan.  
+2. Melaksanakan penelitian dan publikasi ilmiah yang inovatif untuk 
+pengembangan ilmu pengetahuan dan teknologi.  
+--- PAGE 13 ---
+6 
+ 
+  3. Melakukan pengabdian kepada masyarakat secara berkelanjutan guna 
+menyelesaikan berbagai permasalahan sosial.  
+4. Memperluas jejaring kerja sama nasional dan internasional untuk 
+mendukung Tridarma Perguruan Tinggi . 
+Tujuan :  
+1. Menghasilkan lulusan berkarakter, berdaya saing global, dan berakhlakul 
+karimah.  
+2. Menciptakan inovasi IPTEK melalui pendekatan transdisipliner.  
+3. Mewujudkan tata kelola perguruan tinggi yang responsif, transparan, dan 
+memberikan pelayanan prima.  
+2.1.3  Struktur Organisasi  : 
+1. Dekan Fakultas Sains dan Teknologi  
+2. Ketua Program Studi Ilmu Komputer  
+3. Sekretaris Program Studi Ilmu Komputer  
+4. Kepala Laboratorium Komputer  
+5. Admin Program Studi  
+6. Asisten Laboratorium  
+ 
+2.2 Landasan Teori tentang Materi Yang Dibahas  
+ Rekrutmen merupakan suatu proses pencarian dan pemikatan para pelamar 
+kerja atau kandidat yang memiliki kemampuan untuk dipekerjakan di dalam suatu 
+struktur organisasi, sedangkan seleksi adalah tahapan sistematis yang dilakukan 
+untuk menentukan individu mana yang paling memenuhi kriteria klasifikasi 
+evaluasi dari sekumpulan pelamar tersebut. Ketika proses penjaringan ini 
+diintegrasikan dengan pemanfaatan teknologi internet dan perangkat digital, maka 
+sistem tersebut bertransformasi menjadi konsep rekrutmen berbasis web ( e-
+recruitment ). Sistem rekrutmen berbasis elektronik atau online terbukti secara 
+signifikan mampu memangkas waktu pemrosesan berkas, memperluas jangkauan 
+akses bagi para pendaftar, serta mengintegrasikan berbagai tahapan administrasi 
+awal hingga evaluasi penilaian ke dalam satu basis data yang terpusat (Rusdiana, 
+2022.)  
+--- PAGE 14 ---
+7 
+ 
+   Sistem informasi secara umum didefinisikan sebagai sebuah kombinasi 
+teratur dan saling terkait dari komponen manusia, perangkat keras ( hardware ), 
+perangkat lunak ( software ), jaringan komunikasi, dan sumber daya data yang 
+bertugas mengumpulkan, mengubah, serta menyebarkan informasi demi 
+mendukung kegiatan operasional dan pengambilan keputusan di dalam suatu 
+organisasi. Untuk membangun sebuah sistem informasi yang baik, diperlukan 
+tahapan analisis sistem yang merupakan proses penguraian suatu sistem yang utuh 
+menjadi bagian -bagian komponennya dengan maksud mengidentifikasi hambatan, 
+peluang, dan kebutuhan yang diharapkan pengguna. Setelah fase analisis tersebut 
+selesai dilakukan, alur dilanjutkan pada tahap perancangan sistem yang 
+menerjemahkan seluruh hasil analisis kebutuhan ke dalam rancangan teknis yang 
+siap diimplementasikan ke dalam kode program, meliputi pemodelan data logis 
+dan perancangan fisik antarmuka pengguna (Ahmad, 2022) . 
+ Pengembangan perangkat lunak dalam proyek ini mengacu pada salah satu 
+metodologi klasik yang sangat disiplin dan terstruktur, yaitu model air terjun 
+(waterfall model ). Model sekuensial linear atau waterfall ini merupakan 
+pendekatan pengembangan perangkat lunak yang sistematis dan berurutan, di 
+mana kemajuan pengerjaan mengalir secara linear dari atas ke bawah melewati 
+tahapan analisis kebutuhan, perancangan desain sistem, penulisan kode 
+pemrograman atau implementasi, pengujian sistem secara integratif, hingga tahap 
+pemeliharaan. Karakteristik utama dari model ini adalah setiap fase berikutnya 
+tidak dapat berjalan atau dieksekusi sebelum fase sebelumnya telah selesai 
+divalidasi dan diselesaikan secara tuntas.  
+ Dalam melakukan pemodelan proses, alat bantu yang digunakan secara 
+luas adalah Data Flow Diagram  (DFD) yang memberikan gambaran visual 
+mengenai aliran data, asal data, tujuan data, tempat penyimpanan data, serta 
+transformasi informasi yang diterapkan saat data bergerak dari masukan menjadi 
+keluaran melalui sebuah proses terstruktur. Selain pemodelan proses, perancangan 
+database juga membutuhkan komponen logis berupa Entity Relationship Diagram  
+(ERD) sebagai model konseptual untuk menggambarkan struktur log is data 
+berdasarkan hubungan keterikatan antar entitas dunia nyata yang memiliki 
+--- PAGE 15 ---
+8 
+ 
+  karakteristik atribut unik. Untuk melengkapi pemodelan yang berorientasi pada 
+objek, digunakan Unified Modeling Language  (UML) sebagai rumpun bahasa 
+pemodelan standar berbasis grafis yang berfungsi untuk menspesifikasikan, 
+memvisualisasikan, membangun, dan mendokumentasikan artefak atau struktur 
+kelas serta komponen dari sistem perangkat lunak.  
+ Penerapan sistem aplikasi berbasis web dinamis pada umumnya 
+menggunakan bahasa pemrograman Hypertext Preprocessor  (PHP) yang 
+merupakan bahasa pemrograman scripting  bersifat server -side yang disisipkan ke 
+dalam HTML agar dapat memproses data formulir, melakukan interaksi database, 
+dan menampilkan halaman web secara interaktif. Dalam hal penyimpanan data, 
+bahasa pemrograman tersebut didukung oleh My Structured Query Language  
+(MySQL) sebagai sistem manajemen basis data relasional ( Relational Database 
+Management System ) yang menggunakan perintah standar untuk melakukan 
+pengelolaan, penyimpanan, penyaringan, dan manipulasi data berkapasitas besar 
+secara cepat, aman, dan terstruktur.  
+ 
+--- PAGE 16 ---
+ 
+9 
+ BAB III   
+METODE PERANCANGAN SISTEM  
+ 
+3.1 Metode Pengembangan Sistem Informasi  
+ Metode pengembangan sistem informasi yang digunakan dalam 
+membangun Aplikasi Sistem Informasi Seleksi Rekrutmen Asisten Lab ini adalah 
+Model Waterfall (Air Terjun). Pendekatan ini dilakukan secara sistematis dan 
+berurutan dari satu fase ke fase berikutnya. Alur masing -masing tahapan 
+pendekatan beserta proses nyata yang dilaksanakan dan dijalani oleh Kelompok 3 
+selama tahun 2026 adalah sebagai berikut:  
+1. Observasi & Pengumpulan Data  
+Tahap ini dilaksanakan pada tanggal 15 April 2026 sampai dengan 16 April 
+2026. Pada tahap ini, tim melakukan observasi langsung terhadap proses 
+rekrutmen asisten laboratorium yang sedang berjalan serta mengumpulkan 
+data terkait kebutuhan sistem. Kegiatan ini meliputi identifikasi alur 
+pendaftaran, jenis berkas yang dibutuhkan, serta mekanisme seleksi yang 
+digunakan sebelum sistem diintegrasikan.  
+2. Perencanaan Sistem  
+Tahap ini dilaksanakan pada tanggal 18 April 2026 sampai dengan 19 April 
+2026. Tahap ini berfokus pada perumusan solusi atas masalah yang 
+ditemukan di lapangan. Tim merencanakan pembuatan aplikasi berbasis 
+website yang mengintegrasikan seluruh tahapan seleksi dalam satu 
+platform, mulai dari formulir pendaftaran online, modul unggah berkas 
+(KRS, KHS, surat lamaran, pas foto), hingga halaman tes dasar 
+pemrograman.  
+3. Analisis  
+Tahap analisis dilaksanakan mulai dari minggu ke -4 bulan April 2026 
+hingga minggu ke -2 bulan Mei 2026. Pada tahap ini, dilaksanakan analisis 
+mendalam mengenai kebutuhan sistem melalui metode analisis PIECES 
+(Performance, Information, Economy, Control, Efficiency, Service). Tim 
+mendefinisikan secara rinci kebutuhan fungsional (fitur pendaftar dan 
+--- PAGE 17 ---
+10 
+ 
+  admin lab) serta kebutuhan non -fungsional (keamanan, ketersediaan, dan 
+skalabilitas database) berdasarkan kondisi nyata proses rekrutmen.  
+4. Perancangan  
+Tahap perancangan dilaksanakan pada minggu ke -3 dan minggu ke -4 bulan 
+Mei 2026. Proses yang dijalani meliputi pemodelan data dan proses untuk 
+membentuk arsitektur sistem baru. Tim merancang skema logis berupa 
+Diagram Konteks, Data Flow Diagram (DFD) dari proses 1.0 hingga 
+proses 6.0, Entity Relationship Diagram (ERD) dengan 9 entitas utama, 
+serta struktur perancangan Class Diagram menggunakan UML.  
+5. Penerapan  
+Tahap penerapan dilaksanakan mulai dari minggu ke -4 bulan Mei 2026 
+hingga minggu ke -2 bulan Juni 2026. Tahap ini berfokus pada 
+penerjemahan blueprint blueprint diagram ke dalam bahasa pemrograman. 
+Proses yang dilaksanakan meliputi pembuatan database relasional 
+menggunakan MySQL serta penulisan kode program berbasis web (PHP) 
+untuk mengimplementasikan antarmuka input dan output aplikasi.  
+6. Pengujian  
+Tahap akhir dari siklus ini dilaksanakan pada minggu ke -2 dan minggu ke -
+3 bulan Juni 2026. Pada tahap ini, sistem aplikasi seleksi rekrutmen asisten 
+lab diuji secara menyeluruh untuk memastikan semua fungsi terintegrasi 
+berjalan dengan baik, sistem penilaian otomatis bekerja akurat, dan tidak 
+ada kesalahan logika (bug) sebelum laporan diserahkan.  
+ 
+3.2 Metode Analisis PIECES  
+ Berdasarkan kondisi proses rekrutmen saat ini yang masih menggunakan 
+media terpisah (Google Form dan tes manual), berikut adalah analisis PIECES 
+untuk sistem yang akan dikembangkan :  
+a. Performance (Kinerja)  
+Saat ini, rekapitulasi hasil seleksi memakan waktu lama karena data 
+tersebar di berbagai platform . Dengan sistem baru, penilaian tes dilakukan 
+secara otomatis, mempercepat pengambilan keputusan .  
+--- PAGE 18 ---
+11 
+ 
+  b. Information (Informasi)  
+Pengelolaan data melalui media terpisah berpotensi menimbulkan 
+kesalahan administrasi . Sistem terpusat menjamin data pendaftar (KRS, 
+KHS, transkrip) tersimpan rapi dan mudah diakses oleh pihak lab .  
+c. Economy (Ekonomi)  
+Mengurangi penggunaan kertas atau sumber daya fisik untuk tes manual . 
+Semua proses dilakukan dalam satu website, sehingga menghemat waktu 
+dan tenaga pengelola .  
+d. Control (Kontrol/Keamanan)  
+Sistem menyediakan kontrol akses melalui halaman admin . Hal ini 
+meminimalisir risiko manipulasi data penilaian dibandingkan dengan 
+metode manual .  
+e. Efficiency (Efisiensi)  
+Mengintegrasikan pendaftaran, unggah berkas, dan tes dalam satu platform 
+menghilangkan proses duplikasi data dan mempercepat alur kerja .  
+f. Service (Layanan)  
+Mempermudah calon pendaftar karena bisa mengikuti seluruh tahapan 
+seleksi secara online tanpa harus bolak -balik ke kampus untuk urusan 
+administrasi awal . 
+ 
+ 
+--- PAGE 19 ---
+ 
+12 
+ BAB IV  
+ANALISIS DAN HASIL  
+ 
+4.1 Deskripsi Sistem Lama  
+ Secara garis besar, perubahan utama terletak pada pusat kendali. Saat ini, 
+proses masih berpindah -pindah tempat, sedangkan sistem yang diusulkan akan 
+menyatukan semuanya dalam satu pintu.  
+1. Proses Pendaftaran dan Pengumpulan Berkas  
+a. Media Terpisah: Calon pendaftar harus mengakses Google Form untuk 
+mengisi data diri dan mengunggah dokumen seperti KRS, KHS, transkrip 
+nilai, dan pas foto.  
+b. Risiko Data Tercecer: Karena data tersimpan di media luar, pihak 
+laboratorium harus memindahkan atau mengunduh data tersebut ke 
+penyimpanan lain, yang berisiko menimbulkan kesalahan administrasi atau 
+kehilangan data.  
+ 
+2. Pelaksanaan Tes Kemampuan Dasar Sistem  
+a. Pertemuan Langsung: Pelaksanaan tes kemampuan dasar pemrograman 
+dan wawancara dilakukan dengan kehadiran fisik di lingkungan kampus.  
+b. Keterbatasan Waktu: Proses ini membutuhkan pengaturan jadwal yang 
+kaku karena penguji dan peserta harus berada di lokasi yang sama pada 
+waktu yang sama.  
+ 
+3. Pengolahan Nilai dan Penentuan Kelulusan Sistem  
+1. Rekapitulasi Terpisah: Panitia harus menggabungkan data dari Google 
+Form dengan hasil tes yang dilakukan secara langsung untuk mendapatkan 
+nilai akhir.  
+2. Subjektivitas Tinggi: Karena data tidak terintegrasi, sulit bagi pihak 
+laboratorium untuk melakukan penyaringan kandidat secara objektif dan 
+cepat.  
+--- PAGE 20 ---
+13 
+ 
+  4.2 Analisis Kebutuhan Fungsional dan Non Fungsional  
+4.2.1  Analisis Kebutuhan Fungsional  
+ Kebutuhan fungsional menggambarkan fitur -fitur yang harus ada agar 
+sistem dapat bekerja sesuai tujuan proyek .  
+a. Fitur untuk Pendaftar (Mahasiswa)  
+• Pendaftaran Akun: Mahasiswa dapat mengisi formulir pendaftaran 
+secara online .  
+• Unggah Berkas: Sistem harus mampu menerima dan menyimpan 
+unggahan dokumen berupa surat lamaran, KRS, KHS, transkrip 
+nilai, dan pas foto .  
+• Ujian Online: Mahasiswa dapat mengerjakan tes kemampuan dasar 
+pemrograman (pilihan ganda atau logika coding) langsung di 
+dalam website .  
+• Monitoring Status: (Implisit dari tujuan efisiensi) Pendaftar dapat 
+melihat status kelengkapan berkas mereka .  
+ 
+b. Fitur untuk Admin (Pihak Laboratorium)  
+• Manajemen Data Pendaftar: Admin dapat melihat, menyaring, dan 
+mengelola seluruh data mahasiswa yang masuk .  
+• Penilaian Otomatis: Sistem secara otomatis memberikan skor pada 
+tes pilihan ganda/logika dasar yang dikerjakan pendaftar .  
+• Verifikasi Berkas: Admin memiliki fungsi untuk mengecek 
+keabsahan berkas (KRS, KHS, dll.) guna menentukan kelolosan 
+tahap administrasi .  
+• Rekapitulasi Hasil: Admin dapat melihat daftar kandidat terbaik 
+berdasarkan integrasi nilai tes dan kelengkapan berkas untuk 
+mempermudah keputusan akhir .  
+ 
+4.2.2 Analisis Kebutuhan Non Fungsiona l 
+ Kebutuhan ini berkaitan dengan properti atau batasan teknis sistem agar 
+dapat beroperasi dengan baik .  
+--- PAGE 21 ---
+14 
+ 
+  1. Availability: Mengingat ini adalah website seleksi, sistem diharapkan 
+dapat diakses 24/7 selama periode rekrutmen berlangsung agar mahasiswa 
+fleksibel dalam mendaftar .  
+2. Usability: Antarmuka website harus sederhana dan mudah digunakan 
+(user -friendly) baik oleh mahasiswa maupun admin lab .  
+3. Security: Dokumen pribadi seperti KHS dan transkrip nilai harus 
+tersimpan dengan aman dan hanya bisa diakses oleh admin yang 
+berwenang .  
+4. Scalability: Database MySQL yang digunakan harus mampu menangani 
+lonjakan data saat jumlah pendaftar mencapai ratusan orang dalam satu 
+periode .  
+5. Compatibility: Website dapat dijalankan di berbagai browser populer 
+(Chrome, Firefox, Edge) karena dibangun dengan teknologi web standar 
+PHP.  
+6. Portability: Sebagai prototype, sistem harus mudah dipindahkan antar 
+server lokal untuk keperluan presentasi atau pengujian .  
+ 
+4.3 Usulan Sistem Baru  
+ Usulan sistem baru dirancang sebagai solusi integratif untuk mengatasi 
+kendala administrasi, inefisiensi waktu, dan subjektivitas penilaian pada sistem 
+lama. Keterhubungan antara masalah di sistem lama dengan penyelesaian di 
+sistem baru dijabarkan sebagai berikut:  
+1. Integrasi Alur Seleksi  
+Masalah Sistem Lama:  Proses rekrutmen berjalan terpisah; pendaftaran 
+dan berkas dikumpulkan melalui Google Form, sedangkan tes 
+pemrograman dan wawancara dilakukan manual di kampus, sehingga tidak 
+efisien.  
+Penyelesaian Sistem Baru:  Aplikasi website mengintegrasikan seluruh 
+tahapan seleksi dalam satu platform terpusat, mulai dari pendaftaran, 
+unggah berkas, hingga pelaksanaan ujian pilihan ganda dan esai secara 
+online . 
+--- PAGE 22 ---
+15 
+ 
+  2. Otomatisasi Penilaian dan Rekapitulasi  
+Masalah Sistem Lama:  Pihak laboratorium kesulitan melakukan 
+penilaian dan rekapitulasi secara terstruktur karena data tersebar di media 
+terpisah, sehingga memperlambat pengambilan keputusan.  
+Penyelesaian Sistem Baru:  Sistem menyediakan fitur penilaian otomatis 
+untuk tes pilihan ganda. Skor langsung terintegrasi ke database, sehingga 
+admin dapat melihat laporan rekapitulasi nilai secara real-time untuk 
+mempercepat keputusan kelulusan.  
+ 
+3. Sentralisasi Data Dokumen  
+Masalah Sistem Lama:  Pengelolaan berkas pendaftar (KRS, KHS, 
+transkrip, foto) pada media terpisah berpotensi menimbulkan kesalahan 
+administrasi ( human error ) dan risiko berkas hilang.  
+Penyelesaian Sistem Baru:  Seluruh berkas digital mahasiswa tersimpan 
+aman dalam satu database MySQL. Admin dapat menyaring data dan 
+memvalidasi keaslian dokumen langsung melalui dasbor admin, sehingga 
+meminimalisir manipulasi atau kehilangan data.  
+ 
+4. Peningkatan Objektivitas Seleksi  
+Masalah Sistem Lama:  Penyaringan kandidat kurang objektif karena 
+rekam jejak akademis dan hasil tes belum tersimpan dalam sistem terpusat, 
+sehingga rentan dipengaruhi faktor subjektivitas.  
+Penyelesaian Sistem Baru:  Dengan tersimpannya seluruh komponen nilai 
+dan berkas dalam satu platform, sistem menyajikan data pendaftar yang 
+transparan berdasarkan parameter riil, membantu laboratorium memilih 
+asisten yang kompeten sesuai kebutuhan.  
+ 
+ 
+ 
+ 
+--- PAGE 23 ---
+16 
+ 
+  
+4.4 Desain Logik Sistem  
+1. Konteks Diagram  
+Gambar 4.1 Konteks Diagram  
+ 
+ Diagram tersebut menjelaskan alur kerja pada Sistem Informasi Seleksi 
+Rekrutmen Asisten Lab Kampus. Di tengah terdapat sistem utama yang menjadi 
+pusat pengolahan data dan penghubung antara Mahasiswa, Admin Prodi, dan 
+Admin Laboratorium.  
+ Mahasiswa menggunakan sistem untuk melakukan login, mengunggah 
+berkas persyaratan, dan mengirim jawaban ujian seleksi. Setelah data dikirim, 
+sistem akan memberikan informasi kepada mahasiswa berupa jadwal ujian, soal 
+ujian, dan hasil seleksi. Jadi, mahasiswa berperan sebagai peserta seleksi yang 
+menerima dan mengirim data melalui sistem.  
+ Admin Prodi berfungsi untuk mengelola data mahasiswa. Admin Prodi 
+mengirimkan data mahasiswa dan data akun mahasiswa ke dalam sistem. Setelah 
+itu, sistem memberikan kembali informasi berupa data mahasiswa dan status akun 
+yang sudah dibuat atau diperbarui. Dengan adanya Admin Prodi, data peserta 
+seleksi dapat tersusun dan terkelola dengan baik.  
+ Selanjutnya, Admin Laboratorium memiliki tugas mengatur proses seleksi 
+dan ujian. Admin Laboratorium mengirim soal ujian, jadwal ujian, penilaian 
+essay, dan keputusan kelulusan ke dalam sistem. Sistem kemudian memberikan 
+informasi berupa data peserta, hasil ujian, dan laporan seleksi kepada Admin 
+--- PAGE 24 ---
+17 
+ 
+  Laboratorium. Dari proses ini, Admin Laboratorium dapat memantau seluruh hasil 
+seleksi asisten laboratorium.  
+ Secara keseluruhan, diagram tersebut menunjukkan bahwa sistem menjadi 
+pusat utama dalam proses rekrutmen asisten laboratorium, mulai dari pengelolaan 
+data mahasiswa, pelaksanaan ujian, hingga penentuan hasil seleksi. Untuk sistem 
+informasi seleksi rekrutmen asisten lab, berikut gambaran entitas, atribut, dan 
+relasi yang cocok digunakan pada analisis basis data atau ERD.  
+ 
+2. Data Flow Diagram (DFD)  
+1. DFD Level 0  
+ 
+Gambar 4.2 DFD Level 0   
+
+--- PAGE 25 ---
+18 
+ 
+  DFD Level 0 pada Sistem Informasi Seleksi Rekrutmen Asisten 
+Laboratorium digunakan untuk menggambarkan aliran data utama yang terjadi di 
+dalam sistem. Diagram ini melibatkan tiga entitas eksternal yaitu Mahasiswa, 
+Admin Prodi, dan Admin Laboratorium. Mahasiswa berperan sebagai peserta 
+seleksi yang melakukan login, mengisi data diri, mengunggah berkas, mengikuti 
+ujian, dan menerima hasil seleksi. Admin Prodi bertugas mengelola akun 
+mahasiswa agar mahasiswa dapat mengakses sistem. Sementara itu, Admin 
+Laboratorium bertanggung jawab dalam validasi berkas, pengelolaan soal dan 
+jadwal ujian, penilaian ujian, serta  penentuan hasil akhir seleksi.  
+Alur sistem dimulai dari proses login menggunakan data akun yang 
+tersimpan pada data store Akun. Setelah berhasil login, mahasiswa mengisi data 
+diri dan mengunggah dokumen persyaratan yang kemudian divalidasi oleh Admin 
+Laboratorium. Admin Laboratorium juga mengelola soal serta jadwal ujian yang 
+digunakan pada proses pelaksanaan ujian seleksi. Jawaban mahasiswa akan 
+disimpan ke dalam data store Detail_Jawaban dan diproses untuk menghasilkan 
+nilai ujian. Pada tahap akhir, sistem menampilkan hasil seleksi berdasarkan hasil 
+ujian dan validasi pemberkasan yang telah dilakukan sebelumnya.  
+ 
+2. DFD Level 1  
+a. Proses 1.0  
+ 
+Gambar 4.3 DFD Level 1  Proses 1.0   
+username dan  
+password  username dan  
+password  
+data login  
+data akun pengguna  
+status validasi akun  
+--- PAGE 26 ---
+19 
+ 
+  Proses Login Sistem merupakan tahap autentikasi pengguna sebelum dapat 
+mengakses fitur pada Sistem Informasi Seleksi Rekrutmen Asisten Laboratorium. 
+Pada proses ini pengguna yang dapat melakukan login adalah Mahasiswa dan 
+Admin Laboratorium dengan menggunakan username dan password yang telah 
+terdaftar pada sistem. Mahasiswa memperoleh data akun dari Admin Prodi yang 
+sebelumnya telah membuat akun mahasiswa melalui proses Kelola Akun 
+Mahasiswa. Setelah pengguna menginput username dan password, sistem akan 
+melakukan validasi data dengan mencocokkan informasi pada data store Akun. 
+Jika data login sesuai, sistem akan memberikan hak akses kepada pengguna sesuai 
+role masing -masing sehingga pengguna dapat mengakses menu dan fitur yang 
+tersedia di dalam sistem.  
+ 
+b. Proses 2.0  
+ 
+Gambar 4.4 DFD Level 1  Proses 2.0 
+ 
+Proses Kelola Akun Mahasiswa dilakukan oleh Admin Prodi sebagai tahap 
+awal sebelum mahasiswa dapat mengikuti proses seleksi. Pada proses ini Admin 
+Prodi dapat menambahkan akun baru maupun melakukan perubahan data akun 
+mahasiswa. Data akun yang dikelola meliputi username, password, dan role 
+pengguna. Sistem kemudian menyimpan data akun tersebut ke dalam data store 
+Akun. Akun yang telah dibuat nantinya digunakan mahasiswa untuk melakukan 
+login ke dalam sistem.    
+data akun  
+informasi akun login  data akun 
+mahasiswa  username dan  
+password  
+--- PAGE 27 ---
+20 
+ 
+  c. Proses 3.0  
+ 
+Gambar 4.5 DFD Level 1  Proses 3.0 
+ 
+Proses Pemberkasan dan Data Diri dilakukan oleh mahasiswa setelah 
+berhasil login ke dalam sistem. Pada proses ini mahasiswa mengisi biodata secara 
+mandiri serta mengunggah dokumen persyaratan seperti CV, KHS, dan berkas 
+pendukung lainnya. Sistem akan menyimpan data diri mahasiswa ke dalam data 
+store Mahasiswa dan dokumen persyaratan ke dalam data store Pemberkasan. 
+Setelah berkas dikirim, Admin Laboratorium melakukan proses validasi terhadap 
+dokumen yang telah diunggah mahasiswa. Hasil validasi tersebut digunakan 
+sebagai syarat untuk mengikuti proses ujian seleksi.  
+  
+data mahasiswa  datadiri mahasiswa  
+informasi pendaftaran  
+dokumentasi 
+persyaratan  data pemberkasan  
+data berkas 
+mahasiswa  
+status  
+validasi akhir  data pemberkasan  
+status  
+validasi berkas  
+--- PAGE 28 ---
+21 
+ 
+  d. Proses 4.0  
+ 
+Gambar 4.6 DFD Level 1  Proses 4.0 
+ 
+Proses Kelola Soal dan Jadwal Ujian dilakukan oleh Admin Laboratorium 
+untuk mempersiapkan pelaksanaan ujian seleksi asisten laboratorium. Admin 
+Laboratorium menginput data soal, kunci jawaban, tipe soal, bobot nilai, serta 
+jadwal atau sesi ujian ke dalam sistem. Data tersebut kemudian disimpan ke dalam 
+data store Soal dan Sesi_Ujian. Informasi soal dan jadwal ujian nantinya akan 
+digunakan pada proses pelaksanaan ujian. Dengan adanya proses ini, sistem dapat 
+mengatur pelaksanaan ujian secara terstruktur dan terjadwal.  
+  
+Data  
+soal ujian  
+Data  
+soal 
+Data  
+jadwal ujian  
+Data  
+sesi ujian  Data  
+soal Data  
+sesi ujian  
+--- PAGE 29 ---
+22 
+ 
+  e. Proses 5.0  
+ 
+Gambar 4.7 DFD Level 1  Proses 5.0 
+ 
+Pada proses Pelaksanaan Ujian, mahasiswa mengikuti ujian seleksi sesuai 
+jadwal yang telah ditentukan. Sistem akan mengambil data soal dan sesi ujian dari 
+data store Soal dan Sesi_Ujian untuk ditampilkan kepada mahasiswa. Mahasiswa 
+kemudian menginput jawaban ujian ke dalam sistem dan data jawaban tersebut 
+disimpan pada data store Detail_Jawaban. Sistem dapat melakukan penilaian 
+otomatis untuk soal pilihan ganda, sedangkan penilaian soal essay dilakukan oleh 
+Admin Laboratorium. Hasil penilaian ujian selanjutnya digunakan dalam proses 
+penentuan hasil akhir seleksi.  
+  
+
+--- PAGE 30 ---
+23 
+ 
+  f. Proses 6.0  
+ 
+Gambar 4.8 DFD Level 1  Proses 6.0 
+ 
+Proses Hasil Akhir Seleksi merupakan tahap akhir dalam sistem seleksi 
+asisten laboratorium. Pada proses ini sistem mengambil data nilai ujian dari data 
+store Detail_Jawaban dan data validasi administrasi dari data store Pemberkasan. 
+Berdasarkan data tersebut, Admin Laboratorium melakukan verifikasi dan 
+menentukan status kelulusan mahasiswa. Hasil keputusan kemudian disimpan ke 
+dalam data store Hasil_Akhir. Sistem selanjutnya menampilkan informasi hasil 
+seleksi kepada mahasiswa melalui halaman pengumuman pada sistem.  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+        
+ 
+Data  
+nilai ujian  
+Data  
+validasi berkas  
+Data hasil seleksi  
+ 
+status kelulusan  
+ 
+hasil verifikasi 
+akhir  
+ Data hasil seleksi  
+ 
+informasi hasil akhir  
+ 
+--- PAGE 31 ---
+24 
+ 
+  3. DFD 2  
+a. Proses 1.0  
+ 
+Gambar 4.9 DFD 2 Proses 1.0 
+ 
+Proses login merupakan tahap awal yang digunakan untuk 
+mengidentifikasi pengguna sebelum mas uk ke dalam sistem. Pada tahap 1.1 Input 
+Username dan Password, pengguna seperti mahasiswa dan admin laboratorium 
+memasukkan kredensial mereka ke dalam sistem. Data yang dimasukkan 
+kemudian diteruskan ke proses 1.2 Validasi Username dan Password  untuk 
+dicocokkan dengan data yang tersimpan pada basis data akun. Setelah validasi 
+dilakukan, sistem melanjutkan ke 1.3 Cek Role Pengguna, yaitu menentukan 
+peran dari pengguna apakah sebagai mahasiswa atau admin. Berdasarkan hasil 
+pengecekan tersebut, siste m kemudian menjalankan proses 1.4 Pemberian Hak 
+Akses  yang mengarahkan pengguna ke tampilan dan fitur sesuai dengan perannya 
+masing -masing.  
+ 
+ 
+ 
+ 
+  
+username dan  
+password  
+username dan  
+password  data  
+login  data akun  
+pengguna  
+status 
+validasi 
+akun  
+hak akses  
+admin lab  
+hak akses mahasiswa  
+--- PAGE 32 ---
+25 
+ 
+  b. Proses 2.0  
+ 
+Gambar 4.10 DFD 2 Proses 2.0 
+ 
+Proses pengelolaan akun mahasiswa dilakukan oleh admin prodi untuk 
+memastikan setiap mahasiswa memiliki akses  sistem yang valid. Pada tahap 2.1 
+Input Data Akun, admin memasukkan data akun mahasiswa ke dalam sistem. Data 
+tersebut kemudian melalui proses 2.2 Validasi Data Akun  untuk memastikan tidak 
+ada kesalahan atau duplikasi data. S etelah valid, sistem melakukan 2.3 Simpan 
+Akun  dengan menyimpan data ke datab ase akun. Tahap terakhir yaitu 2.4 
+Distribusi Akun , di mana sistem membagikan informasi akun kepada mahasiswa 
+agar dapat digunakan untuk login ke sistem.  
+ 
+ 
+ 
+ 
+ 
+ 
+  
+data akun  
+mahasiswa  
+data akun  
+data akun  
+valid  
+data akun  
+mahasiswa  informasi 
+akun login  username dan  
+password  
+--- PAGE 33 ---
+26 
+ 
+  c. Proses 3.0  
+ 
+Gambar 4.11 DFD 2 Proses 3.0 
+ 
+Pada proses ini, admin laboratorium bertanggung jawab dalam pengelolaa n 
+soal dan jadwal ujian. Tahap 3.1 Input Soal  digunakan untuk memasukkan soal 
+ujian ke dalam sistem, yang kemudian diperiksa pada proses 3.2 Validasi Soal 
+untuk memastikan kualitas dan kesesuaian materi. Setelah valid, soal disimpan 
+melalui proses 3.3 Simpan Soal  ke dalam database soal. Selain itu, admin juga  
+mengatur jadwal ujian melalui 3.4 Input Jadwal dan Sesi, yang kemudian 
+disimpan pada pros es 3.5 Simpan Jadwal  ke dalam basis data sesi ujian agar dapat 
+digunakan saat pelaksanaan ujian.  
+ 
+ 
+ 
+ 
+ 
+  
+data soal, 
+jawaban, dan 
+bobot nilai  
+ 
+ data jadwal ujian  
+data soal valid  
+data soal ujian  data jadwal ujian  
+data sesi ujian  data jadwal  
+dan sesi  ujian  
+--- PAGE 34 ---
+27 
+ 
+  d. Proses 4.0  
+ 
+Gambar 4.12 DFD 2 Proses 4.0 
+ 
+Proses ini berfokus pada pengumpulan data dan  dokumen mahasiswa. 
+Pada tahap 4.1 Input Biodata, mahasiswa mengisi informasi pribadi yang akan 
+disimpan dalam database mahasi swa. Selanjutnya, pada proses 4.2 Upload Berkas, 
+mahasiswa mengunggah dokumen pendukung yang kemudian disimpan dalam 
+sistem pemberkasan. Berkas  tersebut akan melalui proses 4.3 Validasi Berkas , di 
+mana admin laboratorium memeriksa kelengkapan dan keabsahan dokumen 
+sebelum data dinyatakan valid dan digunakan dalam proses seleksi.  
+ 
+e. Proses 5.0  
+ 
+Gambar 4.13 DFD 2 Proses 5.0   
+Hasil penilaian 
+ujian  
+--- PAGE 35 ---
+28 
+ 
+  Tahap pe laksanaan ujian dimulai dengan 5.1 Ambil Soal dan Jadwal, di 
+mana sistem mengambil data soal serta jadwal ujian yang telah tersimpan. Data 
+tersebut kemud ian digunakan untuk 5.2 Tampilkan Ujian, yaitu menampilkan 
+antarmuka ujian kepada mahasiswa. Selanjutnya mahasiswa me ngerjakan soal 
+melalui proses 5.3 Input Jawaban, dan j awaban tersebut disimpan pada 5.4 
+Simpan Jawaban  ke dalam database detail jawa ban. Tahap terakhir yaitu 5.5 
+Penilaian Ujian , di mana jawaban mahasiswa dievaluasi dan dinilai oleh sistem 
+atau admin laboratorium.  
+ 
+f. Proses 6.0  
+ 
+Gambar 4.1 4 DFD 2 Proses 6.0 
+ 
+Proses akhir ini digunakan untuk menentukan hasil  seleksi mahasiswa. 
+Pada tahap 6.1 Ambil Data Nilai, sistem mengumpulkan data nilai ujian dan data 
+pemberkasan sebagai dasar penilaian. Data tersebut kemudian diverifikasi pada 
+6.2 Verifikasi Kelulusan  oleh admin laboratorium untuk menentukan kelayakan 
+mahasiswa. Setelah itu, hasil  akhir disimpan melalui proses 6.3 Simpan Hasil 
+Seleksi  ke dalam database hasil akhir, dan informasi kelulusan kemudian 
+ditampilkan atau disampaikan kepada mahasiswa.  
+  
+
+--- PAGE 36 ---
+29 
+ 
+  3. Use Case Diagram  (OOAD)  
+ 
+Gambar 4.15 Use Case Diagram  
+ 
+Use Case Diagram Sistem Informasi Seleksi Rekrutmen Asisten 
+Laboratorium digunakan untuk menggambarkan interaksi antara aktor dengan 
+sistem dalam proses seleksi asisten laboratorium. Pada sistem ini terdapat tiga 
+aktor utama yaitu Mahasiswa, Admin Prodi, dan Admin Laboratorium. 
+Mahasiswa memiliki hak akses untuk melakukan login sistem, menginput biodata, 
+mengunggah berkas persyaratan, melihat jadwal ujian, mengerjakan ujian, serta 
+melihat hasil seleksi. Admin Prodi bertugas mengelola akun mahasiswa agar 
+mahasiswa dapat memperoleh akses login ke dalam sistem. Sementara itu, Admin 
+Laboratorium memiliki hak akses untuk mengelola soal ujian, mengatur jadwal 
+dan sesi ujian, melakukan validasi berkas, memberikan penilaian ujian, 
+memverifikasi kelulusan, serta mengelola hasil akhir seleksi mahasiswa.  
+Pada Use Case Diagram juga terdapat relasi <<include>> dan <<extend>> 
+untuk menunjukkan hubungan antar proses di dalam sistem. Relasi <<include>>  
+
+--- PAGE 37 ---
+30 
+ 
+  
+digunakan pada proses yang bersifat wajib, seperti proses mengerjakan ujian yang 
+selalu melibatkan input jawaban serta proses kelola hasil seleksi yang selalu 
+mencakup verifikasi kelulusan. Sedangkan relasi <<extend>> digunakan pada 
+proses tambahan atau proses yang terjadi berdasarkan kondisi tertentu, seperti 
+validasi berkas yang dilakukan setelah mahasiswa mengunggah dokumen 
+persyaratan, penilaian ujian yang dilakukan setelah mahasiswa menginput 
+jawaban, serta melihat hasil seleksi yang hanya dapat dilakukan apabila proses 
+verifikasi kelulusan telah selesai. Dengan adanya Use Case Diagram ini, alur 
+interaksi pengguna terhadap sistem dapat dipahami secara lebih jelas dan 
+terstruktur.  
+ 
+4. Normalisasi  
+a. UNF  
+Tabel 4.1 Tabel UNF  
+ 
+ Pada bentuk UNF, seluruh data masih digabung dalam satu tabel besar 
+sehingga struktur database belum terorganisir dengan baik. Masih terdapat 
+repeating group pada bagian soal dan jawaban seperti Soal 1, Jawaban 1, Soal 2, 
+dan Jawaban 2, karena data yang sejenis dibuat menjadi beberapa kolom berbeda. 
+Struktur  seperti  ini menyebabkan  tabel  tidak  fleksibel  karena  jika jumlah  soal 
+bertambah maka harus menambah kolom baru lagi. Selain itu, data mahasiswa, 
+akun, admin, ujian, pemberkasan, dan hasil seleksi masih tercampur dalam satu 
+tabel sehingga menimbulkan redundansi data dan menyulitkan proses pengelolaan 
+database. Oleh karena itu, diperlukan proses normalisasi ke tahap 1NF agar data 
+menjadi lebih terstruktur dan setiap atribut hanya memiliki satu nilai.  
+ 
+ 
+--- PAGE 38 ---
+31 
+ 
+  b. INF 
+ 
+Tabel 4.2 Tabel INF 
+ 
+ Pada tahap 1NF, tabel sudah memenuhi aturan bahwa setiap atribut hanya 
+memiliki satu nilai (atomik) dan tidak terdapat repeating group seperti “Soal 1”, 
+“Soal  2”, dan seterusnya.  Data  soal sudah  dijadikan  isi data dalam  satu atribut  Soal, 
+bukan lagi menjadi beberapa kolom berbeda. Namun seluruh data masih berada 
+dalam  satu tabel  besar  sehingga  masih  terdapat  redundansi  data,  seperti  data admin, 
+akun, dan soal yang dapat berulang pada setiap baris. Oleh karena itu, tabel masih 
+perlu  dinormalisasi  ke tahap  berikutnya  agar struktur  database  menjadi  lebih  efisien 
+dan terorganisir.  
+ 
+c. 2NF 
+• Tabel Mahasiswa  
+ 
+Tabel 4.3 Tabel Mahasiswa  
+ 
+• Tabel Soal  
+ 
+Tabel 4.4 Tabel Soal  
+
+--- PAGE 39 ---
+32 
+ 
+  • Tabel Admin_Prodi  
+ 
+Tabel 4.5 Tabel Admin_Prodi  
+ 
+• Tabel Admin_Lab  
+ 
+Tabel 4.6 Tabel Admin_Lab  
+ 
+• Tabel Hasil Ujian  
+ 
+Tabel 4.7 Tabel Hasil Ujian  
+ 
+ Pada  tahap  2NF (Second  Normal  Form),  tabel  sudah  dipisahkan  
+berdasarkan ketergantungan atribut terhadap primary key sehingga tidak ada lagi 
+partial dependency.  Tabel  Mahasiswa  menyimpan  data yang  bergantung  pada  NIM  
+seperti nama, semester, IPK, akun, dan berkas. Tabel Soal berisi data pertanyaan 
+dan jawaban yang bergantung pada ID_Soal. Tabel Admin_Prodi dan Admin_Lab 
+menyimpan data admin secara terpisah sesuai perannya. Sementara itu, tabel 
+Hasil_Ujian berfungsi sebagai relasi antara mahasiswa dan soal yang menyimpan 
+
+--- PAGE 40 ---
+33 
+ 
+  jawaban  serta  skor.  Dengan  pemisahan  ini, data menjadi  lebih  rapi, tidak  redundan, 
+dan sesuai aturan 2NF.  
+ 
+3. 3NF 
+• Tabel Akun  
+ 
+Tabel 4.8 Tabel Akun  
+ 
+5. Entity Relationship Diagram(ERD)  
+ 
+Gambar 4.16 Entity Relationship Diagram(ER D)
+
+--- PAGE 41 ---
+34 
+ 
+  ERD  ini menggambarkan  sistem  seleksi  asisten  laboratorium  yang  
+melibatkan  beberapa  entitas utama seperti  akun,  admin  prodi, admin  laboratorium,  
+mahasiswa, sesi ujian, bank soal, pemberkasan, detail jawaban, dan hasil akhir. 
+Setiap  pengguna  memiliki  akun  yang  digunakan  untuk  masuk  ke sistem  dengan  role 
+yang berbeda. Admin prodi bertugas mengimpor dan mengelola data mahasiswa, 
+sedangkan admin laboratorium bertanggung jawab dalam memvalidasi 
+pemberkasan  serta  menentukan  hasil  akhir  seleksi.  Mahasiswa  dapat  mengikuti  sesi 
+ujian  yang  berisi  soal-soal dari bank  soal, kemudian  jawaban  peserta  akan  disimpan 
+pada  detail  jawaban  dan digunakan  untuk  memperoleh  skor ujian.  Selain  mengikuti 
+ujian, mahasiswa juga mengunggah berkas persyaratan seperti CV dan transkrip 
+nilai yang nantinya divalidasi oleh admin laboratorium. Setelah seluruh proses 
+seleksi selesai, sistem akan menghasilkan keputusan akhir berupa status kelulusan 
+dan keterangan hasil seleksi mahasiswa.  
+ 
+6. Class Diagram  
+ 
+Tabel  4.9 Tabel Class Diagram  
+
+--- PAGE 42 ---
+35 
+ 
+   Class Diagram yang diusulkan ini menggambarkan struktur data dan 
+hubungan antar -entitas dalam sistem seleksi rekrutmen asisten laboratorium tanpa 
+menggunakan tanda panah arah (navigasi) untuk mencerminkan hubungan 
+asosiasi dua arah yang struktural. Hubungan inti dimulai dari kelas Akun yang 
+memiliki relasi satu -ke-satu (one -to-one) dengan kelas Mahasiswa (kardinalitas 1 
+ke 0..1), yang berarti setiap mahasiswa pendaftar hanya memiliki satu akun akses 
+yang valid di dalam sistem. Mahasiswa kemudian terhubung secara langsung 
+dengan kelas Pemberkasan lewat kardinalitas 1 ke 1..* yang menunjukkan bahwa 
+seorang mahasiswa wajib mengunggah setidaknya satu atau beberapa dokumen 
+persyaratan administrasi, serta terhubung ke kelas Detail_Jawaban dengan 
+kardinalitas 1 ke 0..* untuk menampung seluruh lembar jawaban ujian yang 
+dikerjakan oleh mahasiswa tersebut.  
+ Di sisi pelaksanaan ujian, kelas Sesi_Ujian bertindak sebagai poros utama 
+yang mengoordinasikan jalannya tes dengan tingkat hubungan yang teratur. Kelas 
+Sesi_Ujian ini terhubung dengan kelas Mahasiswa melalui kardinalitas 1 ke 1..* 
+karena satu sesi ujian dapat diikuti oleh banyak mahasiswa pendaftar sekaligus. 
+Lebih lanjut, Sesi_Ujian memiliki relasi linier yang kuat dengan beberapa kelas 
+komponen hasil, yaitu terhubung ke kelas Hasil_Akhir (kardinalitas 1 ke 0..*) 
+untuk menyimpan draf keputusan kelulusan peserta, terhubung ke kelas 
+Pemberkasan (kardinalitas 1 ke 0..*) guna keperluan sinkronisasi validasi, serta 
+terhubung secara mutlak bersilangan dengan kelas Detail_Jawaban (kardinalitas 1 
+ke 1 dan 1..*) untuk memastikan setiap butir soal dan jawaban yang diinput oleh 
+mahasiswa tercatat secara akurat dan terintegrasi di dalam database server.  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+--- PAGE 43 ---
+36 
+ 
+  7. Perancangan Database (Struktur Tabel)  
+ 
+Tabel  4.10 Perancangan Database (Struktur Tabel)  
+ 
+ Perancangan database pada Aplikasi Sistem Informasi Seleksi Rekrutmen 
+Asisten Lab ini dibangun oleh sembilan struktur tabel relasional yang saling 
+terintegrasi melalui Primary Key dan Foreign Key. Tabel AKUN bertindak sebagai 
+fondasi autentikasi logis yang menyimpan kredensial data berupa username, 
+password, dan hak akses pengguna (role). Data master pengelola sistem dicatat 
+secara terpisah di dalam tabel ADMIN_PRODI yang berfungsi mengimpor berkas 
+pendaftar, dan tabel ADMIN_LAB yang memegang otoritas penuh atas jalannya 
+seluruh rangkaian manajemen pengujian, di mana kedua tabel tersebut terelasi 
+langsung dengan tabel AKUN melalui kunci tamu id_user. Untuk data mahasiswa 
+pendaftar, seluruh entitas profil pribadi dan rekam jejak akademisnya disimpan di 
+dalam tabel MAHASISWA yang menggunakan kunci utama nomor induk 
+mahasiswa (nim).  
+ Pada alur pelaksanaan seleksi, keterhubungan data operasional diatur 
+secara dinamis melalui lima tabel komponen utama lainnya. Tabel 
+PEMBERKASAN berfungsi menampung unggahan dokumen digital persyaratan 
+
+--- PAGE 44 ---
+37 
+ 
+  (CV , transkrip) yang status berkasnya divalidasi langsung oleh admin 
+laboratorium. Sementara itu, proses pengujian diwadahi oleh tabel BANK_SOAL 
+sebagai tempat penyimpanan inventarisasi pertanyaan, tabel SESI_UJIAN untuk 
+merekam batasan waktu pengerjaan mahasiswa, serta tabel DETAIL_JAWABAN 
+yang secara kompleks mengikat hubungan antara ujian, soal, dan input pilihan 
+jawaban peserta. Muara dari seluruh pemrosesan data relasional tersebut akan 
+disimpan di dalam tabel HASIL_AKHIR yang mencatat keputusan final dari 
+admin laboratorium mengenai status kelulusan resmi setiap mahasiswa, apakah 
+dinyatakan lulus atau tidak lulus sebagai asisten laboratorium.  
+ 
+4.5 Desain Fisik Sistem Baru  
+ Disain fisik sistem baru merupakan tahapan penerjemahan seluruh 
+kebutuhan logis (diagram proses dan skema data) ke dalam bentuk rancangan 
+antarmuka visual ( user interface ) berbasis website yang siap diimplementasikan. 
+Perancangan disain fisik ini memfokuskan arsitekturnya pada kenyamanan 
+pengguna ( user experience ) dalam berinteraksi dengan sistem, yang dibagi ke 
+dalam cetak biru rancangan input sebagai media pengumpulan data dan rancangan 
+output sebagai media penyajian informasi terstruktur.  
+ 
+4.5.1  Rancangan Disain Interface  
+ Rancangan disain interface  pada Aplikasi Sistem Informasi Seleksi 
+Rekrutmen Asisten Lab dibuat dengan pendekatan responsif dan minimalis agar 
+dapat diakses dengan mudah melalui berbagai perangkat web browser . Struktur 
+dasbor navigasi pada aplikasi ini dirancang menggunakan tata letak sidebar  kiri 
+untuk menu kontrol dan area konten utama di sisi kanan, yang tampilannya akan 
+berubah secara dinamis menyesuaikan hak akses ( role) yang divalidasi dari tabel 
+AKUN . Warna dasar antarmuka didominasi oleh palet warna profesional (seperti 
+kombinasi putih, abu -abu terang, dan aksen hijau/biru) untuk menciptakan 
+lingkungan ujian dan administrasi akademis yang nyaman bagi seluruh pengguna. 
+Di dalam rancangan disain interface  ini, terdapat dua poin implementasi utama 
+sebagai berikut:  
+--- PAGE 45 ---
+38 
+ 
+  1. Rancangan Input  
+Rancangan input dikembangkan secara visual dalam bentuk formulir 
+digital ( form input ) untuk mengumpulkan data riil dari tiga aktor utama ke 
+dalam sistem basis data MySQL. Pada Halaman Autentikasi Login, 
+disediakan komponen kotak teks ( text box ) untuk memasukkan data akun 
+berupa username  (NIM/NIP), password , serta menu pilihan ( drop-down 
+list) untuk menentukan hak akses pengguna. Bagi mahasiswa pendaftar, 
+disediakan komponen isian teks manual untuk memasukkan nomor induk 
+mahasiswa ( nim), nama_lengkap , pilihan semester , dan angka desimal 
+untuk ipk, yang dilengkapi dengan tombol file picker  (choose file ) 
+secara visual untuk mengunggah berkas digital seperti CV dan transkrip 
+nilai ke dalam tabel pemberkasan. Sementara itu, dari sisi pengelola, 
+disediakan kolom teks area ( text area ) pada dasbor Admin Laboratorium 
+untuk menginput teks pertanyaan  baru, opsi pilihan A hingga D, beserta 
+kunci_jawaban  ke dalam bank soal, serta menu pilihan status ( drop-down 
+enum ) untuk memasukkan data verifikasi berkas pendaftar 
+(status_berkas : Menunggu Validasi, Valid, atau Tidak Valid). 
+Mahasiswa juga berinteraksi dengan komponen tombol pilihan ( radio 
+button ) untuk memasukkan input pilihan jawaban mereka saat ujian 
+berlangsung ( jawaban_peserta ). 
+ 
+2. Rancangan Output  
+Rancangan output dirancang untuk menyajikan data akhir hasil 
+pemrosesan sistem dalam bentuk tabel dinamis, grafik ringkasan, maupun 
+lembar dokumen informasi yang terstruktur. Output pertama berupa 
+Laporan Seluruh Data Pendaftar yang menyajikan tabel data kolektif pada 
+dasbor Admin Laboratorium, memuat daftar nama seluruh pelamar, nilai 
+IPK, status kelayakan berkas, dan perolehan skor ujian otomatis mereka 
+sebagai bahan pertimbangan. Selanjutnya, terdapat Laporan per Objek 
+(Individu) yang menampilkan halaman  detail profil spesifik satu orang 
+mahasiswa pendaftar, menyajikan pratinjau ( preview ) dokumen digital 
+--- PAGE 46 ---
+39 
+ 
+  yang telah diunggah serta rekaman detail lembar jawaban ujian 
+pemrograman mereka. Output terakhir adalah Pengumuman Hasil Akhir 
+yang menampilkan lembar konfirmasi kelulusan personal secara langsung 
+pada halaman mahasiswa pasca -seleksi, serta lembar rekapitulasi nilai 
+akhir bagi Admin Lab yang memuat keputusan final status_kelulusan  
+(Lulus  atau Tidak Lulus ) beserta kolom keterangan  resmi dari pihak 
+laboratorium.  
+ 
+--- PAGE 47 ---
+ 
+40 
+ BAB V  
+IMPLEMENTASI  
+ 
+5.1 Spesifikasi Sistem Baru  
+ Implementasi fisik dari Aplikasi Sistem Informasi Seleksi Rekrutmen 
+Asisten Lab memerlukan spesifikasi minimum baik dari segi perangkat lunak, 
+perangkat keras, maupun pengguna agar sistem dapat berjalan dengan optimal, 
+aman, dan responsif. Spesifikasi minimum yang diajukan untuk mendukung 
+sistem baru ini adalah sebagai berikut:  
+1. Perangkat Lunak ( Software ) 
+Perangkat lunak minimal yang digunakan untuk menjalankan aplikasi ini 
+di sisi server dan pengembangan meliputi sistem operasi Windows 10/11 
+atau Linux Ubuntu Server. Server basis data menggunakan MySQL versi 
+5.7 atau di atasnya untuk mengelola kesembilan tabel relasional yang telah 
+dirancang. Di sisi pemrograman, lingkungan yang digunakan adalah PHP 
+versi 7.4 ke atas serta Apache HTTP Server (atau menggunakan paket 
+XAMPP). Sementara itu, di sisi pengguna ( client ), aplikasi hanya 
+membutuhkan web browser  modern seperti Google Chrome, Mozilla 
+Firefox, atau Microsoft Edge versi terbaru yang sudah mendukung 
+eksekusi JavaScript dan HTML5.  
+ 
+2. Perangkat Keras ( Hardware ) 
+Di sisi infrastruktur server hosting aplikasi, spesifikasi perangkat keras 
+minimum yang dibutuhkan adalah prosesor dengan 2 Cores (Intel Xeon 
+atau AMD EPYC), kapasitas memori utama ( RAM ) minimal 4 GB, serta 
+ruang penyimpanan berupa SSD minimal sebesar 40 GB untuk 
+menampung penyimpanan berkas digital pendaftar pada tabel 
+pemberkasan. Sedangkan di sisi pengguna (mahasiswa dan pengelola lab), 
+perangkat keras minimum yang disarankan adalah laptop atau komputer 
+dengan prosesor Intel Core i3 / AMD Ryzen 3, RAM 4 GB, serta resolusi 
+--- PAGE 48 ---
+41 
+ 
+ layar minimal 1366x768 piksel agar tampilan antarmuka halaman ujian 
+dapat dipresentasikan secara visual dengan sempurna.  
+3. Sumber Daya Manusia ( Brainware ) 
+Komponen brainware yang terlibat dalam pengoperasian sistem baru ini 
+dibagi menjadi tiga tingkatan hak akses sesuai rancangan kelas aplikasi. 
+Pertama adalah Admin Program Studi yang bertindak sebagai operator 
+awal untuk mengimpor data master mahasiswa aktif ke dalam sistem. 
+Kedua adalah Admin Laboratorium (Kepala Lab atau Laboran) yang 
+memiliki kemampuan teknis untuk mengelola bank soal, memvalidasi 
+berkas digital, menilai ujian esai, serta menentukan status kelulusan akhir 
+pelamar. Ketiga adalah Mahasiswa pendaftar yang bertindak sebagai 
+pengguna akhir yang menginput profil, mengunggah dokumen persyaratan, 
+dan mengerjakan lembar ujian online.  
+ 
+5.2 Penerapan Sistem Baru  
+ Penerapan sistem baru menggambarkan implementasi nyata dari 
+antarmuka visual yang telah dibangun ke dalam baris kode program dan siap 
+berinteraksi langsung dengan database backend.  
+ 
+5.2.1 Penerapan Tampilan Input  
+ Penerapan tampilan input pada aplikasi seleksi rekrutmen ini diwujudkan 
+melalui beberapa komponen formulir digital terintegrasi yang menangkap data 
+langsung dari pengguna sebagai berikut:  
+1. Halaman Autentikasi Login:  Penerapan antarmuka ini merupakan 
+gerbang utama bagi seluruh aktor untuk memasuki sistem dengan 
+memasukkan kredensial data akun mereka. Tampilan formulir dirancang 
+minimalis di tengah layar, menyediakan kotak teks untuk username  dan 
+password . Sistem juga dilengkapi dengan penanganan pesan kesalahan 
+(error handling ) berbasis visual yang akan memunculkan peringatan 
+berwarna merah jika data kredensial yang diinput tidak cocok dengan 
+database.  
+--- PAGE 49 ---
+42 
+ 
+  
+Gambar 5.1 Tampilan halaman login  
+ 
+2. Menu Dasbor Utama (Sidebar Navigasi):  Ketika pengguna berhasil 
+masuk, sistem menerapkan menu kontrol utama menggunakan tata letak 
+sidebar  kiri yang dinamis. Menu navigasi ini otomatis menyesuaikan 
+tingkat hak akses ( role) pengguna. Pada dasbor Admin Laboratorium, 
+pilihan menu navigasi yang tersedia meliputi Dashboard, Kelola Soal, 
+Penilaian, Hasil Seleksi, dan Logout. Sementara pada dasbor Mahasiswa 
+pendaftar, pilihan menu yang muncul adalah Dashboard, Data Diri & 
+Berkas, Ujian Seleksi, serta Status Kelulusan.  
+ 
+3. Form Input Data Diri & Unggah Berkas (Master & Transaksi 
+Mahasiswa):  Pada halaman ini, mahasiswa pendaftar melakukan 
+pengisian data master profil secara manual yang mencakup Nama 
+Lengkap, NIM, Program Studi, Semester, Nomor Telepon, dan Email. Di 
+bawah formulir data diri, sistem menerapkan komponen transaksi unggah 
+berkas menggunakan tombol interaktif ( file picker ) untuk mengunggah 
+dokumen digital berupa KTM, Transkrip Nilai, dan Surat Pernyataan 
+dalam format PDF. Sistem juga secara visual menampilkan statu s badge  
+perkembangan verifikasi dokumen (seperti Menunggu Verifikasi, 
+Terverifikasi, atau Ditolak).  
+
+--- PAGE 50 ---
+43 
+ 
+  
+Gambar 5.2 Tampilan identitas diri  
+ 
+4. Form Input Modul Ujian Seleksi Online (Transaksi Tes Mahasiswa):  
+Penerapan antarmuka lembar ujian digital dirancang untuk memfasilitasi 
+mahasiswa dalam menjawab soal secara real-time. Tampilan ini 
+mengimplementasikan fitur penghitung waktu mundur ( countdown timer ) 
+yang tegas di sudut kanan atas untuk membatasi durasi ujian. Pilihan 
+jawaban untuk tipe soal pilihan ganda diinput menggunakan komponen 
+radio button  (opsi A sampai E). Sistem juga menerapkan panel kotak 
+navigasi nomor soal (1 -30) di sisi kanan yang secara visual berubah warna 
+(hijau untuk soal yang sudah dijawab, biru untuk nomor aktif, dan abu -abu 
+untuk yang belum diisi) guna memudahkan pelacakan ujian.  
+ 
+Gambar 5.3 Tampilan ujian seleksi online  
+
+--- PAGE 51 ---
+44 
+ 
+ 5. Form Input Tambah Bank Soal (Master Pengelola):  Penerapan formulir 
+ini digunakan oleh Admin Laboratorium untuk merancang materi 
+pengujian ke dalam database. Sistem menampilkan jendela sembul ( modal 
+pop-up) interaktif untuk memilih jenis soal menggunakan radio button  
+(Esai atau Pilihan Ganda). Antarmuka ini menyediakan kolom input teks 
+area untuk menuliskan narasi pertanyaan, kolom isian opsi jawaban, serta 
+menu drop-down  untuk menentukan bobot nilai soal.  
+ 
+Gambar 5.4 Tampilan tambah soal  
+ 
+6. Form Input Verifikasi Berkas & Input Nilai Esai (Proses Pengelola):  
+Di sisi manajemen proses, Admin Laboratorium dibekali dengan 
+antarmuka peninjauan berkas kolektif. Sistem memunculkan jendela 
+pemeriksaan berkas per individu pelamar yang dilengkapi dengan tombol 
+persetujuan visual yaitu "[Setujui Berkas]" berwarna hijau dan "[Tolak 
+Berkas]" berwarna merah untuk mempercepat validasi dokumen. Selain 
+itu, pada bagian penilaian ujian, sistem menyediakan halaman khusus bagi 
+Admin Lab untuk memeriksa lembar jawa ban esai mahasiswa secara 
+subjektif dan menginput bobot nilai angka ke dalam kolom input nilai esai 
+yang disediakan sebelum diakumulasikan secara otomatis oleh sistem 
+backend.  
+
+--- PAGE 52 ---
+45 
+ 
+  
+Gambar 5.5 Tampilan Nilai Essay  
+ 
+7. Fitur Searching dan Filtering Data:  Untuk mempermudah administrasi 
+pengelola, sistem menerapkan komponen kotak pencarian ( searching ) 
+berbasis teks kata kunci pada setiap tabel dasbor utama. Fitur ini terhubung 
+langsung dengan kueri database untuk melakukan pencarian nama atau 
+NIM pelamar tertentu. Selain itu, diterapkan pula fitur penyaringan 
+(filtering ) menggunakan komponen drop-down selection  di sudut kanan 
+atas tabel yang memungkinkan admin untuk menyaring daftar data 
+pendaftar berdasarkan kategori rumpun Program Studi tertentu 
+(Informatika, Sistem Informasi, atau Semua).  
+ 
+5.2.2 Penerapan Tampilan Output  
+ Penerapan tampilan output memfokuskan implementasinya pada penyajian 
+hasil pemrosesan dan kalkulasi data seleksi rekrutmen ke dalam bentuk ringkasan 
+informasi terstruktur sebagai berikut:  
+1. Laporan Seluruh dengan Data Sample (Rekapitulasi Kolektif Seleksi):  
+Output utama bagi pengelola laboratorium diwujudkan dalam bentuk tabel 
+data besar yang memuat data sampel riil dari para pendaftar. Tabel ini 
+menampilkan informasi nama pendaftar, NIM, Program Studi, nilai ujian 
+pilihan ganda, nilai esai, akumulasi nilai akhir, hingga status badge  
+
+--- PAGE 53 ---
+46 
+ 
+ kelulusan peserta. Tampilan ini memberikan kemudahan visual bagi kepala 
+laboratorium untuk membandingkan performa antar -pelamar.  
+ 
+2. Laporan per Objek (Detail Keputusan Kelulusan Individu):  Penerapan 
+output per objek disajikan melalui jendela tampilan detail ( detail view 
+modal ) saat salah satu baris mahasiswa pada tabel diklik. Antarmuka ini 
+meringkas rekam jejak penilaian personal pelamar secara spesifik, mulai 
+dari data diri, nilai pilihan ganda, nilai esai, hingga akumulasi skor akhir. 
+Di dalam output objek inilah Admin Laboratorium mengeksekusi 
+keputusan seleksi final melalui radio button  pilihan status kelulusan 
+("Lulus" atau "Tidak Lulus") yang jika disimpan akan langsung mengubah 
+warna komponen badge  status di tabel utama secara otomatis.  
+ 
+Gambar 5. 6 Tampilan hasil seleksi
+
+--- PAGE 54 ---
+ 
+47 
+ BAB VI  
+PENUTUP  
+ 
+6.1 Kesimpulan  
+ Berdasarkan seluruh rangkaian tahapan analisis, perancangan, hingga 
+implementasi yang telah dilaksanakan pada Aplikasi Sistem Informasi Seleksi 
+Rekrutmen Asisten Lab berbasis website ini, terdapat beberapa kesimpulan utama 
+yang menjadi jawaban atas rumusan masalah. Pertama, proses rekrutmen asisten 
+laboratorium yang pada sistem lama berjalan secara terpisah dan kurang efisien 
+kini telah berhasil disatukan ke dalam satu platform terpusat. Sistem baru ini 
+mengintegrasikan seluruh rangkaian tahapan seleksi secara daring, mulai dari 
+pengisian profil mahasiswa, pengunggahan dokumen persyaratan administrasi, 
+hingga pelaksanaan ujian kemampuan dasar pemrograman secara online . Kedua, 
+kendala penumpukan dan pengelolaan berkas persyaratan digital pelamar yang 
+berisiko memicu kesalahan administrasi atau kehilangan data telah diatasi melalui 
+sentralisasi pangkalan data. Seluruh dokumen digital mahasiswa kini tersimpan 
+aman di dalam database relasional MySQL yang terikat langsung dengan akun 
+login mereka, sehingga memudahkan admin laboratorium untuk melakukan 
+penyaringan dan validasi secara cepat melalui dasbor admin. Ketiga, kesulitan 
+pengelola dalam melakukan rekapitulasi penilaian pendaftar secara cepat dan 
+objektif telah diselesaikan dengan penerapan fitur penilaian otomatis untuk modul 
+tes pilihan ganda dan fungsionalitas input nilai esai terintegrasi. Sistem mampu 
+mengalkulasikan skor total secara langsung ke dalam basis data dan 
+menyajikannya dalam bentuk laporan rekapitulasi nilai akhir secara real-time, 
+sehingga mempercepat pengambilan keputusan kelulusan kandidat secara 
+transparan dan objektif berdasarkan parameter nilai riil.  
+ Secara keseluruhan, review  terhadap aplikasi yang diusulkan menunjukkan 
+bahwa sistem informasi ini telah memenuhi kriteria kebutuhan fungsional dan 
+non-fungsional dari seluruh aktor yang terlibat, yaitu Mahasiswa, Admin Program 
+Studi, dan Admin Laboratorium. Implementasi arsitektur database sembilan tabel 
+relasional dan pemodelan berorientasi objek yang telah diterapkan mampu 
+--- PAGE 55 ---
+48 
+ 
+ menjamin konsistensi aliran data rekrutmen berjalan secara sistematis, teratur, dan 
+aman. Dengan demikian, kehadiran sistem ini terbukti berhasil memangkas 
+birokrasi administrasi yang berbelit -belit pada mekanisme lama dan mengubahnya 
+menjadi proses seleksi yang modern, terukur, serta akuntabel.  
+ 
+6.2 Saran  
+ Meskipun aplikasi sistem informasi seleksi rekrutmen ini telah berhasil 
+diimplementasikan dengan baik, masih terdapat beberapa keterbatasan pada sistem 
+saat ini yang dapat dijadikan acuan perbaikan di masa mendatang. Keterbatasan 
+utama terletak pada modul pengujian kemampuan dasar pemrograman yang saat 
+ini masih terbatas pada input teks jawaban pilihan ganda dan esai manual, di mana 
+sistem belum dibekali dengan fitur compiler  atau interpreter  internal untuk 
+mengeksekusi dan menguji kode program secara langsung di dalam website. 
+Selain itu, proses validasi dokumen administrasi pada tabel pemberkasan masih 
+bergantung sepenuhnya pada peninjauan manual oleh pengelola laboratorium 
+secara digital lewat dasbor. Sistem penyampaian informasi atau notifikasi hasil 
+kelulusan akhir dan jadwal ujian juga masih bersifat pasif, sehingga mahasiswa 
+harus melakukan login secara berkala ke dalam website untuk memeriksa 
+pembaruan status mereka.  
+ Berdasarkan keterbatasan tersebut, terdapat beberapa proyeksi 
+pengembangan sistem ke depannya yang sangat disarankan untuk diterapkan pada 
+penelitian selanjutnya. Pengembangan berikutnya disarankan untuk 
+mengintegrasikan modul editor kode online dan penguji kode otomatis ( auto-
+grader ) berbasis API, sehingga mahasiswa pendaftar dapat langsung menulis kode 
+pemrograman saat ujian dan sistem dapat menilai keakuratan logika coding  
+tersebut secara otomatis. Disarankan pula untuk menambahkan teknologi 
+kecerdasan buatan berbasis Optical Character Recognition  (OCR) guna membaca 
+dokumen transkrip nilai secara otomatis saat diunggah, sehingga sistem dapat 
+langsung mencocokkan nilai IPK mahasiswa pendaftar tanpa memerlukan input 
+manual dari pengguna.  
+--- PAGE 56 ---
+ 
+49 
+ DAFTAR PUSTAKA  
+ 
+Ahmad, N., Krisnanik, E., Rupilele, F. G. J., Muliawati, A., Syamsiyah, N., 
+Kraugusteeliana, K., Cahyono, B. D., Sriyeni, Y., Kristanto, T., & Irwanto, I. 
+(2022). ANALISA & PERANCANGAN SISTEM INFORMASI 
+BERORIENTASI OBJEK . Penerbit Widina. 
+https://books.google.co.id/books?id=wSSFEAAAQBAJ  
+DR. H. A. Rusdiana, M. M. ( 2022 ). MANAJEMEN SUMBERDAYA MANUSIA 
+PENDIDIKAN Dalam Persefektif Sainsdan Islam . PROGRAM STUDI 
+MAGISTER MANAJEMEN PENDIDIKAN ISLAM S -2 PASCA 
+SARJANA UNIVERSITA S ISLA M NEGERI SUNAN GUNUNG DJATI 
+BANDUNG . https://books.google.co.id/books?id=CaSeEQAAQBAJ  
+ 
+--- PAGE 57 ---
+ 
+50 
+ LAMPIRAN  
+ 
+ Laporan pertanggungjawaban kinerja tim kelompok ini disusun sebagai 
+wujud akuntabilitas, transparansi, dan pembagian tanggung jawab secara 
+profesional di antara seluruh anggota Kelompok 3 dalam merancang serta 
+mengimplementasikan Aplikasi Sistem Informasi Seleksi Rekrutmen Asisten Lab 
+Kampus. Seluruh tahapan pengembangan aplikasi dilaksanakan dengan 
+mengadopsi pendekatan metode Waterfall yang menuntut keterurutan pengerjaan 
+secara disiplin, mulai dari fase pengumpulan data awal, analisis kelemahan sistem 
+lama, perancangan diagram alir data, disain antarmuka, pengodean program, 
+hingga fase pengujian fungsionalitas sistem. Untuk memastikan efektivitas kerja 
+dan keadilan beban tugas, tim membagi peran ke dalam beberapa bidang keahlian 
+khusus yang saling terintegrasi satu sama lain, sehingga seluruh spesifikasi teknis 
+database relasional dan modul aplikasi yang disyaratkan dapat diselesaikan 
+dengan tepat waktu.  
+ Pelaksanaan proyek diawali dengan fase observasi dan pengumpulan data 
+riil mengenai kendala mekanisme rekrutmen asisten laboratorium konvensional 
+yang kemudian dianalisis secara mendalam menggunakan metode PIECES guna 
+memetakan kebutuhan fungsional dan non -fungsional dari tiga aktor sistem. Hasil 
+analisis kebutuhan tersebut menjadi dasar bagi tim perancang arsitektur logis 
+untuk menyusun Diagram Konteks, Data Flow Diagram (DFD) Level 0 hingga 
+Level 2, skema basis data relasional sembilan tabel melalui Entity Relationship 
+Diagram (ERD), serta pemodelan berorientasi objek menggunakan Class Diagram. 
+Blueprint logis yang telah divalidasi tersebut kemudian ditransformasikan secara 
+nyata oleh tim pengembang ke dalam bentuk basis data MySQL dan penulisan 
+baris kode program berbasis PHP untuk menghadirkan antarmuka input -output 
+yang interaktif, meliputi modul pendaftaran, transaksi unggah berkas digital, 
+lembar ujian online otomatis, hingga halaman rekapitulasi kelulusan akhir oleh 
+admin laboratorium.  
+ Sebagai bentuk verifikasi terhadap kualitas produk perangkat lunak, tim 
+secara kolaboratif melaksanakan pengujian performa dan penanganan kesalahan 
+--- PAGE 58 ---
+51 
+ 
+ (bug) pada seluruh fungsionalitas sistem sebelum seluruh dokumentasi teknis serta 
+tangkapan layar aplikasi nyata dirangkum ke dalam draf laporan akhir dari Bab I 
+hingga Bab VI. Berdasarkan seluruh rangkaian kegiatan yang telah dijalani selama 
+periode tahun 2026, Kelompok 3 menyatakan bertanggung jawab penuh atas 
+keaslian pengerjaan proyek rekayasa perangkat lunak ini, di mana rincian 
+kontribusi nyata dari masing -masing personil anggota kelompok dijabarkan secara 
+transparan dalam tabel di bawah ini.  
+ 
+No. Nama Anggota  NIM  Jobdesk & Kontribusi  
+1. Daffa Zahir 
+Arkhan  0701242066  Manajer Aplikasi Perangkat Lunak dan 
+Backend; mengkoordinasikan proyek 
+serta membangun basis data MySQL dan 
+logika pemrograman server -side. 
+2. Muhammad 
+Hakim Sembara 
+Purba  0701242089  Aplikasi Analisis; melakukan pemetaan 
+kelemahan sistem lama dan merumuskan 
+spesifikasi kebutuhan fungsional sistem 
+baru melalui analisis PIECES.  
+3. Mirza Azmi 
+Zawahri  0701242069  Frontend dan UI/UX; merancang maket 
+disain antarmuka serta 
+mengimplementasikan layout halaman 
+web pendaftaran, dasbor, dan form ujian.  
+4. Indryani Afdila  0701243156  Dokumentasi dan Pembuat Laporan; 
+menyusun draf naskah laporan akademis, 
+merapikan format penulisan, dan 
+mendokumentasikan hasil perancangan.  
+5. Mumtazah 
+Dhyfa Nazha  0701243151  Dokumentasi dan Pembuat Laporan; 
+berkolaborasi dalam menyusun teks 
+narasi laporan, mengumpulkan daftar 
+pustaka, dan mengintegrasikan revisi 
+naskah.  
+--- PAGE 59 ---
+52 
+ 
+ 6. Rahmad 
+Syafaruddin  0701241016  Quality Assurance Tester; merencanakan 
+skenario pengujian, melakukan uji coba 
+fungsi input -output, serta 
+mengidentifikasi kesalahan logika (bug).  
+7. Arya Ovaliano  0701242064  Quality Assurance Tester; mengevaluasi 
+stabilitas halaman web, menguji akurasi 
+penilaian otomatis, dan memastikan 
+kesesuaian sistem dengan spesifikasi.  
+8. Maria Ulfa  0701243153  Pengumpulan Data; melakukan observasi 
+lapangan, mengumpulkan berkas 
+persyaratan sampel seleksi, dan menggali 
+data kebutuhan pengguna sistem.  
+9. M. Adri Hashfi 
+Rangkuti  0701242060  Pengumpulan Data; melakukan 
+wawancara/observasi terhadap alur 
+seleksi konvensional dan mendata 
+komponen berkas administrasi rekrutmen 
+aslab.  
+Tabel 1 Lampiran  
