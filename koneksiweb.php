@@ -5,10 +5,10 @@
  */
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
-$host     = "localhost";
-$username = "root";
-$password = "";
-$database = "web_seleksi";
+$host     = getenv("DB_HOST") ?: "localhost";
+$username = getenv("DB_USER") ?: "root";
+$password = getenv("DB_PASS") ?: "";
+$database = getenv("DB_NAME") ?: "web_seleksi";
 
 try {
     $koneksi = mysqli_connect($host, $username, $password, $database);
