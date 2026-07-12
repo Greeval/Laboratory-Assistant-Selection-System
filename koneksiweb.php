@@ -9,9 +9,10 @@ $host     = getenv("DB_HOST") ?: "localhost";
 $username = getenv("DB_USER") ?: "root";
 $password = getenv("DB_PASS") ?: "";
 $database = getenv("DB_NAME") ?: "web_seleksi";
+$port     = getenv("DB_PORT") ?: 3306;
 
 try {
-    $koneksi = mysqli_connect($host, $username, $password, $database);
+    $koneksi = mysqli_connect($host, $username, $password, $database, $port);
     mysqli_set_charset($koneksi, "utf8mb4");
 } catch (mysqli_sql_exception $e) {
     error_log("Database connection failed: " . $e->getMessage());
