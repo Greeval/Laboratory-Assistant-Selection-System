@@ -8,31 +8,61 @@ $db   = getenv('DB_NAME') ?: 'defaultdb';
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
 try {
-    echo "<h1>Database Importer</h1>";
+    echo "<h2>Database Importer</h2>";
     echo "Connecting to Aiven MySQL...<br>";
     $koneksi = mysqli_connect($host, $user, $pass, $db, $port);
-    echo "Connected successfully!<br>";
+    echo "✅ Connected successfully!<br><br>";
 
-    echo "Reading database.sql...<br>";
-    // Vercel path is relative to api folder
-    $sql = file_get_contents(__DIR__ . '/../database.sql');
+    // Import web_seleksi.sql (schema + data)
+    $sqlFile = __DIR__ . '/../web_seleksi.sql';
+    echo "Reading web_seleksi.sql...<br>";
     
+    if (!file_exists($sqlFile)) {
+        die("❌ File web_seleksi.sql not found at: $sqlFile<br>");
+    }
+    
+    $sql = file_get_contents($sqlFile);
     if (!$sql) {
-        die("Could not read database.sql<br>");
+        die("❌ Could not read web_seleksi.sql<br>");
     }
 
-    echo "Executing SQL script...<br>";
+    echo "Executing SQL schema + data...<br>";
     if (mysqli_multi_query($koneksi, $sql)) {
         do {
-            /* store first result set */
             if ($result = mysqli_store_result($koneksi)) {
                 mysqli_free_result($result);
             }
         } while (mysqli_more_results($koneksi) && mysqli_next_result($koneksi));
-        echo "<b>Database imported successfully! You can now login.</b><br>";
+        echo "✅ Schema imported!<br><br>";
     } else {
-        echo "Error executing script: " . mysqli_error($koneksi) . "<br>";
+        echo "❌ Error: " . mysqli_error($koneksi) . "<br>";
     }
+
+    // Now run seed.sql
+    $seedFile = __DIR__ . '/../seed.sql';
+    if (file_exists($seedFile)) {
+        // Need a fresh connection after multi_query
+        mysqli_close($koneksi);
+        $koneksi = mysqli_connect($host, $user, $pass, $db, $port);
+        
+        echo "Reading seed.sql...<br>";
+        $seedSql = file_get_contents($seedFile);
+        if ($seedSql && mysqli_multi_query($koneksi, $seedSql)) {
+            do {
+                if ($result = mysqli_store_result($koneksi)) {
+                    mysqli_free_result($result);
+                }
+            } while (mysqli_more_results($koneksi) && mysqli_next_result($koneksi));
+            echo "✅ Seed data imported!<br><br>";
+        }
+    }
+
+    echo "<br><b style='color:green;font-size:18px;'>🎉 Database imported successfully! You can now login.</b><br>";
+    echo "<br>Login credentials:<br>";
+    echo "- Admin Prodi: <b>adminprodi</b> / password<br>";
+    echo "- Admin Lab: <b>adminlab</b> / password<br>";
+    echo "- Mahasiswa: <b>123456789</b> / password<br>";
+    
 } catch (Exception $e) {
-    echo "Connection failed: " . $e->getMessage() . "<br>";
+    echo "❌ Error: " . $e->getMessage() . "<br>";
 }
