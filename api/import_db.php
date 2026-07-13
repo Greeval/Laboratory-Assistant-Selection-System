@@ -38,26 +38,7 @@ try {
         echo "❌ Error: " . mysqli_error($koneksi) . "<br>";
     }
 
-    // Now run seed.sql
-    $seedFile = __DIR__ . '/seed.sql';
-    if (file_exists($seedFile)) {
-        // Need a fresh connection after multi_query
-        mysqli_close($koneksi);
-        $koneksi = mysqli_connect($host, $user, $pass, $db, $port);
-        
-        echo "Reading seed.sql...<br>";
-        $seedSql = file_get_contents($seedFile);
-        if ($seedSql && mysqli_multi_query($koneksi, $seedSql)) {
-            do {
-                if ($result = mysqli_store_result($koneksi)) {
-                    mysqli_free_result($result);
-                }
-            } while (mysqli_more_results($koneksi) && mysqli_next_result($koneksi));
-            echo "✅ Seed data imported!<br><br>";
-        }
-    }
 
-    echo "<br><b style='color:green;font-size:18px;'>🎉 Database imported successfully! You can now login.</b><br>";
     echo "<br>Login credentials:<br>";
     echo "- Admin Prodi: <b>adminprodi</b> / password<br>";
     echo "- Admin Lab: <b>adminlab</b> / password<br>";
