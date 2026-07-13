@@ -14,7 +14,7 @@ try {
     echo "✅ Connected successfully!<br><br>";
 
     // Import web_seleksi.sql (schema + data)
-    $sqlFile = __DIR__ . '/../web_seleksi.sql';
+    $sqlFile = __DIR__ . '/web_seleksi.sql';
     echo "Reading web_seleksi.sql...<br>";
     
     if (!file_exists($sqlFile)) {
@@ -39,7 +39,7 @@ try {
     }
 
     // Now run seed.sql
-    $seedFile = __DIR__ . '/../seed.sql';
+    $seedFile = __DIR__ . '/seed.sql';
     if (file_exists($seedFile)) {
         // Need a fresh connection after multi_query
         mysqli_close($koneksi);
