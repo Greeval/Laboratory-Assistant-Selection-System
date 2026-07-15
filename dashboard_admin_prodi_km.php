@@ -213,6 +213,16 @@ if (isset($_POST['ubah_akun']) || isset($_POST['update_akun'])) {
         }
     }
     
+    // 0. Cegah ubah akun sesama Admin Prodi
+    $q_target = mysqli_query($koneksi, "SELECT role FROM akun WHERE id_user = '$id_user' LIMIT 1");
+    if ($q_target && mysqli_num_rows($q_target) > 0) {
+        $dt_target = mysqli_fetch_assoc($q_target);
+        if ($dt_target['role'] === 'Admin Prodi' && (int)$id_user !== (int)$id_user_login) {
+            header("Location: dashboard_admin_prodi_km.php?status=akses_ditolak");
+            exit();
+        }
+    }
+
     // 1. Validasi duplikasi username jika username/NIM diubah
     if ($username_baru !== $username_lama) {
         $cek_username = mysqli_query($koneksi, "SELECT id_user FROM akun WHERE username='$username_baru' AND id_user != '$id_user'");
@@ -318,6 +328,16 @@ if (isset($_POST['hapus_akun']) && isset($_POST['id_hapus'])) {
         }
         if (!$pw_valid) {
             echo "<script>alert('Password Admin Prodi salah! Akun gagal dihapus.'); window.location.href='dashboard_admin_prodi_km.php';</script>";
+            exit();
+        }
+    }
+
+    // Cek role target, larang hapus sesama Admin Prodi
+    $q_target = mysqli_query($koneksi, "SELECT role FROM akun WHERE id_user = '$id_hapus' LIMIT 1");
+    if ($q_target && mysqli_num_rows($q_target) > 0) {
+        $dt_target = mysqli_fetch_assoc($q_target);
+        if ($dt_target['role'] === 'Admin Prodi' && (int)$id_hapus !== (int)$id_user_login) {
+            header("Location: dashboard_admin_prodi_km.php?status=akses_ditolak");
             exit();
         }
     }
@@ -456,9 +476,9 @@ $foto_prodi   = $profil_prodi['foto'] ?? '';
         }
     </style>
 
-<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #1d1e24; border-bottom: 1px solid #2a2d35;">
+<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #1d1e24; border-bottom: 1px solid #2a2d35;">
     <div class="container-xl">
-        <a class="navbar-brand navbar-brand-custom" href="#">
+        <a class="navbar-brand navbar-brand-custom text-white fw-bold" href="#">
             <i class="bi bi-shield-lock-fill me-2"></i>
             Admin Prodi &mdash; UINSU
         </a>
@@ -468,9 +488,9 @@ $foto_prodi   = $profil_prodi['foto'] ?? '';
         <div class="collapse navbar-collapse" id="navbarAdmin">
             <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-2">
                 <li class="nav-item">
-                    <span class="navbar-text text-dark-50 me-3">
+                    <span class="navbar-text text-white-50 me-3">
                         <i class="bi bi-person-circle me-1"></i>
-                        Selamat datang, <strong class="text-dark"><?php echo htmlspecialchars($username_login); ?></strong>
+                        Selamat datang, <strong class="text-white"><?php echo htmlspecialchars($username_login); ?></strong>
                     </span>
                 </li>
                 <li class="nav-item me-2">
@@ -479,12 +499,12 @@ $foto_prodi   = $profil_prodi['foto'] ?? '';
                     </button>
                 </li>
                 <li class="nav-item me-2">
-                    <button class="btn btn-outline-dark btn-sm px-3" data-bs-toggle="modal" data-bs-target="#modalGantiPasswordDiri">
+                    <button class="btn btn-outline-light btn-sm px-3" data-bs-toggle="modal" data-bs-target="#modalGantiPasswordDiri">
                         <i class="bi bi-key me-1"></i> Ganti Password
                     </button>
                 </li>
                 <li class="nav-item">
-                    <a class="btn btn-outline-dark btn-sm px-3" href="login.php">
+                    <a class="btn btn-outline-danger btn-sm px-3" href="login.php">
                         <i class="bi bi-box-arrow-right me-1"></i> Keluar
                     </a>
                 </li>
@@ -578,7 +598,7 @@ if ($status === 'sukses_tambah') {
 
     <div class="card card-main">
         <div class="card-header border-bottom-0 pt-3 px-4" style="background-color:#1d1e24;">
-            <h5 class="mb-0 fw-semibold text-dark">
+            <h5 class="mb-0 fw-semibold text-white">
                 <i class="bi bi-card-list me-2 text-success"></i>
                 Daftar Akun Terdaftar
             </h5>
