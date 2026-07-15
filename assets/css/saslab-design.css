@@ -148,6 +148,10 @@ h1, h2, h3, h4, h5, h6 {
 .sas-badge-success { background-color: #E6F4EA; color: #137333; }
 .sas-badge-warning { background-color: #FEF7E0; color: #B06000; }
 
+.badge-role-mhs { background-color: var(--mahasiswa-bg); color: var(--mahasiswa-ink) !important; }
+.badge-role-lab { background-color: var(--admin-lab-bg); color: var(--admin-lab-ink) !important; }
+.badge-role-prodi { background-color: var(--admin-prodi-bg); color: var(--admin-prodi-ink) !important; }
+
 /* Utilities */
 .text-tabular { font-variant-numeric: tabular-nums; }
 .label-caps {
