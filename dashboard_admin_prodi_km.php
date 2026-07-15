@@ -700,7 +700,7 @@ if ($status === 'sukses_tambah') {
                                         <!-- Modal Edit Mahasiswa -->
                                         <div class="modal fade" id="modalEditMhs<?= $row_mhs['id_user']; ?>" tabindex="-1" aria-hidden="true">
                                             <div class="modal-dialog">
-                                                <div class="modal-content" style="background:#1d1e24; border:1px solid #2a2d35;">
+                                                <div class="modal-content text-white" style="background:#1d1e24; border:1px solid #2a2d35;">
                                                     <form method="POST">
     <?= csrf_field(); ?>
                                                         <div class="modal-header" style="background:#2a2d35;">
@@ -739,7 +739,7 @@ if ($status === 'sukses_tambah') {
                                         <?php if (!( (int)$row_mhs['id_user'] === (int)$id_user_login )) : ?>
                                         <div class="modal fade" id="modalHapusMhs<?= $row_mhs['id_user']; ?>" tabindex="-1" aria-hidden="true">
                                             <div class="modal-dialog">
-                                                <div class="modal-content" style="background:#1d1e24; border:1px solid #2a2d35;">
+                                                <div class="modal-content text-white" style="background:#1d1e24; border:1px solid #2a2d35;">
                                                     <form method="POST">
     <?= csrf_field(); ?>
                                                         <div class="modal-header" style="background:#2a2d35;">
@@ -832,7 +832,7 @@ if ($status === 'sukses_tambah') {
                                         <!-- Modal Edit Admin -->
                                         <div class="modal fade" id="modalEditAdmin<?= $row_adm['id_user']; ?>" tabindex="-1" aria-hidden="true">
                                             <div class="modal-dialog">
-                                                <div class="modal-content" style="background:#1d1e24; border:1px solid #2a2d35;">
+                                                <div class="modal-content text-white" style="background:#1d1e24; border:1px solid #2a2d35;">
                                                     <form method="POST">
                                                         <?= csrf_field(); ?>
                                                         <div class="modal-header" style="background:#2a2d35;">
@@ -877,7 +877,7 @@ if ($status === 'sukses_tambah') {
                                         <?php if (!( (int)$row_adm['id_user'] === (int)$id_user_login )) : ?>
                                         <div class="modal fade" id="modalHapusAdmin<?= $row_adm['id_user']; ?>" tabindex="-1" aria-hidden="true">
                                             <div class="modal-dialog">
-                                                <div class="modal-content" style="background:#1d1e24; border:1px solid #2a2d35;">
+                                                <div class="modal-content text-white" style="background:#1d1e24; border:1px solid #2a2d35;">
                                                     <form method="POST">
                                                         <?= csrf_field(); ?>
                                                         <div class="modal-header" style="background:#2a2d35;">
@@ -923,7 +923,7 @@ if ($status === 'sukses_tambah') {
 <!-- Modal Ganti Password Diri Sendiri -->
 <div class="modal fade" id="modalGantiPasswordDiri" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content" style="background-color: #1d1e24; border: 1px solid #2a2d35;">
+        <div class="modal-content text-white" style="background-color: #1d1e24; border: 1px solid #2a2d35;">
             <div class="modal-header border-0 pb-0">
                 <h5 class="modal-title fw-bold">Ganti Password Anda</h5>
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -965,7 +965,7 @@ if ($status === 'sukses_tambah') {
 <!-- Modal Tambah Akun -->
 <div class="modal fade" id="modalTambah" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
-        <div class="modal-content" style="background:#1d1e24; border:1px solid #2a2d35;">
+        <div class="modal-content text-white" style="background:#1d1e24; border:1px solid #2a2d35;">
             <form method="POST">
                 <?= csrf_field(); ?>
                 <div class="modal-header" style="background:#2a2d35;">
@@ -1023,7 +1023,7 @@ if ($status === 'sukses_tambah') {
 <!-- Modal Import Excel -->
 <div class="modal fade" id="modalImport" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
-        <div class="modal-content" style="background:#1d1e24; border:1px solid #2a2d35;">
+        <div class="modal-content text-white" style="background:#1d1e24; border:1px solid #2a2d35;">
             <form method="POST" enctype="multipart/form-data">
                 <?= csrf_field(); ?>
                 <div class="modal-header" style="background:#2a2d35;">
@@ -1052,7 +1052,7 @@ if ($status === 'sukses_tambah') {
 <!-- Modal Profil Admin Prodi -->
 <div class="modal fade" id="modalProfilProdi" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-lg">
-        <div class="modal-content" style="background:#1d1e24; border:1px solid #2a2d35;">
+        <div class="modal-content text-white" style="background:#1d1e24; border:1px solid #2a2d35;">
             <form method="POST" enctype="multipart/form-data" action="dashboard_admin_lab.php">
                 <?= csrf_field(); ?>
                 <div class="modal-header" style="background:linear-gradient(135deg,#1e3a5f,#1d1e24); border-color:#2a2d35;">
