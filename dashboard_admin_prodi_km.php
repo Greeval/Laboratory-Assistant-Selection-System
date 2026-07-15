@@ -723,7 +723,7 @@ if ($status === 'sukses_tambah') {
                                                             <div class="mb-3">
                                                                 <label class="form-label fw-bold text-warning"><i class="bi bi-shield-lock me-1"></i> Konfirmasi Password Admin Prodi</label>
                                                                 <input type="password" name="admin_password" class="form-control sas-input focus-prodi" placeholder="Masukkan password Anda" required>
-                                                                <small class="text-muted">Diperlukan untuk verifikasi keamanan.</small>
+                                                                <small class="text-light">Diperlukan untuk verifikasi keamanan.</small>
                                                             </div>
                                                         </div>
                                                         <div class="modal-footer" style="border-color:#2a2d35;">
@@ -749,7 +749,7 @@ if ($status === 'sukses_tambah') {
                                                         <div class="modal-body">
                                                             <input type="hidden" name="id_hapus" value="<?= $row_mhs['id_user']; ?>">
                                                             <p class="text-primary fw-bold">Anda yakin ingin menghapus akun <strong><?= htmlspecialchars($row_mhs['username']); ?></strong>?</p>
-                                                            <p class="text-muted small">Tindakan ini tidak dapat dibatalkan.</p>
+                                                            <p class="text-light small">Tindakan ini tidak dapat dibatalkan.</p>
                                                             <hr style="border-color:#3d4050;">
                                                             <div class="mb-3">
                                                                 <label class="form-label fw-bold text-warning"><i class="bi bi-shield-lock me-1"></i> Konfirmasi Password Admin Prodi</label>
@@ -861,7 +861,7 @@ if ($status === 'sukses_tambah') {
                                                             <div class="mb-3">
                                                                 <label class="form-label fw-bold text-warning"><i class="bi bi-shield-lock me-1"></i> Konfirmasi Password Admin Prodi</label>
                                                                 <input type="password" name="admin_password" class="form-control sas-input focus-prodi" placeholder="Masukkan password Anda" required>
-                                                                <small class="text-muted">Diperlukan untuk verifikasi keamanan.</small>
+                                                                <small class="text-light">Diperlukan untuk verifikasi keamanan.</small>
                                                             </div>
                                                         </div>
                                                         <div class="modal-footer" style="border-color:#2a2d35;">
@@ -887,7 +887,7 @@ if ($status === 'sukses_tambah') {
                                                         <div class="modal-body">
                                                             <input type="hidden" name="id_hapus" value="<?= $row_adm['id_user']; ?>">
                                                             <p class="text-primary fw-bold">Anda yakin ingin menghapus akun <strong><?= htmlspecialchars($row_adm['username']); ?></strong> (<?= htmlspecialchars($row_adm['role']); ?>)?</p>
-                                                            <p class="text-muted small">Tindakan ini tidak dapat dibatalkan.</p>
+                                                            <p class="text-light small">Tindakan ini tidak dapat dibatalkan.</p>
                                                             <hr style="border-color:#3d4050;">
                                                             <div class="mb-3">
                                                                 <label class="form-label fw-bold text-warning"><i class="bi bi-shield-lock me-1"></i> Konfirmasi Password Admin Prodi</label>
@@ -976,7 +976,7 @@ if ($status === 'sukses_tambah') {
                     <div class="mb-3">
                         <label class="form-label fw-bold">Username / NIM / NIP</label>
                         <input type="text" name="username" class="form-control sas-input focus-prodi" required placeholder="Masukkan Username / NIM / NIP">
-                        <small class="text-muted">Untuk Admin Lab/Prodi gunakan NIP. Untuk Mahasiswa gunakan NIM.</small>
+                        <small class="text-light">Untuk Admin Lab/Prodi gunakan NIP. Untuk Mahasiswa gunakan NIM.</small>
                     </div>
                     <div class="mb-3">
                         <label class="form-label fw-bold">Role</label>
@@ -1008,7 +1008,7 @@ if ($status === 'sukses_tambah') {
                     <div class="mb-3">
                         <label class="form-label fw-bold text-warning"><i class="bi bi-shield-lock me-1"></i> Konfirmasi Password Admin Prodi</label>
                         <input type="password" name="admin_password" class="form-control sas-input focus-prodi" placeholder="Masukkan password Anda sendiri" required>
-                        <small class="text-muted">Diperlukan untuk verifikasi keamanan setiap pembuatan akun baru.</small>
+                        <small class="text-light">Diperlukan untuk verifikasi keamanan setiap pembuatan akun baru.</small>
                     </div>
                 </div>
                 <div class="modal-footer" style="border-color:#2a2d35;">
@@ -1034,7 +1034,7 @@ if ($status === 'sukses_tambah') {
                     <div class="mb-3">
                         <label class="form-label fw-bold">Pilih File Excel (.xlsx)</label>
                         <input type="file" name="file_excel" class="form-control sas-input focus-prodi" accept=".xlsx" required>
-                        <small class="text-muted d-block mt-2">
+                        <small class="text-light d-block mt-2">
                             Pastikan file Anda berformat <strong>.xlsx</strong> dan memiliki kolom berurutan sebagai berikut: <br>
                             <strong>Nama, NIM, Fakultas, Program Studi, Password</strong>
                         </small>
@@ -1081,17 +1081,17 @@ if ($status === 'sukses_tambah') {
                                 <div class="col-md-6">
                                     <label class="form-label fw-bold text-secondary">NAMA LENGKAP</label>
                                     <input type="text" class="form-control sas-input focus-prodi" value="<?= htmlspecialchars($nama_prodi) ?>" readonly style="background:#131418; color:#94a3b8;">
-                                    <small class="text-muted">Ubah melalui Kelola Akun</small>
+                                    <small class="text-light">Ubah melalui Kelola Akun</small>
                                 </div>
                                 <div class="col-md-6">
                                     <label class="form-label fw-bold text-secondary">NIP</label>
                                     <input type="text" class="form-control sas-input focus-prodi" value="<?= htmlspecialchars($nip_prodi) ?>" readonly style="background:#131418; color:#94a3b8;">
-                                    <small class="text-muted">Ubah melalui Kelola Akun</small>
+                                    <small class="text-light">Ubah melalui Kelola Akun</small>
                                 </div>
                                 <div class="col-md-6">
                                     <label class="form-label fw-bold text-secondary">JABATAN</label>
                                     <input type="text" class="form-control sas-input focus-prodi" value="<?= htmlspecialchars($jabatan_prodi) ?>" readonly style="background:#131418; color:#94a3b8;">
-                                    <small class="text-muted">Ubah melalui Kelola Akun</small>
+                                    <small class="text-light">Ubah melalui Kelola Akun</small>
                                 </div>
                                 <div class="col-md-6">
                                     <label class="form-label fw-bold text-secondary">EMAIL</label>
