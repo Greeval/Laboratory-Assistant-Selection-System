@@ -159,8 +159,8 @@ $hasil_tampil = mysqli_query($koneksi, $query_tampil);
             justify-content: space-between;
         }
 
-        .tab-content-panel { display: none; }
-        .tab-content-panel.active { display: block; }
+        .tab-panel { display: none; }
+        .tab-panel.active { display: block; }
         
         .navbar-custom, .navbar {
             background-color: var(--surface);
@@ -179,18 +179,17 @@ $hasil_tampil = mysqli_query($koneksi, $query_tampil);
 </head>
 <body>
 
-<div class="container-fluid">
-    <div class="row">
+
         <!-- SIDEBAR -->
         <!-- Mobile Navbar Toggler (Visible only on small screens) -->
-<nav class="navbar navbar-light d-md-none px-3 py-2" style="">
-    <a class="navbar-brand text-dark fw-bold fs-6" href="#">Admin Lab Portal</a>
+<nav class="navbar navbar-dark d-md-none px-3 py-2" style="background-color: #1d1e24; border-bottom: 1px solid #2a2d35;">
+    <a class="navbar-brand text-white fw-bold fs-6" href="#">Admin Lab Portal</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
 </nav>
 
-<nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block sidebar collapse p-3">
+<nav id="sidebarMenu" class="sidebar collapse d-md-block p-3">
     <div class="text-center my-3">
         <h5 class="fw-bold text-dark">Admin Lab Portal</h5>
         <hr>
@@ -198,25 +197,25 @@ $hasil_tampil = mysqli_query($koneksi, $query_tampil);
     <ul class="nav flex-column">
         <?php $current_page = basename($_SERVER['PHP_SELF']); ?>
         <li class="nav-item">
-            <a class="nav-link" href="dashboard_admin_lab.php?tab=profil"><i class="bi bi-person-fill me-2"></i>Profil</a>
+            <a class="nav-link-custom" href="dashboard_admin_lab.php?tab=profil"><i class="bi bi-person-fill me-2"></i>Profil</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link <?= ($current_page == 'dashboard_admin_lab.php') ? 'active' : '' ?>" href="dashboard_admin_lab.php"><i class="bi bi-speedometer2 me-2"></i>Dashboard</a>
+            <a class="nav-link-custom <?= ($current_page == 'dashboard_admin_lab.php') ? 'active' : '' ?>" href="dashboard_admin_lab.php"><i class="bi bi-speedometer2 me-2"></i>Dashboard</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link <?= ($current_page == 'kelola_soal.php') ? 'active' : '' ?>" href="kelola_soal.php"><i class="bi bi-journal-text me-2"></i>Kelola Soal</a>
+            <a class="nav-link-custom <?= ($current_page == 'kelola_soal.php') ? 'active' : '' ?>" href="kelola_soal.php"><i class="bi bi-journal-text me-2"></i>Kelola Soal</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link <?= ($current_page == 'penilaian_ujian.php' || $current_page == 'penilaian_interview.php') ? 'active' : '' ?>" href="penilaian_ujian.php"><i class="bi bi-pencil-square me-2"></i>Penilaian</a>
+            <a class="nav-link-custom <?= ($current_page == 'penilaian_ujian.php' || $current_page == 'penilaian_interview.php') ? 'active' : '' ?>" href="penilaian_ujian.php"><i class="bi bi-pencil-square me-2"></i>Penilaian</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link <?= ($current_page == 'jadwal_interview.php') ? 'active' : '' ?>" href="jadwal_interview.php"><i class="bi bi-camera-video me-2"></i>Interview</a>
+            <a class="nav-link-custom <?= ($current_page == 'jadwal_interview.php') ? 'active' : '' ?>" href="jadwal_interview.php"><i class="bi bi-camera-video me-2"></i>Interview</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link <?= ($current_page == 'keputusan_seleksi.php') ? 'active' : '' ?>" href="keputusan_seleksi.php"><i class="bi bi-trophy me-2"></i>Hasil Seleksi</a>
+            <a class="nav-link-custom <?= ($current_page == 'keputusan_seleksi.php') ? 'active' : '' ?>" href="keputusan_seleksi.php"><i class="bi bi-trophy me-2"></i>Hasil Seleksi</a>
         </li>
         <li class="nav-item mt-3">
-            <a class="nav-link text-warning fw-bold" href="logout.php?role=Admin%20Lab" onclick="return confirm('Apakah Anda yakin ingin keluar?')">
+            <a class="nav-link-custom text-warning fw-bold" href="logout.php?role=Admin%20Lab" onclick="return confirm('Apakah Anda yakin ingin keluar?')">
                 <i class="bi bi-box-arrow-left me-2"></i>Logout
             </a>
         </li>
@@ -224,9 +223,14 @@ $hasil_tampil = mysqli_query($koneksi, $query_tampil);
 </nav>
 
         <!-- MAIN CONTENT -->
-        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+        <main class="main-content px-4">
             <div class="d-flex justify-content-between align-items-center pt-4 pb-2 mb-3 border-bottom">
-                <h2 class="h3 fw-bold text-slate-800">Keputusan Hasil Seleksi Aslab</h2>
+                <div class="d-flex align-items-center">
+                        <button type="button" class="btn btn-outline-secondary me-3 d-none d-md-block" id="sidebarToggle" onclick="document.getElementById('sidebarMenu').classList.toggle('closed'); document.querySelector('.main-content').classList.toggle('expanded');">
+                            <i class="bi bi-list"></i>
+                        </button>
+                        <h2 class="h3 fw-bold text-slate-800 mb-0">Keputusan Hasil Seleksi Aslab</h2>
+                    </div>
                 <span class="badge bg-light p-2 fs-6">Admin: <?= htmlspecialchars($username_admin); ?></span>
             </div>
             <div class="card border-0 shadow-sm mb-4">
@@ -373,8 +377,6 @@ $hasil_tampil = mysqli_query($koneksi, $query_tampil);
                 </div>
             </div>
         </main>
-    </div>
-</div>
 
 <script src="assets/js/bootstrap.bundle.min.js"></script>
 </body>

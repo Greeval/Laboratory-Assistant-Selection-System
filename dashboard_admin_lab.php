@@ -231,8 +231,8 @@ $hasil_tampil = mysqli_query($koneksi, $query_tampil);
             justify-content: space-between;
         }
 
-        .tab-content-panel { display: none; }
-        .tab-content-panel.active { display: block; }
+        .tab-panel { display: none; }
+        .tab-panel.active { display: block; }
         
         .navbar-custom {
             background-color: var(--surface);
@@ -296,7 +296,12 @@ $hasil_tampil = mysqli_query($koneksi, $query_tampil);
             <!-- ========== TAB PROFIL ========== -->
             <div class="tab-panel <?= $active_tab === 'profil' ? 'active' : '' ?>" id="tab-profil">
                 <div class="d-flex justify-content-between align-items-center pt-4 pb-2 mb-3 border-bottom">
-                    <h2 class="h3 fw-bold">Profil Admin Lab</h2>
+                    <div class="d-flex align-items-center">
+                        <button type="button" class="btn btn-outline-secondary me-3 d-none d-md-block" id="sidebarToggle" onclick="document.getElementById('sidebarMenu').classList.toggle('closed'); document.querySelector('.main-content').classList.toggle('expanded');">
+                            <i class="bi bi-list"></i>
+                        </button>
+                        <h2 class="h3 fw-bold mb-0">Profil Admin Lab</h2>
+                    </div>
                     <span class="badge bg-light p-2 fs-6">Admin: <?= htmlspecialchars($nama_admin); ?></span>
                 </div>
 
@@ -358,7 +363,12 @@ $hasil_tampil = mysqli_query($koneksi, $query_tampil);
             <!-- ========== TAB DASHBOARD / VALIDASI ========== -->
             <div class="tab-panel <?= $active_tab === 'dashboard' ? 'active' : '' ?>" id="tab-dashboard">
                 <div class="d-flex justify-content-between align-items-center pt-4 pb-2 mb-3 border-bottom">
-                    <h2 class="h3 fw-bold text-slate-800">Validasi Berkas Pendaftar</h2>
+                    <div class="d-flex align-items-center">
+                        <button type="button" class="btn btn-outline-secondary me-3 d-none d-md-block" id="sidebarToggle" onclick="document.getElementById('sidebarMenu').classList.toggle('closed'); document.querySelector('.main-content').classList.toggle('expanded');">
+                            <i class="bi bi-list"></i>
+                        </button>
+                        <h2 class="h3 fw-bold text-slate-800 mb-0">Validasi Berkas Pendaftar</h2>
+                    </div>
                     <span class="badge bg-light p-2 fs-6">Admin: <?= htmlspecialchars($nama_admin); ?></span>
                 </div>
 
